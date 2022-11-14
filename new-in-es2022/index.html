@@ -88,13 +88,13 @@
       <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-# New in ECMAScript 2022 
+## New in ECMAScript 2020-2022 
 
-<img src="master-class/📖 New-in-es2022/imgs/es2022.png" alt="" style="object-fit: scale-down">
+<img src="master-class/📖 New-in-es2022/imgs/es2022.png" alt="" style="width: 600px; object-fit: fill">
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Method `.at()` of indexable values
+### Method `.at()` of indexable values
 
 ```js
 const arr = ['a', 'b', 'c'];
@@ -114,7 +114,7 @@ arrayOfArrays[arrayOfArrays.length - 1][arrayOfArrays[arrayOfArrays.length - 1].
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## `Object.hasOwn(obj, propKey)`
+### `Object.hasOwn(obj, propKey)`
 
 ```js
 const obj = Object.create(null);
@@ -127,7 +127,7 @@ Object.hasOwn(obj, 'color'); // ✅ false
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Top-level `await` in modules:
+### Top-level `await` in modules:
 
 ```html
 <script type="module">
@@ -137,7 +137,7 @@ __SCRIPT_END__
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## `error.cause`
+### `error.cause`
 
 ```js
 new Error('Something went wrong', { cause: otherError });
@@ -145,7 +145,7 @@ new Error('Something went wrong', { cause: otherError });
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Static public fields and methods
+### Static public fields and methods
 
 ```js
 class Component {
@@ -160,7 +160,7 @@ class Component {
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Instance private fields
+### Instance private fields
 
 ```js
 class Component {
@@ -170,7 +170,7 @@ class Component {
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Static initialization blocks in classes
+### Static initialization blocks in classes
 
 ```js
 class Component {
@@ -184,13 +184,13 @@ class Component {
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-# New in ECMAScript 2020
+## New in ECMAScript 2020
 
 <img src="master-class/📖 New-in-es2022/imgs/es2020.png" alt="" style="object-fit: scale-down">
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Dynamic imports via `import()`
+### Dynamic imports via `import()`
 
 ```js
 const { default: Page } = await import(`../../pages/${path}/index.js`);
@@ -198,7 +198,7 @@ const { default: Page } = await import(`../../pages/${path}/index.js`);
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Optional chaining for property accesses and method calls.
+### Optional chaining for property accesses and method calls.
 
 ```js
 const obj = {
@@ -211,7 +211,7 @@ obj?.color?.foo?.bar; // undefined
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Nullish coalescing operator (??)
+### Nullish coalescing operator (??)
 
 ```js
 value ?? defaultValue;
@@ -232,7 +232,7 @@ setWidth(0); // "0px"
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## BigInt
+### BigInt
 
 ```js
 typeof 1n; // 'bigint'
@@ -244,7 +244,7 @@ console.log(1e309); // ?
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Promise.allSettled()
+### Promise.allSettled()
 
 ```js
 Promise.allSettled([
