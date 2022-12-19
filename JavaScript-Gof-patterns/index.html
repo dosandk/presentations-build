@@ -104,6 +104,12 @@
 </div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## ? Pattern
+
+Паттерн гарантирует наличие единственного экземпляра класса и обеспечивает глобальную точку входа в некоторую сущность.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ##  Singleton
 
 <img src="master-class/📖 JavaScript-Gof-patterns/imgs/singleton.png" alt="" style="width: 500px; object-fit: fill">
@@ -129,7 +135,7 @@ new Singleton() === new Singleton(); // true
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Singleton  code example
+Singleton Example #1:
 
 ```js
 class Singleton {
@@ -146,7 +152,42 @@ class Singleton {
 
 new Singleton() === new Singleton(); // true
 ```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Singleton Example #2:
+
+```js
+function createDbConnection () {  
+  let connection;  
+  
+  function connectToSomeDb () {  
+    // some logic here...  
+    return {};  
+  }  
+  
+  return {  
+    connect () {  
+      if (!connection) {  
+        connection = connectToSomeDb();  
+      }  
+  
+      return connection;  
+    }  
+  };  
+}  
+  
+const db = createDbConnection();  
+  
+console.log(db.connect() === db.connect()); // true
+```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern 
+
+Паттерн предназначен для отделения приложений от конкретных реализаций, путем создания объектов c использованием  наследования...
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Factory Method
@@ -283,6 +324,12 @@ class NotificationFactory {
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## ?Pattern 
+
+Паттерн является объектом-переводчиком, трансформирует интерфейс или данные одного объекта в такой вид, чтобы он стал понятен другому объекту.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ## Adapter
 
 <img src="master-class/📖 JavaScript-Gof-patterns/imgs/adapter.png" alt="" style="width: 400px; object-fit: fill">
@@ -346,6 +393,12 @@ class Component {
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## ?Pattern
+
+Предоставляет простой интерфейс к сложной сущности: набору методов класса, библиотеке, фреймворку и т.д.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ## Facade
 
 <img src="master-class/📖 JavaScript-Gof-patterns/imgs/facade.png" alt="" style="object-fit: scale-down">
@@ -391,6 +444,12 @@ const component = new Component();
 component.update();
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern
+
+С помощью "оберток" реализует динамическое расширение функционала используя механизм агрегации или композиции.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Decorator
@@ -439,6 +498,12 @@ class Component {
 export default connectToStore(Component);
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern
+
+Позволяет итерировать некоторую сущность не раскрывая ее внутреннего устройства.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Iterator
@@ -491,6 +556,12 @@ for await (const item of iterator) {
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## ?Pattern
+
+Позволяет создать механизм подписки, который позволит некоторым сущностям следить и реагировать на события, происходящие в других сущностях, как следствие обеспечивая слабую связанность.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ## Observer
 
 <img src="master-class/📖 JavaScript-Gof-patterns/imgs/observer.png" alt="" style="object-fit: scale-down">
@@ -538,6 +609,12 @@ class Observable {
 }
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern
+
+Позволяет уменьшить связанность множества классов между собой, благодаря перемещению этих связей в один класс-посредник.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Mediator
@@ -624,6 +701,12 @@ peter.send(john, "Hey! New one message");
 chatroom.broadcast('hi all');
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern
+
+Позволяет создавать сложные объекты пошагово.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Builder
@@ -732,6 +815,12 @@ class PaymentRequest {
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## ?Pattern
+
+Позволяет подставлять вместо реальных объектов специальные объекты-заменители
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ## Proxy
 
 <img src="master-class/📖 JavaScript-Gof-patterns/imgs/proxy.png" alt="" style="object-fit: scale-down">
@@ -778,10 +867,10 @@ proxyUser.foo // Uncaught ReferenceError: There is no propery: "foo"
 class Proxy {
   proxyCache = new Map();
 
-  constructor(obj, {
+  constructor(request, {
     maxSize = 10
   } = {}) {
-    this.obj = obj;
+    this.request = request;
     this.maxSize = maxSize;
   }
 
@@ -800,7 +889,7 @@ class Proxy {
       return this.proxyCache.get(key);
     }
     
-    const result = await this.obj.get(key, options);
+    const result = await this.request.get(key, options);
 
     this.set(key, result);
     
@@ -828,6 +917,12 @@ proxyHttpRequest.get('url-1'); // Request to server and resposne
 proxyHttpRequest.get('url-1'); // Request to cache and response
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern
+
+Определяет семейство схожих алгоритмов , после чего алгоритмы можно взаимозаменять прямо во время исполнения программы
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Strategy
@@ -905,6 +1000,12 @@ if (transferType === 'bank') {
 transfer.execute(transferData)
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ?Pattern
+
+Определяет скелет алгоритма, перекладывая ответственность за некоторые его шаги на подклаcсы или методы
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Template method

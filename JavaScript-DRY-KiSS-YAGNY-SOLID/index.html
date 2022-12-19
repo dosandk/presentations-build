@@ -101,19 +101,31 @@ You aren't gonna need it
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-On the function level:
+YAGNY example #1: On the function level:
 
 ```js
 Array.from(
-  this.element.querySelectorAll(".sortable-table__cell[data-id]")
-).forEach((column) => {
+  document.querySelectorAll(".sortable-table__cell[data-id]")
+).forEach(item => {
   // ...some lgic here
 });
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-On the function level:
+YAGNY Example #1: Solution
+
+```js
+const list = document.querySelectorAll(".sortable-table__cell[data-id]");
+
+for (const item of list) {
+  // ...some lgic here
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+YAGNY Example #2: On the function level
 
 ```js
 function checkSum (a, b) {
@@ -131,6 +143,21 @@ function checkSum (a, b) {
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+YAGNY Example #2: Solution
+
+```js
+function checkSum (a, b) {
+  const result = a + b;
+
+  return result >= 10;
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+YAGNY Example #3: On the syntax level
+
 ```js
 this.sliderBounds = {
   left: this.subElements.innerBounds.getBoundingClientRect().left,
@@ -140,6 +167,8 @@ this.sliderBounds = {
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+YAGNY Example #3: solution
 
 ```js
 const { innerBounds } = this.subElements;
@@ -164,7 +193,8 @@ Keep it simple, stupid
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### KISS
-On the function level:
+
+KISS Example #1: On the function level
 
 ```js
 const uniq = (arr = []) => {
@@ -185,8 +215,7 @@ const uniq = (arr = []) => {
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### KISS
-Solution:
+KISS Example #1:  Solution
 
 ```js
 const uniq = (arr = []) => {
@@ -266,6 +295,7 @@ Principles of object-oriented programming
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Single-Responsibility principle
+
 `Card` example
 
 ```js
@@ -304,6 +334,7 @@ class Card {
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Single-Responsibility principle
+
 `Card` solution part 1
 
 ```js
@@ -344,6 +375,7 @@ class RequestsManager {
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Single-Responsibility principle
+
 `Card` solution part 2
 
 ```js
@@ -430,7 +462,8 @@ const card = new Card({
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Liskov substitution principle
-Example
+
+Example:
 
 ```js
 class Rectangle {
@@ -452,13 +485,57 @@ class Square extends Rectangle {
     this.width = size;
     this.height = size;
   }
+  
+  setWidth(width = 0) {
+    this.setSize(width);
+  }
+
+  setHeight(height = 0) {
+    this.setSize(width);
+  }
+}
+
+const objSquare = new Square();
+
+objSquare.seSize(4);
+objSquare.getArea(); // 16
+
+objSquare.setHeight(2); // 2 * 2 = 4 
+objSquare.getArea(); // ? 2 * 4 = 8
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+class Shape {
+  getArea() {
+    return this.width * this.height;
+  }
+}
+
+class Rectangle extends Shape {
+  setWidth(width = 0) {
+    this.width = width;
+  }
+
+  setHeight(height = 0) {
+    this.height = height;
+  }
+}
+
+class Square extends Shape {
+   setSize(size = 0) {
+    this.width = size;
+    this.height = size;
+  }
 }
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Liskov substitution principle
-Example
+
+Example:
 
 ```js
 const rectangle = new Rectangle();
@@ -549,7 +626,7 @@ class SortableTable {
     /* some logic here */
   }
 
-  sort (field = '', order = '') {
+  update (field = '', order = '') {
     if (field === 'image') return;
     
     const sortedData = this.sortData(field, order);
@@ -620,7 +697,7 @@ class SortableTable {
     /* some logic here */
   }
 
-  sort (field, order) {
+  update (field, order) {
     const sortedData = this.sortData(field, order);
 
     this.render(sortedData);
