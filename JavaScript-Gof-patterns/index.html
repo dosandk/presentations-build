@@ -1,0 +1,2986 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+
+.reveal pre code {
+  max-height: 80vh;
+}
+
+.app-resources-block {
+  font-size: 1.5rem;
+}
+
+</style>
+
+## GoF Patterns
+
+<img src="master-class/javascript-patterns/imgs/gof-patterns.png" alt="" style="width: 800px; object-fit: fill">
+</div>
+
+<aside class="notes"><ul>
+<li>Design patterns are common architectural approaches.</li>
+<li>Popularized by the Gang of Four book 1994 (Smalltalk and C++)</li>
+<li>Universally relevant</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Singleton
+
+### Singleton <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/singleton.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Creational
+- Complexity: ⭐
+</div>
+
+ 
+
+</split>
+
+Гарантирует, что у класса есть только один экземпляр
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Singleton: example #1
+
+```js [|4-9|13]
+class Singleton {
+  static #instance;
+
+  constructor() {
+    if (Singleton.#instance) {
+      return Singleton.#instance;
+    }
+
+    Singleton.#instance = this;
+  }
+}
+
+new Singleton() === new Singleton(); // true
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Singleton: example #2
+
+```js [|9-17|22]
+function createDbConnection () {  
+  let connection;  
+  
+  function connectToSomeDb () {  
+    // some logic here...  
+    return {};  
+  }  
+  
+  return {  
+    connect () {  
+      if (!connection) {  
+        connection = connectToSomeDb();  
+      }  
+  
+      return connection;  
+    }  
+  };  
+}  
+  
+const db = createDbConnection();  
+  
+console.log(db.connect() === db.connect()); // true
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Singleton <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Singleton: resources:
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/store/index.js#L9
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/notification/notification-manager/index.js#L8
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/router/index.js#L16
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/observer/index.js#L7
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/storage/sync-storage.js#L8
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Singleton: time to practice
+
+~3 min
+https://patterns.bootcamp.place/js-track/patterns/singleton
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Factory Method
+
+### Factory Method <!-- .element: style="display: none" -->
+
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/factory-method.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Creational
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Определяет общий интерфейс для создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Factory method: example #1
+
+```js
+class Creator {
+  factoryMethod() {/* abastruct */}
+
+  someOperation() {
+    const product = this.factoryMethod();
+
+    return `Creator: Run ${product.operation()}`;
+  }
+}
+
+class ConcreteProduct1 {
+  operation() {
+    return '{Result of the ConcreteProduct1}';
+  }
+}
+
+class ConcreteProduct2 {
+  operation() {
+    return '{Result of the ConcreteProduct2}';
+  }
+}
+
+class ConcreteCreator1 extends Creator {
+  factoryMethod() {
+    return new ConcreteProduct1();
+  }
+}
+
+class ConcreteCreator2 extends Creator {
+  factoryMethod() {
+    return new ConcreteProduct2();
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Factory method: example #2
+
+```js [|7-11|13]
+class SuccessNotification {}
+class ErrorNotification {}
+class InfoNotification {}
+
+class Component {
+  factoryMethod (type = '') {
+    const notificationTypes = {
+      succes: SuccessNotification,
+      error: ErrorNotification,
+      info: InfoNotification
+    };
+
+    const notification = new notificationTypes[type];
+
+    return notification;
+  }
+}
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Factory Method <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Factory Method: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/notification/notification-manager/index.js#L30
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/storage/sync-storage.js#L17
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Factory Method: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/factoryMethod
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Abstract Factory
+
+### Abstract Factory <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/abstract-factory.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Creational
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет создавать семейства связанных объектов, не привязываясь к конкретным классам создаваемых объектов.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+<div class="mermaid">
+flowchart TB
+  A[Abstract Factory] -- create --> B[Concrete Factory]
+  B -- new --> C[Product 1]
+  B -- new --> D[Product 2]
+  B -- new --> E[Product 3]
+
+</div>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Abstract factory: example #1
+
+```js [|7-11|13]
+class SuccessNotificationFactory {}
+class ErrorNotificationFactory {}
+class InfoNotificationFactory {}
+
+class NotificationFactory {
+  static create (type = '') {
+    const notificationTypes = {
+      succes: SuccessNotificationFactory,
+      error: ErrorNotificationFactory,
+      info: InfoNotificationFactory
+    };
+    
+    return notificationTypes[type];
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Abstract factory: example #1
+
+```js
+const SuccessNotificationF = NotificationFactory.create('success');
+
+const success1 = new SuccessNotificationF();
+const success2 = new SuccessNotificationF();
+const success3 = new SuccessNotificationF();
+
+const ErrorNotificationF = NotificationFactory.create('error');
+
+const error1 = new ErrorNotificationF();
+const error1 = new ErrorNotificationF();
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Abstract Factory <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abstract Factory: resources
+
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/notification/notification/index.js#L3
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abstract Factory: time to practice
+
+~5min
+https://patterns.bootcamp.place/js-track/patterns/abstractFactory
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Builder
+
+### Builder <!-- .element: style="display: none" -->
+
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/builder.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Creational
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет создавать сложные объекты пошагово.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+<div class="mermaid">
+flowchart LR
+  A[X_Builder] -- "buildFeature_1()" --> B(X_Builder)
+  B[X_Builder] -- "buildFeature_2()" --> C(X_Builder)
+  C[X_Builder] -- "build()" --> E(Result object)
+
+</div>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Builder: example #1
+
+```js
+const request = new PaymentRequest()
+  .setSenderName("John Doe")
+  .setSenderCardNumber("0000 1111 2222 3333")
+  .setSenderCardDate("01/26")
+  .setSenderCardCvv("000")
+  .setReceiverCardNumber("3333 2222 1111 0000")
+  .setReceiverName("Jane Doe")
+  .setAmount(100)
+  .setApiKey("qwerty")
+  .getRequest();
+
+performTransaction(request);
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Builder: example #1
+
+```js [|13, 19, 25, 31, 37, 43, 49, 55, 59]
+class PaymentRequest {
+  constructor() {
+    this.request = {
+      sender: {},
+      receiver: {},
+      data: {}
+    };
+  }
+
+  setSenderCardNumber(cardNumber) {
+    this.request.sender.cardNumber = cardNumber;
+
+    return this;
+  }
+
+  setSenderCardCvv(cvv) {
+    this.request.sender.cvv = cvv;
+
+    return this;
+  }
+
+  setSenderCardDate(date) {
+    this.request.sender.expireDate = date;
+
+    return this;
+  }
+
+  setSenderName(fullName) {
+    this.request.sender.name = fullName;
+
+    return this;
+  }
+
+  setReceiverCardNumber(cardNumber) {
+    this.request.receiver.cardNumber = cardNumber;
+
+    return this;
+  }
+
+  setReceiverName(fullName) {
+    this.request.receiver.name = fullName;
+
+    return this;
+  }
+
+  setApiKey(key) {
+    this.request.data.key = key;
+
+    return this;
+  }
+
+  setAmount(amount) {
+    this.request.data.amount = amount;
+
+    return this;
+  }
+
+  getRequest() {
+    return this.request;
+  }
+}
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Builder <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Builder: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/api/index.js#L3
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Builder: time to practice
+
+~5min
+https://patterns.bootcamp.place/js-track/patterns/builder
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Prototype
+
+### Prototype <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/prototype-1.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Creational
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет копировать объекты, не вдаваясь в подробности иx реализации.
+</div>
+
+<aside class="notes"><p>In JavaScript Prototype pattern may be implemented via <code>Object.create</code> method</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Prototype: example #1
+
+```js [|10-15 | 18-19]
+class Card {  
+  constructor({  
+    title = '',  
+    description = '',  
+  } = {}) {  
+    this.title = title;  
+    this.description = description;  
+  }  
+  
+  clone () {  
+    return new Card({  
+      title: this.title,  
+      description: this.description,  
+    });  
+  }  
+}  
+  
+const card1 = new Card({ title: 'first card', description: 'some description'});  
+const card2 = card1.clone();
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prototype: time to practice
+
+~6min
+https://patterns.bootcamp.place/js-track/patterns/prototype
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Adapter
+
+### Adapter <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/adapter.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет объектам с несовместимыми интерфейсами работать вместе.
+
+Адаптер превращает интерфейс одного класса в интерфейс, ожидаемый клиентом.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+<div class="mermaid">
+flowchart LR
+  A[Client] -- "get(a)" --> B[Adapter]
+  B -- "getLibMethod(a)" --> C[Library]
+
+</div>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Adapter: example #1
+
+```js [|5,8,17,20, 26-35]
+// adapterA.js
+import libA from './libA.js';
+
+export const adapterA = {
+  read () {
+    return libA.readData();
+  },
+  write () {
+    return libA.writeData();
+  }
+}
+
+// adapterB.js
+import libB from './libB.js';
+
+export const adapterB = {
+  read () {
+    return libB.getData();
+  },
+  write () {
+    return libB.sendData();
+  }
+}
+
+// component.js
+import adapterA from './adapterA.js';
+
+class Component {
+  constructor(props) {
+    this.data = adapterA.read();
+  }
+  send () {
+    adapterA.write();
+  }
+}
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Adapter <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Adapter: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/storage/local-storages.service.js#L1
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Adapter: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/adapter
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Bridge
+
+### Bridge <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/bridge-1.png" alt="" style="width: 500 px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Разделяет один или несколько классов на две отдельные иерархии — абстракцию и реализацию, позволяя изменять их независимо друг от друга.
+</div>
+
+<aside class="notes"><p>connection two components via abstraction</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Bridge: example #1
+
+```js
+class ColorsPallet {  
+  constructor (name = '') {  
+    this.name = name;  
+  }  
+}  
+  
+class ErrorColorPallet extends ColorsPallet {  
+  constructor () {  
+    super('error-colors-pallet');  
+    this.color = 'red';  
+  }  
+}  
+  
+class SuccessColorPallet extends ColorsPallet {  
+  constructor () {  
+    super('success-colors-pallet');  
+    this.color = 'green';  
+  }  
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Bridge: example #1
+
+```js
+class Notification {  
+  constructor (name = '', colorsPallet) {  
+    this.name = name;  
+    this.colorsPallet = colorsPallet;  
+  }  
+  
+  toString () {  
+    return `This is `${this.name} notification with $`{this.colorsPallet.color} colors pallet`;  
+  }  
+}
+
+const successNotification = new Notification('success', new SuccessColorPallet());  
+const errorNotification = new Notification('error', new ErrorColorPallet());
+```
+
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Bridge <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Bridge: time to practice
+
+~1min
+https://patterns.bootcamp.place/js-track/patterns/bridge
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Composite
+
+### Composite <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/08-composite/imgs/composite.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет сгруппировать множество объектов в древовидную структуру, 
+а затем работать с ней так, как будто это единичный объект.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Composite: example #1
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/composite-1.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Composite: example #1
+
+```js
+const list = new Comment({  
+  id: "comment-1",  
+  content: "text content for comment-1",  
+  children: [  
+    new Comment({  
+      id: "comment-1.1",  
+      content: "text content for comment-1.1",  
+    }),  
+    new Comment({  
+      id: "comment-1.2",  
+      content: "text content for comment-1.2",  
+      children: [  
+        new Comment({  
+          id: "comment-1.2.1",  
+          content: "text content for comment-1.2.1",  
+        })  
+      ]  
+    })  
+  ]  
+})
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Composite: example #1
+
+```js [|12-20, 23|]
+class Comment {  
+  constructor({  
+    id = 0,  
+    content = '',  
+    children = []  
+  } = {}) {  
+    this.id = id;  
+    this.content = content;  
+    this.children = children;  
+  }  
+  
+  getSize () {  
+    let count = 1;  
+  
+    for (const child of this.children) {  
+      count += child.getSize();  
+    }  
+  
+    return count;  
+  }  
+}
+
+console.error(list.getSize()); // 4
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Composite: example #2
+
+```js [|9-17, 25-27, 40]
+class List {
+  children = [];
+
+ constructor (content = '', children = []) {
+  this.content = content;
+  this.children.push(...children);
+ }
+
+  getContentLength () {
+    let counter = this.content.length;  
+ 
+    for (const child of this.children) {  
+      counter += child.getContentLength();  
+    }  
+
+    return counter;
+  }
+}
+
+class Item {
+  constructor (content = '') {
+    this.content = content;
+  }
+
+  getContentLength () {
+    return this.content.length;
+  }
+}
+
+const list = new List('list #1.0', [
+  new Item('item #1.1'),
+  new Item('item #1.2'),
+  new List('list #2.0', [
+    new Item('item #2.1'),
+    new Item('item #2.2'),
+    new Item('item #2.3')
+  ])
+]);
+
+list.getContentLength(); // 63
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Composite: example #2
+
+```js [|9-17, 25-29, 42-56]
+class List {
+  children = [];  
+    
+  constructor(content = '', children = []) {  
+    this.content = content;  
+    this.children.push(...children);  
+  }
+
+  getContent (buffer = []) {  
+    buffer.push(this.content, []);  
+    
+    for (const child of this.children) {  
+      child.getContent(buffer.at(-1));  
+    }  
+    
+    return buffer;  
+  }
+}
+
+class Item {  
+  constructor(content = '') {  
+    this.content = content;  
+  }  
+  
+  getContent (buffer = []) {  
+    buffer.push(this.content);  
+  
+    return buffer;  
+  }
+}
+
+const list = new List('list #1.0', [
+  new Item('item #1.1'),
+  new Item('item #1.2'),
+  new List('list #2.0', [
+    new Item('item #2.1'),
+    new Item('item #2.2'),
+    new Item('item #2.3')
+  ])
+]);
+
+const print = content => {
+  const printContent = (arr = [], index = 0) => {  
+    for (const item of arr) {  
+      if (Array.isArray(item)) {  
+        printContent(item, index + 1);  
+      } else {  
+        console.log(`${'*'.repeat(index)} ${item}`);  
+      }  
+    }  
+  };  
+
+  printContent(content, 0);
+};
+
+print(list.getContent());
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Composite <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Composite: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/composite
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Decorator
+
+### Decorator <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/decorator.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐
+</div>
+
+ 
+
+</split>
+
+С помощью "оберток" реализует динамическое расширение функционала используя механизм агрегации или композиции.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart LR
+  A[Client] --> D
+
+  subgraph D[Decorator]
+    Component
+  end
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Decorator: example #1
+```js [|4, 19]
+// connect-to-store.js
+const globalStore = {};
+
+const connectToStore = Component => class extends Component {
+  constructor(...props) {
+    props.push(globalStore);
+
+    super(...props);
+  }
+}
+
+// component.js
+class Component {
+  constructor(store) {
+    this.store = store;
+  }
+}
+
+export default connectToStore(Component);
+```
+
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Decorator <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Decorator: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/cart/index.js#L87
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/search/debounce.js#L1
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/store/connect.js#L1
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/observer/connect.js#L3
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Decorator: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/decorator
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Facade
+
+### Facade <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/10-facade/imgs/facade.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐
+</div>
+
+ 
+
+</split>
+
+Предоставляет простой интерфейс к сложной сущности: набору методов класса, библиотеке, фреймворку и т.д.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart TB
+  subgraph D[Facade method]
+    A["method-1()"]
+    B["method-2()"]
+    C["method-n()"]
+  end
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Facade: example #1
+ 
+<img src="master-class/javascript-patterns/10-facade/imgs/facade-1.png" alt="" style="object-fit: scale-down">
+
+
+```js [|2-8| 19]
+class Component {
+  async update () {
+    const data = await this.loadData();
+    const filteredData = this.filterData(data);
+    const sortedData = this.sortData(filteredData);
+    
+    this.render(sortedData);
+  }
+  
+  async loadData () {/* some implementation */}
+
+  filterData () {/* some implementation */}
+
+  sortData () {/* some implementation */}
+}
+
+const component = new Component();
+
+component.update();
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Facade <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Facade: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/infinity-list/index.js#L43
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/main/index.js#L138
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/cart/index.js#L19
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/wishlist/index.js#L33
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/wishlist/index.js#L101
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Facade: time to practice
+
+~2min
+https://patterns.bootcamp.place/js-track/patterns/facade
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Flyweight
+
+### Flyweight <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<div class="block">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/flyweight-1.png" alt="" style="width: 500px; object-fit: fill">
+
+<img src="master-class/javascript-patterns/11-flyweight/imgs/flyweight.png" alt="" style="width: 500px; object-fit: fill">
+
+</div>
+
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет экономить память, разделяя общее состояние объектов между собой,
+вместо хранения одинаковых данных в каждом объекте.
+</div>
+
+<aside class="notes"><p>The flyweight pattern is useful when you&#39;re creating a huge number of objects, 
+which could potentially drain all available RAM. It allows us to minimize the amount of consumed memory.</p>
+<p>In JavaScript, we can easily solve this problem through
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">prototypal inheritance</a>.
+Nowadays, hardware has GBs of RAM, which makes the flyweight pattern less important.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flyweight: example #1
+
+```js [| 5-8, 13-16, 21-24, 29-32, 37-40]
+const comments = [
+  {
+    id: "comment-1",
+    content: "text content for comment-1",
+    author: {
+      id: 1,
+      name: "John Doe"
+    },
+    children: [
+      {
+        id: "comment-1.1",
+        content: "text content for comment-1.1",
+        author: {
+          id: 2,
+          name: "Peter Jackson"
+        }
+      },
+      {
+        id: "comment-1.2",
+        content: "text content for comment-1.2",
+        author: {
+          id: 3,
+          name: "Marry Jane"
+        },
+        children: [
+          {
+            id: "comment-1.2.1",
+            content: "text content for comment-1.2.1",
+            author: {
+              id: 2,
+              name: "Peter Jackson"
+            }
+          },
+          {
+            id: "comment-1.2.2",
+            content: "text content for comment-1.2.2",
+            author: {
+              id: 1,
+              name: "John Doe"
+            }
+          }
+        ]
+      }
+    ]
+  }
+];
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flyweight: example #1
+
+```js [|5,11,17| 23-36]
+const normalizedComments = [
+  {
+    id: "comment-1",
+    content: "text content for comment-1",
+    authorId: 1,
+    childrenIds: ["comment-1.1", "comment-1.2"]
+  },
+  {
+    id: "comment-1.1",
+    content: "text content for comment-1.1",
+    authorId: 2,
+    childrenIds: []
+  },
+  {
+    id: "comment-1.2",
+    content: "text content for comment-1.2",
+    authorId: 3,
+    childrenIds: ["comment-1.2.1", "comment-1.2.2"]
+  }
+  // ...
+];
+
+const authors = [
+  {
+    id: 1,
+    name: "John Doe"
+  },
+  {
+    id: 2,
+    name: "Peter Jackson"
+  },
+  {
+    id: 3,
+    name: "Marry Jane"
+  }
+];
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flyweight: example #1
+
+```js [|1-6,17|]
+class Author {  
+  constructor({id = 0, name = ''} = {}) {  
+    this.id = id;  
+    this.name = name;  
+  }  
+}  
+  
+class Comment {  
+  constructor({  
+    id = 0,  
+    content = '',  
+    author = {},  
+    children = []  
+  } = {}) {  
+    this.id = id;  
+    this.content = content;  
+    this.author = author;  
+    this.children = children;  
+  }  
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flyweight: example #1
+
+```js [|4, 9, 14, 19, 24]
+const list = new Comment({  
+  id: "comment-1",  
+  content: "text content for comment-1",  
+  author: createAuthor({ id: 1, name: "John Doe" }),  
+  children: [  
+    new Comment({  
+      id: "comment-1.1",  
+      content: "text content for comment-1.1",  
+      author: createAuthor({ id: 2, name: "Peter Jackson"})  
+    }),  
+    new Comment({  
+      id: "comment-1.2",  
+      content: "text content for comment-1.2",  
+      author: createAuthor({ id: 3, name: "Marry Jane"}),  
+      children: [  
+        new Comment({  
+          id: "comment-1.2.1",  
+          content: "text content for comment-1.2.1",  
+          author: createAuthor({ id: 2, name: "Peter Jackson"}),  
+        }),  
+        new Comment({  
+          id: "comment-1.2.2",  
+          content: "text content for comment-1.2.2",  
+          author: createAuthor({ id: 1, name: "John Doe" }),  
+        })  
+      ]  
+    })  
+  ]  
+});
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flyweight: example #1
+
+```js [| 4-6| 8| 13]
+const authorsList = {};  
+  
+const createAuthor = (authorProps = {}) => {  
+  if (authorsList[authorProps.id]) {  
+    return authorsList[authorProps.id];  
+  }  
+  
+  authorsList[authorProps.id] = new Author(authorProps);  
+  
+  return authorsList[authorProps.id];  
+};
+
+console.error(Object.keys(authorsList).length); // 3
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Flyweight <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Flyweight: time to practice
+
+~6min
+https://patterns.bootcamp.place/js-track/patterns/flyweight
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Proxy
+
+### Proxy <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/12-proxy/imgs/proxy.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Structural
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет подставлять вместо реальных объектов специальные объекты-заменители
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart LR
+  Client -- "request()" --> Proxy -- "request()" --> RealSubject
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Proxy: example #1
+
+```js []
+const user = {
+  nickname: 'John'
+};
+
+const proxyUser = new Proxy(user, {
+  get(target, prop, receiver) {
+    if (prop in target) {
+      return Reflect.get(target, prop, receiver);
+    } else {
+      throw new ReferenceError(`There is no propery: "${prop}"`)
+    }
+  }
+});
+
+proxyUser.foo // Uncaught ReferenceError: There is no propery: "foo"
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Proxy: example #2
+
+```js [| 3, 8, 12, 22| 19, 23-25 | 49]
+// request.js
+class Proxy {
+  proxyCache = new Map();
+
+  constructor(requestObj, {
+    maxSize = 10
+  } = {}) {
+    this.requestObj = requestObj;
+    this.maxSize = maxSize;
+  }
+
+  set (key = '', value) {
+    if (this.proxyCache.size === this.maxSize) {
+      const oldestKey = [...this.proxyCache.keys()].shift();
+
+      this.proxyCache.delete(oldestKey);
+    }
+
+    this.proxyCache.set(key, value);
+  }
+
+  async get (key, options) {
+    if (this.proxyCache.has(key)) {
+      return this.proxyCache.get(key);
+    }
+    
+    const result = await this.requestObj.get(key, options);
+
+    this.set(key, result);
+    
+    return result;
+  }
+}
+
+const httpRequest = {
+  async get(url = '', options = {}) {
+    try {
+      const urlString = url.toString();
+      const response = await fetch(urlString, options);
+      const result = await response.json();
+
+      return result;
+    } catch (error) {
+      console.error(`Request error, ${error.message}`);  
+    }
+  }
+};
+
+const proxyHttpRequest = new Proxy(httpRequest, { maxSize: 10 });
+
+proxyHttpRequest.get('url-1'); // Request to server and resposne
+proxyHttpRequest.get('url-1'); // Request to cache and response
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Proxy <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Proxy: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/request/proxy.js#L1
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Proxy: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/proxy
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Chain of Responsibility
+
+### Chain Of Responsibility <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/chain-of-responsibility.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет передавать запросы последовательно по цепочке обработчиков. 
+Каждый последующий обработчик решает, может ли он обработать запрос сам и 
+стоит ли передавать запрос дальше по цепи.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart LR
+    A[Request] -- "<span style='background: #36D399'>baz" --> B    
+    D -- "<span style='background: #36D399'>result" --> E(Response)
+    
+    subgraph Chain of Responsibility 
+        direction LR
+        B(handleFoo) --> C
+        C(handleBar) --> D(handleBaz)
+    end
+
+    style B fill:#F87272
+    style C fill:#F87272
+    style D fill:#F87272
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Chain of Responsibility: example #1
+
+```js [|2,10]
+class Handler {
+  handle(state, action) {
+    if (this.nextHandler) {
+      return this.nextHandler.handle(state, action);
+    }
+
+    return state;
+  }
+
+  setNext(handler) {
+    this.nextHandler = handler;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Chain of Responsibility: example #1
+
+```js
+class ProfileHandler extends Handler {
+  handle(state, action) {
+    if (action.type === "PERSON/UPDATE") {
+      return {
+        ...state
+        // ... add person data
+      };
+    }
+
+    return super.handle(state, action);
+  }
+}
+
+class PostsHandler extends Handler {
+  handle(state, action) {
+    if (action.type === "POSTS/GET") {
+      return {
+        ...state
+        // ... add posts data
+      };
+    }
+
+    return super.handle(state, action);
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Chain of Responsibility: example #1
+
+```js [|1-9|11-14|16-18]
+const createRootReducer = (handlers = []) => {
+  for (const [index, handler] of handlers.entries()) {
+    handler.setNext(handlers[index + 1]);
+  }
+
+  const [firstHandler] = handlers;
+
+  return firstHandler;
+};
+
+const rootReducer = createRootReducer([
+  new ProfileHandler(),
+  new PostsHandler()
+]);
+
+console.log(rootReducer.handle({}, { type: "UNHANDLED" }));
+console.log(rootReducer.handle({}, { type: "PERSON/UPDATE" }));
+console.log(rootReducer.handle({}, { type: "POSTS/GET" }));
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Chain of Responsibility <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Chain of Responsibility: time to practice
+
+https://patterns.bootcamp.place/js-track/patterns/chainOfResponsibility
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Command
+
+### Command <!-- .element: style="display: none" --> 
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/14-command/imgs/command.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Превращает запросы в объекты, позволяя передавать их как аргументы при вызове методов, ставить запросы в очередь, логировать их, а также поддерживать отмену операций.
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Command <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Command: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/command
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Iterator
+
+### Iterator <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/16-iterator/imgs/iterator.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет итерировать некоторую сущность не раскрывая ее внутреннего устройства.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Iterator: code example #1
+
+```js [|5-9|12]
+const range = {
+  from: 1,
+  to: 5,
+
+  *[Symbol.iterator]() { // краткая запись для [Symbol.iterator]: function*()
+    for (const value = this.from; value <= this.to; value++) {
+      yield value;
+    }
+  }
+};
+
+console.log([...range]); // 1,2,3,4,5
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Iterator: code example #2
+
+```js
+function loadData (arr = []) {
+  async function* generator () {
+    for (const item of arr) {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${item}`);
+      const data = await response.json();
+
+      yield data;
+    }
+  }
+
+  return generator();
+}
+
+const iterator = loadData([1, 2, 3, 4, 5]);
+
+for await (const item of iterator) {
+  console.error('item', item);
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Iterator: code example #3
+
+```js
+class List {
+  children = [];
+
+  constructor(content = '', children = []) {  
+    this.content = content;
+    this.children.push(...children);
+  }
+  
+  forEach (callback, index = 0) {  
+    callback(this, index);  
+  
+    for (const child of this.children) {  
+      child.forEach(callback, index + 1);  
+  }  
+}
+
+  print () {
+    this.forEach((item, index) => {  
+      console.log(`${'*'.repeat(index)} ${item.content}`);
+    });
+  }
+}
+
+class Item {
+  constructor(content = '') {
+    this.content = content;
+  }
+  
+  forEach (callback, index) {
+    callback(this, index);
+  }
+}
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Iterator <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Iterator: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/iterator
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Mediator
+
+### Mediator <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/mediator.png" alt="" style="width: 400px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет уменьшить связанность множества классов между собой, 
+благодаря перемещению этих связей в один класс-посредник.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart TB
+  A[Mediator] <--> B[Component 1]
+  A <--> C[Component 2]
+  A <--> D[Component 3]
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Mediator: example #1
+
+```js
+  const chatroom = new ChatRoom();
+
+  const john = new User("John", chatroom);
+  const peter = new User("Peter", chatroom);
+
+  john.send(peter, "Some message");
+  peter.send(john, "Hey! New one message");
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Mediator: example #1
+
+```js
+class ChatRoom {
+  users = [];
+
+  subscribe (user) {
+    this.users.push(user);
+
+    return () => {
+      this.users.filter(item => item !== user);
+    }
+  }
+
+  getName() {
+    return ChatRoom.name;
+  }
+
+  broadcast (message = '') {
+    for (const user of this.users) {
+      this.send(this, user, message);
+    }
+  }
+
+  send (sender, receiver, message = '') {
+    const senderName = sender.getName();
+    const formattedMsg = `${new Date().toLocaleString()} [`${senderName}]: $`{message}`;
+
+    receiver.receiveMessage(formattedMsg);
+  }
+}
+
+class User {
+  constructor(name, chatroom) {
+    this.name = name;
+    this.chatroom = chatroom;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  send(receiver, message = '') {
+    this.chatroom.send(this, receiver, message);
+  }
+
+  receiveMessage (message = '') {
+    console.log(message);
+  }
+}
+
+const chatroom = new ChatRoom();
+
+const john = new User("John", chatroom);
+const peter = new User("Peter", chatroom);
+
+chatroom.subscribe(john);
+chatroom.subscribe(peter);
+
+john.send(peter, "Some message");
+peter.send(john, "Hey! New one message");
+
+chatroom.broadcast('hi all');
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Mediator <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Mediator: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/store/index.js#L1
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Mediator: time to practice
+
+~10min
+https://patterns.bootcamp.place/js-track/patterns/mediator
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Memento
+
+### Memento <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/18-memento/imgs/memento.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет сохранять и восстанавливать прошлые состояния объектов, не раскрывая подробностей их реализации
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Memento: example #1
+
+```js [|2, 4-6]
+class Editor {
+  #state = {};
+
+  addText(text = "") {
+    this.#state.text = text;
+  }
+
+  getState() {
+    return this.#state;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Memento: example #1
+
+```js [|2,6| 18-28 ]
+class Editor {
+  #history = {};
+  #state = {};
+
+  constructor(history = {}) {
+    this.#history = history;
+  }
+
+  addText(text = "") {
+    this.makeSnapshot();
+    this.#state.text = text;
+  }
+
+  getState() {
+    return this.#state;
+  }
+
+  makeSnapshot() {
+    return this.#history.add(new Memento(this.#state));
+  }
+
+  undo() {
+    const snapshot = this.#history.get();
+
+    if (snapshot) {
+      this.#state = snapshot.getState();
+    }
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Memento: example #1
+
+```js [|1-11|13-24]
+class Memento {
+  #state = {};
+
+  constructor(state = {}) {
+    this.#state = { ...state };
+  }
+
+  getState() {
+    return this.#state;
+  }
+}
+
+class History {
+  #snapshots = [];
+
+  add(snapshot) {
+    this.#snapshots.unshift(snapshot);
+    return this.#snapshots.at(0);
+  }
+
+  get() {
+    return this.#snapshots.shift();
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Memento: example #1
+
+```js
+const history = new History();
+const editor = new Editor(history);
+
+editor.addText("hello");
+editor.addText("world");
+editor.addText("!");
+
+editor.undo();
+console.log(editor.getState()); // {text: 'world'}
+
+editor.undo();
+console.log(editor.getState()); // {text: 'hello'}
+
+editor.undo();
+console.log(editor.getState()); // {}
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Memento <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Memento: time to practice
+
+https://patterns.bootcamp.place/js-track/patterns/memento
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Observer
+
+### Observer <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/observer.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет создать механизм подписки, который позволит некоторым сущностям следить и реагировать на события, происходящие в других сущностях, как следствие обеспечивая слабую связанность.
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart BT
+  A[Observer] -- "notify" --> B
+  
+  B -- "subscribe/unsubscribe" --> A
+  
+  subgraph B [Subscribes]
+    C[Component 1]
+    D[Component 2]
+    E[Component 3]
+  end
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Observer: code example #1
+
+```js
+class Observable {
+  constructor() {
+    this.observers = [];
+  }
+
+  subscribe(callback) {
+    this.observers.push(callback);
+  }
+
+  unsubscribe(callback) {
+    this.observers = this.observers.filter(observer => observer !== callback);
+  }
+
+  notify(data) {
+    this.observers.forEach(observer => observer(data));
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Observer: resources
+
+<div class="block">
+
+<!-- .element: class="app-resources-block" -->
+- https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/observer/index.js#L1
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Observer: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/observer
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### State
+
+### State <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/20-state/imgs/state.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет объектам менять поведение в зависимости от своего состояния
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### State: example #1
+
+```js [|10-16]
+class TrafficLights {
+  constructor() {
+    this.state = "green";
+  }
+
+  on () {
+    console.log(this.state);
+
+    this.timerId = setInterval(() => {
+      if (this.state === "green") {
+        this.state = "yellow";
+      } else if (this.state === "yellow") {
+        this.state = "red";
+      } else if (this.state === "red") {
+        this.state = "green";
+      }
+
+      console.log(this.state);
+    }, 3000);
+  }
+
+  off () {
+    clearInterval(this.timerId);
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### State: example #1
+
+```js [|2,9,16| 3-5, 10-12, 17-19]
+class GreenLight {
+  color = "green";
+  next () {
+    return new YellowLight();
+  }
+}
+
+class YellowLight {
+  color = "yellow";
+  next () {
+    return new RedLight();
+  }
+}
+
+class RedLight {
+  color = "red";
+  next () {
+    return new GreenLight();
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### State: example #1
+
+```js [|3, 10]
+class TrafficLights {  
+  constructor() {  
+    this.state = new GreenLight();  
+  }  
+  
+  on () {  
+    console.log(this.state.color);  
+  
+    this.timerId = setInterval(() => {  
+      this.state = this.state.next();  
+  
+      console.log(this.state.color);  
+    }, 3000);  
+  }  
+  
+  off () {  
+    clearInterval(this.timerId);  
+  }  
+}
+
+const trafficLights = new TrafficLights();  
+  
+trafficLights.on();
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#State <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### State: time to practice
+
+~6min
+https://patterns.bootcamp.place/js-track/patterns/state
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Strategy
+
+### Strategy <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/📖 OLD-JavaScript-Gof-patterns/imgs/strategy.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐
+</div>
+
+ 
+
+</split>
+
+Определяет семейство схожих алгоритмов, после чего алгоритмы можно взаимозаменять прямо во время исполнения программы
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+  classDiagram
+    Strategy <|.. Strategy_A
+    Strategy <|.. Strategy_B
+
+    Context o-- Strategy  
+
+    class Strategy {
+      <<interface>>
+      Strategy: +execute()
+    }
+    
+    class Strategy_A{
+        +execute()
+    }
+    class Strategy_B{
+        +execute()
+    }
+
+    class Context{
+        -Strategy: s
+        +setStrategy(s: Strategy)
+        +execute()
+    }
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Strategy: example #1
+
+```js
+class BankTransfer {
+  execute(data) {
+    // call bancking api
+  }
+}
+
+class PaypalTransfer {
+  execute(data) {
+    // call PayPal api
+  }
+}
+
+class CryptoTransfer {
+  execute(data) {
+    // call crypto wallet api
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Strategy: example #1
+
+```js
+class Transfer {
+  setStrategy(strategy) {
+    this.tranferStrategy = strategy;
+  }
+
+  execute(data) {
+    this.tranferStrategy.execute(data);
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Strategy: example #1
+
+```js
+// e.g. input values from form
+const transferData = {
+  cardNumber: '0000 0000 0000 0000',
+  cvv: '000',
+  name: 'John Doe'
+};
+
+// e.g. value received from dropdown
+const transferType = 'bank'; 
+const transfer = new Transfer();
+
+if (transferType === 'bank') {
+  transfer.setStrategy(new BankTransfer())
+} else if (transferType === 'paypal') {
+  transfer.setStrategy(new PaypalTransfer())
+} else if (transferType === 'crypto') {
+  transfer.setStrategy(new CryptoTransfer())
+}
+
+transfer.execute(transferData)
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Strategy: example #2
+
+How to improve?
+
+```js
+class Table {
+  constructor(data, options = {}) {
+    this.data = data;
+    this.sortType = options.sortType;
+  }
+
+  sort (callback) {
+    if (this.sortType === 'client') {
+      const sortedData = [...this.data].sort((a, b) => a - b);
+
+      callback(sortedData);
+    }
+
+    if (this.sortType === 'server') {
+      fetch('https://api.some-server.com/get-sorted-data')
+        .then(response => response.json())
+        .then(data => callback(data));
+    }
+  }
+}
+
+const clientSortingTable = new Table([], { sortType: 'client' });
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Strategy: example #2
+
+```js
+class SortOnClientStrategy {
+  sort (data, callback) {
+    const sortedData = [...data].sort((a, b) => {
+      return a - b;
+    });
+
+    callback(sortedData);
+  }
+}
+
+class SortOnServerStrategy {
+  sort (data, callback) {
+    fetch('https://api.some-server.com/get-sorted-data')
+      .then(response => response.json())
+      .then(data => callback(data));
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Strategy: example #3
+
+```js
+import SortOnClientStrategy from "./client-strategy.js";
+import SortOnServerStrategy from "./server-strategy.js";
+
+class Table {
+  constructor(data, strategy) {
+    this.data = data;
+    this.strategy = strategy;
+  }
+
+  sort () {
+    this.strategy.sort(this.data, sortedData => {
+      console.error(sortedData);
+    });
+  }
+}
+
+const clientSortingTable = new Table([], new SortOnClientStrategy());
+const serverSortingTable = new Table([], new SortOnServerStrategy());
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Strategy <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Strategy: time to practice
+
+~3min
+https://patterns.bootcamp.place/js-track/patterns/strategy
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Template Method
+
+### Template Method <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/22-template-method/imgs/template-method.png" alt="" style="width: 500px; object-fit: fill">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐
+</div>
+
+ 
+
+</split>
+
+Определяет скелет алгоритма, перекладывая ответственность за некоторые его шаги 
+на подклассы или методы
+
+<div class="block">
+
+<!-- .element: style="display: none" -->
+
+
+<div class="mermaid">
+flowchart
+  subgraph A [Template method]
+    
+    direction RL
+    
+    subgraph A1[BaseClass]
+      direction TB
+      A11Step 1
+      A12[Hook 1]
+      A13Step 2
+      A14[Hook 2]
+      A15Step 3
+      
+      A11 --> A12 
+      A12 --> A13 
+      A13 --> A14 
+      A14 --> A15 
+    end
+    
+    subgraph A2[ConcreteClass]
+      direction TB
+        A21Step 1
+        A22[Hook 1]
+        A23Step 2
+        A24[Hook 2] 
+        A25Step 3
+        
+        A21 --> A22 
+        A22 --> A23 
+        A23 --> A24 
+        A24 --> A25 
+    end
+    
+    A2 --> A1
+  end
+
+</div>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Template Method: example #1
+
+```js
+class BaseComponent {
+  constructor() {
+    this.templateMethod();
+  }
+
+  templateMethod () {
+    this.beforeRenderHook();
+    this.render();
+    this.afterRenderHook();
+    this.initEventListeners();
+    this.afterInitializationHook();
+  }
+
+  beforeRenderHook () {
+    // This is hook method
+  }
+
+  render () {
+    // Some basic implementation
+  }
+
+  afterRenderHook () {
+    // This is hook method
+  }
+
+  initEventListeners () {
+    // Some basic implementation
+  }
+
+  afterInitializationHook () {
+    // This is hook method
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Template Method: example #1
+
+```js
+class Component extends BaseComponent {
+  beforeRenderHook () {
+    console.log(`This hook will be run before render method`);
+  }
+
+  afterRenderHook () {
+    console.log(`This hook will be run after render method`);
+  }
+
+  initEventListeners () {
+    super.initEventListeners();
+    // Here we can add extra listeners
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Template Method: time to practice
+
+~6min
+https://patterns.bootcamp.place/js-track/patterns/templateMethod
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Visitor
+
+### Visitor <!-- .element: style="display: none" -->
+
+<split left="1" right="1">
+
+<img src="master-class/javascript-patterns/23-visitor/imgs/visitor.png" alt="" style="object-fit: scale-down">
+
+
+<div class="block">
+
+<!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
+- Type: Behavioral
+- Complexity: ⭐⭐⭐
+</div>
+
+ 
+
+</split>
+
+Позволяет добавлять в программу новые операции, не изменяя классы объектов, над которыми эти операции могут выполняться.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Visitor: Composite pattern improvement
+
+```js [|1,5,9,13,22]
+const list = new Comment({  
+  id: "comment-1",  
+  content: "text content for comment-1",  
+  children: [  
+    new Comment({  
+      id: "comment-1.1",  
+      content: "text content for comment-1.1",  
+    }),  
+    new Comment({  
+      id: "comment-1.2",  
+      content: "text content for comment-1.2",  
+      children: [  
+        new Comment({  
+          id: "comment-1.2.1",  
+          content: "text content for comment-1.2.1",  
+        })  
+      ]  
+    })  
+  ]  
+});  
+  
+console.error(list.getSize()); // 4
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Visitor: Composite pattern improvement
+
+```js [| 12-20]
+class Comment {  
+  constructor({  
+    id = '',  
+    content = '',  
+    children = []  
+  } = {}) {  
+    this.id = id;  
+    this.content = content;  
+    this.children = children;  
+  }  
+
+  getSize () {  
+    let count = 1;  
+
+    for (const child of this.children) {  
+      count += child.getSize();  
+    }  
+
+    return count;  
+  }  
+}  
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Visitor: Composite pattern improvement. Solution part #1
+
+```js
+const list = new Comment({ 
+  // other content and comments here
+});
+
+list.accept(Visitor);  
+  
+console.error(list.getSize());
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Visitor: Composite pattern improvement. Solution part #2
+
+```js [|7-13]
+class Visitor {  
+  constructor(compositeItem) {  
+    this.compositeItem = compositeItem;  
+    this.init();  
+  }  
+  
+  init () {  
+    this.addGetSize();  
+  
+    for (const child of this.compositeItem.children) {  
+      child.accept(Visitor);  
+    }  
+  }  
+  
+  addGetSize () {  
+    let count = 0;  
+  
+    this.compositeItem.getSize = () => {  
+      count += 1;  
+  
+      for (const child of this.compositeItem.children) {  
+        count += child.getSize();  
+      }  
+  
+      return count;  
+    };  
+  }  
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Visitor: Composite pattern improvement. Solution part #3
+
+```js [|12-14]
+class Comment {
+  constructor({
+    id = '',
+    content = '',
+    children = []
+  } = {}) {
+    this.id = id;
+    this.content = content;
+    this.children = children;
+  }
+
+  accept (Visitor) {
+    new Visitor(this);
+  }
+}
+```
+
+back: master-class/javascript-patterns/JavaScript-Gof-patterns#Visitor <!-- .element: style="display: none" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Visitor: time to practice
+
+~6min
+https://patterns.bootcamp.place/js-track/patterns/visitor
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Q&A 
+
+- Observer vs Mediator?
+- Factory method vs Abstract factory?
+- Strategy vs Bridge?
+- Composite vs Iterator?
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
