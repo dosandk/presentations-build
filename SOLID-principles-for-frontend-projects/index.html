@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### SOLID 
+
+Principles of object-oriented programming
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/solid.png" alt="" style="object-fit: scale-down">
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Single-Responsibility principle
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem; width: 100%" -->
+
+> "A class should have one, and only one, reason to change"
+> **Robert C. Martin**
+
+<div class="block">
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/single-responsibility-1.png" alt="" style="width: 300px; object-fit: fill">
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/single-responsibility-2.png" alt="" style="width: 300px; object-fit: fill">
+
+</div>
+</div>
+
+<aside class="notes"><ul>
+<li>separation of concerns/разделение ответственности</li>
+</ul>
+<p>Connected patterns:</p>
+<ul>
+<li>Strategy Patterns rethinking#Strategy</li>
+<li>...</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Single-Responsibility principle
+
+`Card` example
+
+```js
+class Card {
+  data = [];
+
+  constructor (url = '') {
+    this.url = url;
+
+    this.render();
+    this.loadData();
+  }
+
+  render () {
+    /* some logic here */
+  }
+
+  async loadData () {
+    try {
+      const response = await fetch(this.url);
+      const data = await response.json();
+
+      this.saveToBrowserCache(data);
+      this.render();
+    } catch (error) {
+      console.error(`Error: something went wrong ${error.message}`);
+    }
+  }
+
+  saveToBrowserCache (data) {
+    localStorage.setItem('cardData', data);
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Single-Responsibility principle
+
+`Card` solution part 1
+
+```js
+class CacheManager {
+  saveToBrowserCache (data) {
+    localStorage.setItem('cardData', data);
+  }
+}
+
+class Logger {
+  log (...args) {
+    console.log.apply(console, args);
+  }
+  warn (...args) {
+    console.warn.apply(console.log, args);
+  }
+  error (...args) {
+    console.error.apply(console.log, args);
+  }
+}
+
+class RequestsManager {
+  async request (url) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      logger.log(error);
+
+      throw new Error(`Error: data loading error ${error.message}`);
+    }
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Single-Responsibility principle
+
+`Card` solution part 2
+
+```js
+class Card {
+  data = [];
+
+  constructor (url = '') {
+   this.url = url;
+
+   this.render();
+   this.loadData();
+  }
+
+  render () {
+    /* some logic here */
+  }
+
+  async loadData () {
+    const data = await requestManager.request(this.url)
+
+    this.saveToBrowserCache(data);
+    this.render();
+  }
+
+  saveToBrowserCache (data) {
+    cacheManager.saveToBrowserCache(data);
+  }
+}
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Open-closed principle
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/open-closed.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><p>Connected patterns:</p>
+<ul>
+<li>Strategy</li>
+<li>Factory</li>
+<li>...</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Open-closed principle
+
+```js
+class Card {
+  constructor ({
+    title = '',
+    total = 0,
+    formatTotal = data => data
+  } = {}) {
+    this.title = title;
+    this.total = formatTotal(total);
+
+    this.render();
+  }
+
+  render () {
+    // some logic here...
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Open-closed principle
+
+```js
+const card = new Card({
+  title: 'Our clients',
+  total: 301,
+  formatTotal: data => `Total clients ${data}`
+});
+
+const card = new Card({
+  title: 'Our sales',
+  total: 15600,
+  formatTotal: data => `${data} USD`
+});
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Open-closed principle
+
+Component SortableTable
+
+| Image  |   Title   | Sales |
+|--------|:---------:|:------|
+| img #1 | title #1  | 10    |
+| img #2 | title #2  | 5     |
+| img #3 | title #3  | 0     |
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Liskov substitution principle
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/liskov-substitution.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><p>Connected patterns:</p>
+<ul>
+<li>Patterns rethinking#Composite</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Liskov substitution principle
+
+Example:
+
+```js
+class Rectangle {
+  setWidth(width = 0) {
+    this.width = width;
+  }
+
+  setHeight(height = 0) {
+    this.height = height;
+  }
+
+  getArea() {
+    return this.width * this.height;
+  }
+}
+
+class Square extends Rectangle {
+  setSize(size = 0) {
+    this.width = size;
+    this.height = size;
+  }
+  
+  setWidth(width = 0) {
+    this.setSize(width);
+  }
+
+  setHeight(height = 0) {
+    this.setSize(width);
+  }
+}
+
+const objSquare = new Square();
+
+objSquare.seSize(4);
+objSquare.getArea(); // 16
+
+objSquare.setHeight(2); // 2 * 2 = 4 
+objSquare.getArea(); // ? 2 * 4 = 8
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+class Shape {
+  getArea() {
+    return this.width * this.height;
+  }
+}
+
+class Rectangle extends Shape {
+  setWidth(width = 0) {
+    this.width = width;
+  }
+
+  setHeight(height = 0) {
+    this.height = height;
+  }
+}
+
+class Square extends Shape {
+   setSize(size = 0) {
+    this.width = size;
+    this.height = size;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Liskov substitution principle
+
+Example:
+
+```js
+const rectangle = new Rectangle();
+
+rectangle.setWidth(5);
+rectangle.setHeight(2);
+
+console.assert(rectangle.getArea() === 10, 'area should be equal to 10');
+```
+
+```js
+const square = new Square();
+
+square.setWidth(5);
+square.setHeight(2);
+
+console.assert(rectangle.getArea() === 10, 'area should be equal to 10');
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Interface segregation principle
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/interface-segregation.png" alt="" style="object-fit: scale-down">
+
+
+```ts
+export class CardComponent implements OnInit, OnDestroy { 
+  // ...some logic here
+}
+```
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Dependency inversion principle
+
+It'a all about relationship between low and high level modules 
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/dependency-inversion.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+Component "SortableTable"
+
+| Image  |   Title   | Sales |
+|--------|:---------:|:------|
+| img #1 | title #1  | 10    |
+| img #2 | title #2  | 5     |
+| img #3 | title #3  | 0     |
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+Example:
+
+```js
+const data = [
+  {
+    'image': 'https://c.dns-shop.ru/thumb/st1/fit/wm/2000/574/7ce61cca8b9ded3a0fd6f61f40621519/0e9a8ec6749df2cd904acaecd5d5c246cabb053d662f6c4c8f5bb93dceaa79d4.jpg',
+    'title': '480 ГБ SSD M.2 накопитель SiliconPower M55',
+    'sales': 14
+  },
+  {
+    'image': 'https://c.dns-shop.ru/thumb/st4/fit/0/0/d7aadaab81c3d7669393353fad36144f/ad8a0488386a5de5aee95e4e1ad1d83b3d15b441e665f99f607f07518c33c680.jpg',
+    'title': 'Телевизор Haier LE65K6700UG',
+    'sales': 13
+  },
+  {
+    'image': 'https://c.dns-shop.ru/thumb/st1/fit/wm/2000/1430/0042797ef4e98712cfc0e701c3107f2f/11d4bc492cd72e5be5a277e5a1acdb871d19080eb25c369d712d740afc874c47.jpg',
+    'title': 'Bluetooth-стереогарнитура JBL REFLECT CONTOUR',
+    'sales': 11
+  },
+];
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+```js
+class SortableTable {
+  constructor (data = []) {
+    this.data = data;
+  }
+  
+  render (data) {
+    /* some logic here */
+  }
+
+  update (field = '', order = '') {
+    if (field === 'image') return;
+    
+    const sortedData = this.sortData(field, order);
+
+    this.render(sortedData);
+  }
+  
+  sortData (field = '', order = '') {
+    const directions = {
+      asc: 1,
+      desc: -1
+    };
+
+    const direction = directions[order];
+    
+    return [...this.data].sort((a, b) => {
+      switch (field) {
+        case 'sales':
+          return direction * (a[field] - b[field]);
+        case 'title':
+          return direction * a[field].localeCompare(b[field], ['ru', 'en']);
+        default:
+          throw new Error(`There is no sorting algorithm for sortType: "${sortType}"`)
+      }
+    });
+  }
+}
+
+const sortableTable = new SortableTable(headerConfig, data);
+
+sortableTable.sort('sales', 'asc');
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+Example: 
+
+```js
+const config = [
+  {
+    id: 'image',
+    title: 'Image',
+    sortable: false,
+  },
+  {
+    id: 'title',
+    title: 'Name',
+    sortable: true,
+    sortType: 'string'
+  },
+  {
+    id: 'sales',
+    title: 'Sales',
+    sortable: true,
+    sortType: 'number'
+  }
+];
+
+class SortableTable {
+  constructor (config = [], data = []) {
+    this.config = config;
+    this.data = data;
+  }
+  
+  render (data) {
+    /* some logic here */
+  }
+
+  update (field, order) {
+    const sortedData = this.sortData(field, order);
+
+    this.render(sortedData);
+  }
+  
+  sortData (field, order) {
+    const column = this.config.find(item => item.id === field);
+    const { sortType } = column;
+    const directions = {
+      asc: 1,
+      desc: -1
+    };
+    const direction = directions[order];
+
+    return [...this.data].sort((a, b) => {
+      switch (sortType) {
+        case 'number':
+          return direction * (a[field] - b[field]);
+        case 'string':
+          return direction * a[field].localeCompare(b[field], ['ru', 'en']);
+        default:
+          throw new Error(`There is no sorting algorithm for sortType: "${sortType}"`)
+      }
+    });
+  }
+}
+
+const sortableTable = new SortableTable(headerConfig, data);
+
+sortableTable.sort('sales', 'asc');
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+Solution:
+
+```js
+const config = [
+  {
+    id: 'images',
+    title: 'Image'
+  },
+  {
+    id: 'title',
+    title: 'Name',
+    sort (a, b) {
+      return a.localeCompare(b, ['ru', 'en']);
+    }
+  },
+  {
+    id: 'sales',
+    title: 'Sales',
+    sort (a, b) {
+      return a - b;
+    }
+  }
+];
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+Solution:
+
+```js
+class SortableTable {
+  constructor (headersConfig = [], data = []) {
+    this.config = headersConfig;
+    this.data = data;
+  }
+
+  render (data) {
+    /* some logic here */
+  }
+
+  sort (field, order) {
+    const sortedData = this.sortData(field, order);
+
+    this.render(sortedData);
+  }
+
+  sortData (field, order) {
+    const column = this.config.find(item => item.id === field);
+    
+    if (!column.sort) return;
+    
+    const directions = {
+      asc: 1,
+      desc: -1
+    };
+    const direction = directions[order];
+
+    return [...this.data].sort((a, b) => {
+      return direction * column.sort(a, b);
+    });
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Dependency inversion principle
+
+Example #2: Card Component
+
+```js
+class Card {
+  data = [];
+  
+  constructor (url = '') {
+    this.url = url;
+    
+    this.render();
+    this.loadData();
+  }
+  
+  render () {
+    /* some logic here */  
+  }
+  
+  async loadData () {
+    try {
+      const response = await fetch(this.url);
+      const data = await response.json();
+      
+      this.data = data;
+      
+      this.render();
+    } catch (error) {
+      console.error(`Error: something went wrong ${error.message}`);
+    }
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Solution:
+
+```js
+class Card {
+  data = [];
+  
+  constructor (url = '', request) {
+    this.url = url;
+    this.request = request;
+    
+    this.render();
+    this.loadData();
+  }
+  
+  render () {
+    /* some logic here */  
+  }
+  
+  async loadData () {
+    this.data = await this.request.get(this.url);
+
+    this.render();
+  }
+}
+
+const httpRequest = {
+  async get (url) {
+    try {
+      const response = await fetch(urlString, options);
+      const result = await response.json();
+
+      return result;
+    } catch (error) {
+      throw new Error(`Error: something went wrong ${error.message}`);
+    }
+  }
+};
+
+const card = new Card('https://api.example.com', httpRequest);
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Bonus: YAGNY/KISS/DRY principles
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/yagni-kiss-dry.png" alt="" style="object-fit: scale-down">
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY
+You aren't gonna need it
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/yagni.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY example #1: On the function level:
+
+```js
+Array.from(
+  document.querySelectorAll(".sortable-table__cell[data-id]")
+).forEach(item => {
+  // ...some lgic here
+});
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY Example #1: Solution
+
+```js
+const list = document.querySelectorAll(".sortable-table__cell[data-id]");
+
+for (const item of list) {
+  // ...some lgic here
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY Example #2: On the function level
+
+```js
+function checkSum (a, b) {
+  const result = a + b;
+
+  if (result >= 10) {
+    return true;
+  }
+
+  if (result < 10) {
+    return false;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY Example #2: Solution
+
+```js
+function checkSum (a, b) {
+  const result = a + b;
+
+  return result >= 10;
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY Example #3: On the syntax level
+
+```js
+this.sliderBounds = {
+  left: this.subElements.innerBounds.getBoundingClientRect().left,
+  right: this.subElements.innerBounds.getBoundingClientRect().right,
+  width: this.subElements.innerBounds.getBoundingClientRect().width,
+};
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### YAGNY Example #3: solution
+
+```js
+const { innerBounds } = this.subElements;
+const { left, right, width } = innerBounds.getBoundingClientRect();
+
+this.sliderBounds = {
+  left,
+  right,
+  width
+};
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### KISS
+Keep it simple, stupid
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/kiss-1.png" alt="" style="width: 300px; object-fit: fill">
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/kiss-2.png" alt="" style="width: 300px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### KISS Example #1: On the function level
+
+```js
+const uniq = (arr = []) => {
+  const set = new Set();
+  const result = [];
+
+  for (const item of arr) {
+    set.add(item);
+  }
+
+  for (const item of set) {
+    result.push(item);
+  }
+
+  return result;
+};
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### KISS Example #1:  Solution
+
+```js
+const uniq = (arr = []) => {
+  return [...new Set(arr)];
+};
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DRY
+Don't repeat yourself
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/dry.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### DRY example `sortStrings`
+
+```js [|3-5,7-9]
+const sortStrings = (arr, direction = 'asc') => {
+  if (direction === 'asc') {
+    return [...arr].sort((firstStr, secondStr) => {
+      return firstStr.localeCompare(secondStr, ['ru', 'en'], {caseFirst: 'upper'});
+    })
+  } else {
+    return [...arr].sort((firstStr, secondStr) => {
+      return secondStr.localeCompare(firstStr, ['ru', 'en'], {caseFirst: 'upper'});
+    })
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### DRY solution `sortStrings`
+
+```js
+const sortStrings = (arr, direction = 'asc') => {
+  const compare = (a, b) => {
+    return a.localeCompare(b, ['ru', 'en'], {caseFirst: 'upper'});
+  };
+
+  return [...arr].sort((firstStr, secondStr) => {
+    return direction === 'asc'
+      ? compare(firstStr, secondStr)
+      : compare(secondStr, firstStr);
+  });
+}
+```
+</div></script></section></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
