@@ -292,18 +292,6 @@ const card = new Card({
   formatTotal: data => `${data} USD`
 });
 ```
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-#### Open-closed principle
-
-Component SortableTable
-
-| Image  |   Title   | Sales |
-|--------|:---------:|:------|
-| img #1 | title #1  | 10    |
-| img #2 | title #2  | 5     |
-| img #3 | title #3  | 0     |
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -349,7 +337,7 @@ class Square extends Rectangle {
   }
 
   setHeight(height = 0) {
-    this.setSize(width);
+    this.setSize(height);
   }
 }
 
@@ -412,10 +400,10 @@ square.setHeight(2);
 
 console.assert(rectangle.getArea() === 10, 'area should be equal to 10');
 ```
-</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-#### Interface segregation principle
+### Interface segregation principle
 
 <img src="master-class/📖 SOLID principles with JavaScript examples/imgs/interface-segregation.png" alt="" style="object-fit: scale-down">
 
@@ -425,7 +413,63 @@ export class CardComponent implements OnInit, OnDestroy {
   // ...some logic here
 }
 ```
-</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Interface segregation principle
+
+```js
+class MultiFunctionPrinter {
+	print() {
+    console.log('Printing document...');
+    // Code to print document
+  }
+  scan() {
+    console.log('Scanning document...');
+    // Code to scan document
+  }
+
+  fax() {
+    console.log('Sending fax...');
+    // Code to send fax
+  }
+}
+
+const allInOnePrinter = new MultiFunctionPrinter();
+
+allInOnePrinter.print(); // Prints "Printing document..."
+allInOnePrinter.scan(); // Prints "Scanning document..."
+allInOnePrinter.fax(); // Prints "Sending fax..."
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Interface segregation principle
+
+```js
+class Printer {
+  print() {
+    console.log('Printing document...');
+    // Code to print document
+  }
+}
+
+class Scanner {
+  scan() {
+    console.log('Scanning document...');
+    // Code to scan document
+  }
+}
+
+class FaxMachine {
+  fax() {
+    console.log('Sending fax...');
+    // Code to send fax
+  }
+}
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Dependency inversion principle
