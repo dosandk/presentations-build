@@ -133,8 +133,11 @@
 
 </split>
 
-Гарантирует, что у класса есть только один экземпляр
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Ensures that a class has only one instance
+</div>
+
+<aside class="notes"><p>Гарантує, що клас має лише один екземпляр</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Singleton: example #1
@@ -193,19 +196,20 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Singleton <!-- .e
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/store/index.js#L9
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/notification/notification-manager/index.js#L8
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/router/index.js#L16
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/observer/index.js#L7
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/storage/sync-storage.js#L8
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Singleton: time to practice
 
 ~3 min
-https://patterns.bootcamp.place/js-track/patterns/singleton
+https://qa-online-editor.bootcamp.place/js-track/patterns/singleton
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -228,9 +232,12 @@ https://patterns.bootcamp.place/js-track/patterns/singleton
 
 </split>
 
-Позволяет объектам с несовместимыми интерфейсами работать вместе.
-Адаптер превращает интерфейс одного класса в интерфейс, ожидаемый клиентом.
+Allows objects with incompatible interfaces to work together.
+An adapter turns the interface of one class into the interface expected by the client.
+</div>
 
+<aside class="notes"><p>Дозволяє об&#39;єктам з несумісними інтерфейсами працювати разом.
+Адаптер перетворює інтерфейс одного класу на інтерфейс, очікуваний клієнтом.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -242,8 +249,7 @@ flowchart LR
 
 </div>
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Adapter: example #1
@@ -295,15 +301,16 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Adapter <!-- .ele
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/storage/local-storages.service.js#L1
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Adapter: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/adapter
+https://qa-online-editor.bootcamp.place/js-track/patterns/adapter
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -326,8 +333,10 @@ https://patterns.bootcamp.place/js-track/patterns/adapter
 
 </split>
 
-С помощью "оберток" реализует динамическое расширение функционала используя механизм агрегации или композиции.
+With the help of "wrappers" it implements dynamic expansion of functionality using the mechanism of aggregation or composition.
+</div>
 
+<aside class="notes"><p>За допомогою &quot;обгорток&quot; реалізує динамічне розширення функціоналу використовуючи механізм агрегації або композиції.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -337,15 +346,13 @@ https://patterns.bootcamp.place/js-track/patterns/adapter
 flowchart LR
   A[Client] --> D
 
-  subgraph D[Decorator]
+<p>  subgraph D[Decorator]
     Component
-  end
-
+  end</p>
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Decorator: example #1
@@ -381,18 +388,19 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Decorator <!-- .e
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/cart/index.js#L87
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/search/debounce.js#L1
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/store/connect.js#L1
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/observer/connect.js#L3
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Decorator: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/decorator
+https://qa-online-editor.bootcamp.place/js-track/patterns/decorator
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -415,8 +423,10 @@ https://patterns.bootcamp.place/js-track/patterns/decorator
 
 </split>
 
-Предоставляет простой интерфейс к сложной сущности: набору методов класса, библиотеке, фреймворку и т.д.
+Provides a simple interface to a complex entity: a set of class methods, a library, a framework, etc.
+</div>
 
+<aside class="notes"><p>Надає простий інтерфейс до складної сутності: набору методів класу, бібліотеки, фреймворку тощо.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -433,8 +443,7 @@ flowchart TB
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Facade: example #1
@@ -473,19 +482,20 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Facade <!-- .elem
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/infinity-list/index.js#L43
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/main/index.js#L138
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/cart/index.js#L19
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/wishlist/index.js#L33
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/pages/wishlist/index.js#L101
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Facade: time to practice
 
 ~2min
-https://patterns.bootcamp.place/js-track/patterns/facade
+https://qa-online-editor.bootcamp.place/js-track/patterns/facade
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -508,9 +518,10 @@ https://patterns.bootcamp.place/js-track/patterns/facade
 
 </split>
 
-Определяет скелет алгоритма, перекладывая ответственность за некоторые его шаги 
-на подклассы или методы
+Defines the skeleton of an algorithm, assigning responsibility for some of its steps into subclasses or methods
+</div>
 
+<aside class="notes"><p>Визначає скелет алгоритму, перекладаючи відповідальність за деякі його кроки на підкласи чи методи</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -520,44 +531,43 @@ https://patterns.bootcamp.place/js-track/patterns/facade
 flowchart
   subgraph A [Template method]
     
-    direction RL
-    
-    subgraph A1[BaseClass]
-      direction TB
-      A11Step 1
-      A12[Hook 1]
-      A13Step 2
-      A14[Hook 2]
-      A15Step 3
-      
-      A11 --> A12 
-      A12 --> A13 
-      A13 --> A14 
-      A14 --> A15 
-    end
-    
-    subgraph A2[ConcreteClass]
-      direction TB
-        A21Step 1
-        A22[Hook 1]
-        A23Step 2
-        A24[Hook 2] 
-        A25Step 3
-        
-        A21 --> A22 
-        A22 --> A23 
-        A23 --> A24 
-        A24 --> A25 
-    end
-    
-    A2 --> A1
-  end
+<pre><code>direction RL
 
+subgraph A1[BaseClass]
+  direction TB
+  A11Step 1
+  A12[Hook 1]
+  A13Step 2
+  A14[Hook 2]
+  A15Step 3
+  
+  A11 --&gt; A12 
+  A12 --&gt; A13 
+  A13 --&gt; A14 
+  A14 --&gt; A15 
+end
+
+subgraph A2[ConcreteClass]
+  direction TB
+    A21Step 1
+    A22[Hook 1]
+    A23Step 2
+    A24[Hook 2] 
+    A25Step 3
+    
+    A21 --&gt; A22 
+    A22 --&gt; A23 
+    A23 --&gt; A24 
+    A24 --&gt; A25 
+end
+
+A2 --&gt; A1
+</code></pre>
+<p>  end</p>
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Template Method: example #1
@@ -624,7 +634,7 @@ class Component extends BaseComponent {
 ### Template Method: time to practice
 
 ~6min
-https://patterns.bootcamp.place/js-track/patterns/templateMethod
+https://qa-online-editor.bootcamp.place/js-track/patterns/templateMethod
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -654,11 +664,11 @@ https://patterns.bootcamp.place/js-track/patterns/templateMethod
 
 </split>
 
-Позволяет экономить память, разделяя общее состояние объектов между собой,
-вместо хранения одинаковых данных в каждом объекте.
+Allows you to save memory by sharing the general state of objects among themselves, instead of storing the same data in each object.
 </div>
 
-<aside class="notes"><p>The flyweight pattern is useful when you&#39;re creating a huge number of objects, 
+<aside class="notes"><p>Дозволяє заощаджувати пам&#39;ять, поділяючи загальний стан об&#39;єктів між собою, замість зберігання однакових даних у кожному об&#39;єкті.</p>
+<p>The flyweight pattern is useful when you&#39;re creating a huge number of objects, 
 which could potentially drain all available RAM. It allows us to minimize the amount of consumed memory.</p>
 <p>In JavaScript, we can easily solve this problem through
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">prototypal inheritance</a>.
@@ -850,7 +860,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Flyweight <!-- .e
 ### Flyweight: time to practice
 
 ~6min
-https://patterns.bootcamp.place/js-track/patterns/flyweight
+https://qa-online-editor.bootcamp.place/js-track/patterns/flyweight
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -874,8 +884,11 @@ https://patterns.bootcamp.place/js-track/patterns/flyweight
 
 </split>
 
-Определяет общий интерфейс для создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Defines a common interface for creating objects in a superclass, allowing subclasses to change the type of objects created.
+</div>
+
+<aside class="notes"><p>Визначає загальний інтерфейс для створення об&#39;єктів у суперкласі, дозволяючи підкласам змінювати тип об&#39;єктів, що створюються.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Factory method: example #1
@@ -949,16 +962,17 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Factory Method <!
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/notification/notification-manager/index.js#L30
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/storage/sync-storage.js#L17
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Factory Method: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/factoryMethod
+https://qa-online-editor.bootcamp.place/js-track/patterns/factoryMethod
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -981,8 +995,10 @@ https://patterns.bootcamp.place/js-track/patterns/factoryMethod
 
 </split>
 
-Определяет семейство схожих алгоритмов, после чего алгоритмы можно взаимозаменять прямо во время исполнения программы
+Defines a family of similar algorithms, after which the algorithms can be interchanged directly during program execution
+</div>
 
+<aside class="notes"><p>Визначає сімейство подібних алгоритмів, після чого алгоритми можна взаємозамінювати безпосередньо під час виконання програми</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -993,31 +1009,30 @@ https://patterns.bootcamp.place/js-track/patterns/factoryMethod
     Strategy <|.. Strategy_A
     Strategy <|.. Strategy_B
 
-    Context o-- Strategy  
+<pre><code>Context o-- Strategy  
 
-    class Strategy {
-      <<interface>>
-      Strategy: +execute()
-    }
-    
-    class Strategy_A{
-        +execute()
-    }
-    class Strategy_B{
-        +execute()
-    }
+class Strategy {
+  &lt;&lt;interface&gt;&gt;
+  Strategy: +execute()
+}
 
-    class Context{
-        -Strategy: s
-        +setStrategy(s: Strategy)
-        +execute()
-    }
+class Strategy_A{
+    +execute()
+}
+class Strategy_B{
+    +execute()
+}
 
+class Context{
+    -Strategy: s
+    +setStrategy(s: Strategy)
+    +execute()
+}
+</code></pre>
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Strategy: example #1
@@ -1172,7 +1187,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Strategy <!-- .el
 ### Strategy: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/strategy
+https://qa-online-editor.bootcamp.place/js-track/patterns/strategy
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1195,8 +1210,10 @@ https://patterns.bootcamp.place/js-track/patterns/strategy
 
 </split>
 
-Позволяет создать механизм подписки, который позволит некоторым сущностям следить и реагировать на события, происходящие в других сущностях, как следствие обеспечивая слабую связанность.
+Allows you to create a subscription mechanism that will allow some entities to monitor and respond to events occurring in other entities, as a result providing loose coupling.
+</div>
 
+<aside class="notes"><p>Дозволяє створити механізм підписки, який дозволить деяким сутностям стежити та реагувати на події, що відбуваються в інших сутностях, як наслідок забезпечуючи слабку пов&#39;язаність.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -1206,19 +1223,16 @@ https://patterns.bootcamp.place/js-track/patterns/strategy
 flowchart BT
   A[Observer] -- "notify" --> B
   
-  B -- "subscribe/unsubscribe" --> A
-  
-  subgraph B [Subscribes]
+<p>  B -- &quot;subscribe/unsubscribe&quot; --&gt; A</p>
+<p>  subgraph B [Subscribes]
     C[Component 1]
     D[Component 2]
     E[Component 3]
-  end
-
+  end</p>
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Observer: code example #1
@@ -1250,15 +1264,16 @@ class Observable {
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/observer/index.js#L1
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Observer: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/observer
+https://qa-online-editor.bootcamp.place/js-track/patterns/observer
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1281,10 +1296,11 @@ https://patterns.bootcamp.place/js-track/patterns/observer
 
 </split>
 
-Позволяет копировать объекты, не вдаваясь в подробности иx реализации.
+Allows you to copy objects without going into the details of their implementation.
 </div>
 
-<aside class="notes"><p>In JavaScript Prototype pattern may be implemented via <code>Object.create</code> method</p>
+<aside class="notes"><p>Дозволяє копіювати об&#39;єкти, не вдаючись у подробиці їх реалізації.</p>
+<p>In JavaScript Prototype pattern may be implemented via <code>Object.create</code> method</p>
 </aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1317,7 +1333,7 @@ const card2 = card1.clone();
 ### Prototype: time to practice
 
 ~6min
-https://patterns.bootcamp.place/js-track/patterns/prototype
+https://qa-online-editor.bootcamp.place/js-track/patterns/prototype
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1341,8 +1357,10 @@ https://patterns.bootcamp.place/js-track/patterns/prototype
 
 </split>
 
-Позволяет создавать сложные объекты пошагово.
+Allows you to create complex objects step by step.
+</div>
 
+<aside class="notes"><p>Дозволяє створювати складні об&#39;єкти покроково.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -1355,8 +1373,7 @@ flowchart LR
 
 </div>
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Builder: example #1
@@ -1453,15 +1470,16 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Builder <!-- .ele
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/api/index.js#L3
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Builder: time to practice
 
 ~5min
-https://patterns.bootcamp.place/js-track/patterns/builder
+https://qa-online-editor.bootcamp.place/js-track/patterns/builder
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1484,8 +1502,11 @@ https://patterns.bootcamp.place/js-track/patterns/builder
 
 </split>
 
-Позволяет итерировать некоторую сущность не раскрывая ее внутреннего устройства.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Allows you to iterate an entity without revealing its internal structure.
+</div>
+
+<aside class="notes"><p>Дозволяє ітерувати деяку сутність, не розкриваючи її внутрішнього пристрою.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Iterator: code example #1
@@ -1576,7 +1597,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Iterator <!-- .el
 ### Iterator: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/iterator
+https://qa-online-editor.bootcamp.place/js-track/patterns/iterator
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1599,8 +1620,10 @@ https://patterns.bootcamp.place/js-track/patterns/iterator
 
 </split>
 
-Позволяет подставлять вместо реальных объектов специальные объекты-заменители
+Allows you to substitute special substitute objects instead of real objects
+</div>
 
+<aside class="notes"><p>Дозволяє підставляти замість реальних об&#39;єктів спеціальні об&#39;єкти-замінники</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -1613,8 +1636,7 @@ flowchart LR
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Proxy: example #1
@@ -1705,15 +1727,16 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Proxy <!-- .eleme
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/request/proxy.js#L1
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Proxy: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/proxy
+https://qa-online-editor.bootcamp.place/js-track/patterns/proxy1
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1736,9 +1759,10 @@ https://patterns.bootcamp.place/js-track/patterns/proxy
 
 </split>
 
-Позволяет уменьшить связанность множества классов между собой, 
-благодаря перемещению этих связей в один класс-посредник.
+Allows you to reduce the coupling of many classes among themselves by moving these connections into one intermediary class.
+</div>
 
+<aside class="notes"><p>Дозволяє зменшити пов&#39;язаність безлічі класів між собою завдяки переміщенню цих зв&#39;язків в один клас-посередник.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -1753,8 +1777,7 @@ flowchart TB
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Mediator: example #1
@@ -1845,15 +1868,16 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Mediator <!-- .el
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/core/store/index.js#L1
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Mediator: time to practice
 
 ~10min
-https://patterns.bootcamp.place/js-track/patterns/mediator
+https://qa-online-editor.bootcamp.place/js-track/patterns/mediator
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1876,8 +1900,10 @@ https://patterns.bootcamp.place/js-track/patterns/mediator
 
 </split>
 
-Позволяет создавать семейства связанных объектов, не привязываясь к конкретным классам создаваемых объектов.
+Allows you to create families of related objects without being tied to specific classes of the objects being created.
+</div>
 
+<aside class="notes"><p>Дозволяє створювати сімейства пов&#39;язаних об&#39;єктів, не прив&#39;язуючись до конкретних класів об&#39;єктів, що створюються.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -1891,8 +1917,7 @@ flowchart TB
 
 </div>
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Abstract factory: example #1
@@ -1938,19 +1963,19 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Abstract Factory 
 
 ### Abstract Factory: resources
 
-
 <div class="block">
 
 <!-- .element: class="app-resources-block" -->
+
 - https://vscode.dev/github/dosandk/vanila-js-online-store/blob/083d499c1ff85fc9143f0f30d65c4e5a46386b45/src/components/notification/notification/index.js#L3
-</div>
+  </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Abstract Factory: time to practice
 
 ~5min
-https://patterns.bootcamp.place/js-track/patterns/abstractFactory
+https://qa-online-editor.bootcamp.place/js-track/patterns/abstractFactory
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1973,8 +1998,11 @@ https://patterns.bootcamp.place/js-track/patterns/abstractFactory
 
 </split>
 
-Позволяет объектам менять поведение в зависимости от своего состояния
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Allows objects to change behavior depending on their state
+</div>
+
+<aside class="notes"><p>Дозволяє об&#39;єктам змінювати поведінку залежно від свого стану</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### State: example #1
@@ -2071,7 +2099,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#State <!-- .eleme
 ### State: time to practice
 
 ~6min
-https://patterns.bootcamp.place/js-track/patterns/state
+https://qa-online-editor.bootcamp.place/js-track/patterns/state
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2094,10 +2122,12 @@ https://patterns.bootcamp.place/js-track/patterns/state
 
 </split>
 
-Позволяет передавать запросы последовательно по цепочке обработчиков. 
-Каждый последующий обработчик решает, может ли он обработать запрос сам и 
-стоит ли передавать запрос дальше по цепи.
+Allows you to transmit requests sequentially through a chain of handlers.
+Each subsequent handler decides whether it can process the request itself and Is it worth passing the request further down the chain?
+</div>
 
+<aside class="notes"><p>Дозволяє передавати запити послідовно по ланцюжку обробників.
+Кожен наступний оброблювач вирішує, чи може він обробити запит сам і чи варто надсилати запит далі по ланцюгу.</p>
 <div class="block">
 
 <!-- .element: style="display: none" -->
@@ -2108,21 +2138,20 @@ flowchart LR
     A[Request] -- "<span style='background: #36D399'>baz" --> B    
     D -- "<span style='background: #36D399'>result" --> E(Response)
     
-    subgraph Chain of Responsibility 
-        direction LR
-        B(handleFoo) --> C
-        C(handleBar) --> D(handleBaz)
-    end
+<pre><code>subgraph Chain of Responsibility 
+    direction LR
+    B(handleFoo) --&gt; C
+    C(handleBar) --&gt; D(handleBaz)
+end
 
-    style B fill:#F87272
-    style C fill:#F87272
-    style D fill:#F87272
-
+style B fill:#F87272
+style C fill:#F87272
+style D fill:#F87272
+</code></pre>
 </div>
 
 
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Chain of Responsibility: example #1
@@ -2206,7 +2235,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Chain of Responsi
 
 ### Chain of Responsibility: time to practice
 
-https://patterns.bootcamp.place/js-track/patterns/chainOfResponsibility
+https://qa-online-editor.bootcamp.place/js-track/patterns/chainOfResponsibility
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2223,16 +2252,19 @@ https://patterns.bootcamp.place/js-track/patterns/chainOfResponsibility
 
 <!-- .element: style="display: flex; font-size: 2rem; flex-direction: column; align-items: center; justify-content: center" align="center" -->
 - Type: Structural
-- Complexity: ⭐⭐⭐
 </div>
 
  
 
 </split>
 
-Позволяет сгруппировать множество объектов в древовидную структуру, 
-а затем работать с ней так, как будто это единичный объект.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Allows you to group many objects into a tree structure,
+and then work with it as if it were a single object.
+</div>
+
+<aside class="notes"><p>Дозволяє згрупувати безліч об&#39;єктів у деревоподібну структуру,
+а потім працювати з нею так, ніби це одиничний об&#39;єкт.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Composite: example #1
@@ -2413,7 +2445,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Composite <!-- .e
 ### Composite: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/composite
+https://qa-online-editor.bootcamp.place/js-track/patterns/composite
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2436,8 +2468,11 @@ https://patterns.bootcamp.place/js-track/patterns/composite
 
 </split>
 
-Позволяет добавлять в программу новые операции, не изменяя классы объектов, над которыми эти операции могут выполняться.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Allows you to add new operations to a program without changing the classes of objects on which these operations can be performed.
+</div>
+
+<aside class="notes"><p>Дозволяє додавати до програми нові операції, не змінюючи класи об&#39;єктів, над якими ці операції можуть виконуватися.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Visitor: Composite pattern improvement
@@ -2573,7 +2608,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Visitor <!-- .ele
 ### Visitor: time to practice
 
 ~6min
-https://patterns.bootcamp.place/js-track/patterns/visitor
+https://qa-online-editor.bootcamp.place/js-track/patterns/visitor
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2596,10 +2631,11 @@ https://patterns.bootcamp.place/js-track/patterns/visitor
 
 </split>
 
-Разделяет один или несколько классов на две отдельные иерархии — абстракцию и реализацию, позволяя изменять их независимо друг от друга.
+Separates one or more classes into two separate hierarchies —abstraction and implementation — allowing them to be modified independently of each other.
 </div>
 
 <aside class="notes"><p>connection two components via abstraction</p>
+<p>Поділяє один або кілька класів на дві окремі ієрархії - абстракцію і реалізацію, дозволяючи змінювати їх незалежно один від одного.</p>
 </aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2655,7 +2691,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Bridge <!-- .elem
 ### Bridge: time to practice
 
 ~1min
-https://patterns.bootcamp.place/js-track/patterns/bridge
+https://qa-online-editor.bootcamp.place/js-track/patterns/bridge
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2678,8 +2714,11 @@ https://patterns.bootcamp.place/js-track/patterns/bridge
 
 </split>
 
-Позволяет сохранять и восстанавливать прошлые состояния объектов, не раскрывая подробностей их реализации
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+Allows you to save and restore past states of objects without revealing the details of their implementation
+</div>
+
+<aside class="notes"><p>Дозволяє зберігати та відновлювати минулі стани об&#39;єктів, не розкриваючи подробиць їх реалізації</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Memento: example #1
@@ -2793,7 +2832,7 @@ back: master-class/javascript-patterns/JavaScript-Gof-patterns#Memento <!-- .ele
 
 ### Memento: time to practice
 
-https://patterns.bootcamp.place/js-track/patterns/memento
+https://qa-online-editor.bootcamp.place/js-track/patterns/memento
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2816,20 +2855,22 @@ https://patterns.bootcamp.place/js-track/patterns/memento
 
 </split>
 
-Превращает запросы в объекты, позволяя передавать их как аргументы при вызове методов, ставить запросы в очередь, логировать их, а также поддерживать отмену операций.
+Turns requests into objects, allowing you to pass them as arguments when calling methods, queue requests, log them, and also support canceling operations.
+</div>
 
-back: master-class/javascript-patterns/JavaScript-Gof-patterns#Command <!-- .element: style="display: none" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<aside class="notes"><p>Перетворює запити на об&#39;єкти, дозволяючи передавати їх як аргументи при викликі методів, ставити запити в чергу, логувати їх, а також підтримувати скасування операцій.</p>
+<p>back: master-class/javascript-patterns/JavaScript-Gof-patterns#Command <!-- .element: style="display: none" --></p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Command: time to practice
 
 ~3min
-https://patterns.bootcamp.place/js-track/patterns/command
+https://qa-online-editor.bootcamp.place/js-track/patterns/command
 </div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Q&A 
+## Q&A
 
 - Observer vs Mediator?
 - Factory method vs Abstract factory?
