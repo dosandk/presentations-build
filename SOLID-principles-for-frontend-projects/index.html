@@ -130,6 +130,14 @@ Principles of object-oriented programming
 
 `Card` example
 
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/product-card.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Single-Responsibility principle
+
+`Card` example
+
 ```js
 class Card {
   data = [];
@@ -256,6 +264,44 @@ class Card {
 
 #### Open-closed principle
 
+<split>
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/clients-chart.png" alt="" style="object-fit: scale-down">
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/sales-chart.png" alt="" style="object-fit: scale-down">
+
+</split>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Open-closed principle
+
+```js
+class Card {
+  constructor ({
+    title = '',
+    total = 0,
+  } = {}) {
+    this.title = title;
+  
+	if (this.title.toLowerCase() === 'clients') {
+	  this.total = total;
+	} else {
+	  this.total = `Total ${total} USD`;
+	}
+
+    this.render();
+  }
+
+  render () {
+    // some logic here...
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Open-closed principle
+
 ```js
 class Card {
   constructor ({
@@ -289,7 +335,7 @@ const card = new Card({
 const card = new Card({
   title: 'Our sales',
   total: 15600,
-  formatTotal: data => `${data} USD`
+  formatTotal: data => `Total ${data} USD`
 });
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -305,6 +351,17 @@ const card = new Card({
 <li>Patterns rethinking#Composite</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Liskov substitution principle
+
+<split >
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/rectangle-area.png" alt="" style="width: 300px; object-fit: fill">
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/square-area.png" alt="" style="width: 300px; object-fit: fill">
+
+</split>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 #### Liskov substitution principle
@@ -351,6 +408,8 @@ objSquare.getArea(); // ? 2 * 4 = 8
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Liskov substitution principle
 
 ```js
 class Shape {
@@ -420,7 +479,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
 ```js
 class MultiFunctionPrinter {
-	print() {
+  print() {
     console.log('Printing document...');
     // Code to print document
   }
