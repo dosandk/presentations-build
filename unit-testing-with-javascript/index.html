@@ -1415,10 +1415,40 @@ describe("Page", () => {
 });
 
 ```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Integration tests
+
+Snapshot test
+
+```js
+  it("should match snaphost after pressing addToCart button", () => {
+    const { addToCartBtn } = page.components.card.subElements;
+
+    addToCartBtn.dispatchEvent(new CustomEvent("pointerdown"));
+
+    expect(document.body).toMatchSnapshot();
+  });
+```
 </div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## Tests coverage
+
+<img src="master-class/📖 Unit-testing/imgs/test-coverage.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ## Q&A
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Links
+
+- https://github.com/dosandk/online-store-finished
+- https://github.com/dosandk/unit-tests
+- https://github.com/dosandk/how-to-test-javascript
 </div></script></section></div>
     </div>
 
