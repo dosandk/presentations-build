@@ -91,7 +91,24 @@
 
 ## JavaScript unit testing for QA engineers
 
-<img src="master-class/📖 Unit-testing/imgs/qa-dev-unit-tests.png" alt="" style="object-fit: scale-down">
+<img src="master-class/📖 Unit-testing/imgs/qa-dev-unit-tests.png" alt="" style="width: 300px; object-fit: fill">
+
+
+- Specifics of the frontend
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Unit tests basics with JavaScript
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Unit tests for UI components
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Integrations tests 
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->SOLID and unit testing
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Before we start
+
+
+- demo: https://online-store.bootcamp.place
+- repo:  https://github.com/dosandk/online-store-finished
+- https://github.com/dosandk/unit-tests
+- https://github.com/dosandk/how-to-test-javascript
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -167,11 +184,11 @@ Specifics of the frontend
 
 ## The Benefits of Unit Tests
 
-- Help you find and fix bugs earlier
-- Prevent from regression during development
-- Contribute to higher code quality
-- Can act as documentation
-- Detect code smells in your codebase
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Help you find and fix bugs earlier
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Prevent from regression during development
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Contribute to higher code quality
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Can act as documentation
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Detect code smells in your codebase
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -188,7 +205,7 @@ const sum = (a = 0, b = 0) => {
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Your first javaScript unit test
+## 👨‍💻 Your first javaScript unit test
 
 Asserts for the sum function
 
@@ -230,11 +247,11 @@ Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 // some.test.js
 describe("the behavior of some entity", () => {
   it("should be ...", () => {
-    expect(<SomeEntity>).toBe(<SomeValue>);
+    expect(<SomeStatement>).toBe(<SomeValue>);
   });
 
   it("should not be ...", () => {
-    expect(<SomeEntity>).not.toBe(<SomeValue>);
+    expect(<SomeStatement>).not.toBe(<SomeValue>);
   });
 });
 ```
@@ -262,7 +279,7 @@ Honestly not so much
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Your first javaScript unit test
+## 👨‍💻 Your first javaScript unit test
 
 Let's improve our first javaScript unit test
 
@@ -545,7 +562,7 @@ class Calculator {
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Calculator
+## 👨‍💻 Calculator
 
 Specification for the calculator implementation
 
@@ -573,7 +590,6 @@ describe("calculator", () => {
   it("should support operations chaining", () => {
     const result = calculator.add(1).multiply(10).divide(2).value;
 
-    console.log("result", result);
     expect(result).toBe(30);
   });
 });
@@ -582,9 +598,9 @@ describe("calculator", () => {
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Calculator
+## 👨‍💻 Calculator
 
-Corrected implementation
+Fixed unit test implementation
 
 ```js [| 3| 5-7| 9-11]
 // calculator.spec.js
@@ -618,7 +634,6 @@ describe("calculator", () => {
   it("should support operations chaining", () => {
     const result = calculator.add(1).multiply(10).divide(2).value;
 
-    console.log("result", result);
     expect(result).toBe(5);
   });
 });
@@ -648,11 +663,11 @@ describe("unit test name", () => {
   });
 
   it("should be ...", () => {
-    expect(<SomeEntity>).toBe(<SomeValue>);
+    expect(<SomeStatement>).toBe(<SomeValue>);
   });
 
   it("should not be ...", () => {
-    expect(<SomeEntity>).not.toBe(<SomeValue>);
+    expect(<SomeStatement>).not.toBe(<SomeValue>);
   });
 });
 ```
@@ -722,13 +737,11 @@ describe("test case #2", () => {
 Unclear name and implicit assertion
 
 ```js
-
 test('check if the function returns something', () => {
   const result = myFunction();
   
   expect(result).toBeTruthy();
 });
-
 ```
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -791,7 +804,7 @@ Online store Card component
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Unit tests for UI components
+## 👨‍💻 Unit tests for UI components
 
 Card component. Code list
 
@@ -840,7 +853,7 @@ export default class Card {
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Unit tests for UI components
+## 👨‍💻 Unit tests for UI components
 
 ```js
 // card.spec.js
@@ -918,7 +931,7 @@ How to check data loading?
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## UI components: data loading
+## 👨‍💻 UI components: data loading
 
 Let's make modifications to our Card component
 
@@ -1056,7 +1069,7 @@ It'a all about relationship between low and high level modules
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## SOLID: Dependency inversion principle
+## 👨‍💻 SOLID: Dependency inversion principle
 
 Let's change our Card component according to DI principle
 
@@ -1170,7 +1183,7 @@ How to check events?
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## UI components: events
+## 👨‍💻 UI components: events
 
 Let's make changes in our Card component
 
@@ -1241,7 +1254,6 @@ export default class Card {
     console.log(`Detail: ${type}`, payload);
   }
 }
-
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -1324,7 +1336,7 @@ Let's check example of page component with Card and Store sub-components
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Integration tests
+## 👨‍💻 Integration tests
 
 Page component list of code
 
@@ -1446,6 +1458,7 @@ Snapshot test
 
 ## Links
 
+- https://online-store.bootcamp.place
 - https://github.com/dosandk/online-store-finished
 - https://github.com/dosandk/unit-tests
 - https://github.com/dosandk/how-to-test-javascript
