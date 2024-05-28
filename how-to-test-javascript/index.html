@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Workshop: How to test JavaScript
+
+Expectation management
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->❌ It's not about some special tool of framework
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->❌ It's not about testing API usage
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->✅ It's about common practices
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->✅ It's about project analysis
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Why do we need tests?
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Help you find and fix bugs earlier
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Prevent from regression during development
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Contribute to higher code quality
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Can act as documentation
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Detect code smells in your codebase
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript environments
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/javascript-environments.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript server-side runtimes: 
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/javascript-runtimes.png" alt="" style="width: 900px; object-fit: fill">
+
+
+- [Node.js](https://nodejs.org/)
+- [Deno](https://deno.com/)
+- [Bun](https://bun.sh/)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript browsers and engines
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/browsers.png" alt="" style="object-fit: scale-down">
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Modern JavaScript tools and frameworks for testing
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/js-testing-tools.png" alt="" style="object-fit: scale-down">
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript environment: client features
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->DOM (Document Object Model)
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Virtual DOM
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->SPA and MPA applications architecture
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->State management
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Browser features and API
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DOM (Document Object Model)
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/document-oject-model.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Virtual DOM
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/virtual-dom.png" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### SPA vs MPA
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/spa-vs-mpa-apps.png" alt="" style="width: 800px; object-fit: fill">
+
+
+Single page applications vs multipage applications
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Apps state and state-management system
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/app-state-management.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript environment: backend features
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->No window and document objects
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->No storages: localStorage, sessionStorage, indexedDB, etc...
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Types of architecture: monolith, microservices, etc..
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Operation systems and files manipulation
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Communication with Database 
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->Asynchronous nature
+- &shy;<!-- .element: class="fragment" data-fragment-index="7" -->Runtime features: Nodejs, Deno, Bun
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Testing pyramid
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/small-testing-pyramid-1.png" alt="" style="width: 700px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Testing pyramid
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/full-testing-pyramid.png" alt="" style="width: 700px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit tests
+
+Sum function implementation
+
+```js
+// sum.js
+const sum = (a = 0, b = 0) => {
+  return a + b;
+};
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit tests
+
+Unit test for sum function
+
+```js[|3,7,11,15| 4,8,12,16]
+// sum.spec.js
+describe('sum', () => {
+  it('should add two positive numbers correctly', () => {
+    expect(sum(1, 2)).toBe(3);
+  });
+
+  it('should add a positive and a negative number correctly', () => {
+    expect(sum(-1, 1)).toBe(0);
+  });
+
+  it('should add two negative numbers correctly', () => {
+    expect(sum(-3, -2)).toBe(-5);
+  });
+
+  it('should return zero like default value', () => {
+    expect(sum()).toBe(0);
+  });
+});
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit test typical structure
+
+```js[|3-9|11-17]
+// some.test.js
+describe("unit test name", () => {
+  beforeAll(() => {
+    // ... initialization logic
+  });
+
+  afterAll(() => {
+    // ... garbage collection, memory clearing
+  });
+  
+  beforeEach(() => {
+    // ... initialization logic
+  });
+
+  afterEach(() => {
+    // ... garbage collection, memory clearing
+  });
+
+  it("should be ...", () => {
+    expect(<SomeStatement>).toBe(<SomeValue>);
+  });
+
+  it("should not be ...", () => {
+    expect(<SomeStatement>).not.toBe(<SomeValue>);
+  });
+});
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit tests for UI components
+
+How to create new DOM element
+
+```js
+const render = () => {
+  const wrapper = document.createElement('div');
+
+  wrapper.innerHTML = `
+    <div class="card">
+      <div class="title">This is card component</div>
+      <div class="body">...some data</div>
+      <div class="footer">Add to cart</div>
+    </div>
+  `;
+
+  return wrapper.firstElementChild;
+};
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit tests for UI components
+
+<split left="1" right="1" gap="2">
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/online-store-card-component.png" alt="" style="object-fit: scale-down">
+
+
+```javascript
+// card.js
+
+class Card {
+  constructor(data = {}) {
+    this.data = data;
+
+    this.render();
+  }
+
+  render() {
+    /* some logic here */
+  }
+}
+```
+</split>
+
+Online shop "Card" component
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit tests for UI components
+
+Card component. Code list
+
+```js
+export default class Card {
+  constructor(data = {}) {
+    this.data = data;
+
+    this.render();
+  }
+
+  get template() {
+    return `
+      <div class="os-product-card">
+        <div class="os-product-img" style="background-image: url(${this.data.image});"></div>
+
+        <div class="os-product-content">
+          <div class="os-product-price-wrapper">
+            <div class="os-product-rating">
+              <span>${this.data.rating}</span>
+              <i class="bi bi-star"></i>
+            </div>
+
+            <div class="os-product-price">${this.data.price}</div>
+          </div>
+
+          <h5 class="os-product-title">${this.data.title}</h5>
+          <p class="os-product-description">${this.data.category}</p>
+        </div>
+
+        <footer class="os-product-footer">
+          <button class="os-btn-primary" type="button">Add to cart</button>
+        </footer>
+      </div>
+    `;
+  }
+  render() {
+    const wrapper = document.createElement("div");
+
+    wrapper.innerHTML = this.template;
+
+    this.element = wrapper.firstElementChild;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unit tests for UI components
+
+```js
+// card.spec.js
+const product = {
+  id: "1",
+  image: "https://content1.rozetka.com.ua/goods/images/big_tile/25101161.jpg",
+  title: "Ноутбук Acer Aspire 3 A315-57G-336G (NX.HZREU.01S) Charcoal Black",
+  rating: 2.89,
+  price: 15999,
+  category: "laptops",
+  brand: "acer",
+};
+
+describe("Card component", () => {
+  let card;
+
+  beforeEach(() => {
+    card = new Card(product);
+
+    document.body.append(card.element);
+  });
+
+  afterEach(() => {
+    card = null;
+    document.body.innerHTML = "";
+  });
+
+  it("should be rendered correctly", () => {
+    expect(card.element).toBeInTheDocument();
+    expect(card.element).toBeVisible();
+  });
+
+  it("should render data correctly", () => {
+    const ratingElement = card.element.querySelector(".os-product-rating span");
+    const priceElement = card.element.querySelector(".os-product-price");
+    const titleElement = card.element.querySelector(".os-product-title");
+    const descriptionElement = card.element.querySelector(
+      ".os-product-description",
+    );
+
+    expect(card.element).toBeInTheDocument();
+    expect(titleElement.textContent).toBe(
+      "Ноутбук Acer Aspire 3 A315-57G-336G (NX.HZREU.01S) Charcoal Black",
+    );
+    expect(ratingElement.textContent).toBe("2.89");
+    expect(priceElement.textContent).toBe("15999");
+    expect(descriptionElement.textContent).toBe("laptops");
+  });
+});
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### UI components: data loading
+
+How to check data loading?
+
+```js
+  const loadData = async () => {
+    const url =
+      "https://online-store.bootcamp.place/api/products?_page=1&_limit=1";
+
+    try {
+      const response = await fetch(url);
+      const [data] = await response.json();
+
+      console.log(data);
+      
+      // some logic here...
+    } catch (error) {
+      console.error(`Error: something went wrong ${error.message}`);
+    }
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### UI components: data loading
+
+Let's make modifications to our Card component
+
+```js
+export default class Card {
+  data = {
+    image: "",
+    rating: 0,
+    price: 0,
+    title: "",
+    category: "",
+  };
+
+  constructor() {
+    this.render();
+    this.loadData();
+  }
+
+  get template() {
+    // some logic here...
+  }
+  
+  render() {
+    // some logic here...
+  }
+
+  async loadData() {
+    const url =
+      "https://online-store.bootcamp.place/api/products?_page=1&_limit=1";
+
+    try {
+      const response = await fetch(url);
+      const [data] = await response.json();
+
+      this.update(data);
+    } catch (error) {
+      console.error(`Error: something went wrong ${error.message}`);
+    }
+  }
+
+  update(data = {}) {
+    // some logic here...
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### UI components: data loading
+
+What we should do with request to backend?
+
+```js [| 3-15 | 21,27]
+import Card from "./card.js";
+
+const product = [
+  {
+    id: "1",
+    images: [
+      "https://content1.rozetka.com.ua/goods/images/big_tile/25101161.jpg",
+    ],
+    title: "Ноутбук Acer Aspire 3 A315-57G-336G (NX.HZREU.01S) Charcoal Black",
+    rating: 2.89,
+    price: 15999,
+    category: "laptops",
+    brand: "acer",
+  },
+];
+
+describe("Card component", () => {
+  let card;
+
+  beforeEach(() => {
+    fetchMock.mockResponseOnce(JSON.stringify(product));
+    card = new Card();
+    document.body.append(card.element);
+  });
+
+  afterEach(() => {
+    fetchMock.resetMocks();
+    card = null;
+    document.body.innerHTML = "";
+  });
+
+  it("should be rendered correctly", () => {
+    expect(card.element).toBeInTheDocument();
+    expect(card.element).toBeVisible();
+  });
+
+  it("should render data correctly", () => {
+    const ratingElement = card.element.querySelector(".os-product-rating span");
+    const priceElement = card.element.querySelector(".os-product-price");
+    const titleElement = card.element.querySelector(".os-product-title");
+    const descriptionElement = card.element.querySelector(
+      ".os-product-description",
+    );
+
+    expect(card.element).toBeInTheDocument();
+    expect(titleElement.textContent).toBe(
+      "Ноутбук Acer Aspire 3 A315-57G-336G (NX.HZREU.01S) Charcoal Black",
+    );
+    expect(ratingElement.textContent).toBe("2.89");
+    expect(priceElement.textContent).toBe("15999");
+    expect(descriptionElement.textContent).toBe("laptops");
+  });
+});
+
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Integration tests
+
+What is integration test?
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/system-tests.png" alt="" style="width: 400px; object-fit: fill">
+
+
+It’s all about the level of isolation. While unit tests have to be completely isolated, integration tests might use external dependencies.
+
+ Also, integration tests often test several modules of the application in an integrated manner
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Integration tests
+
+Let's check example of page component with Card and Store sub-components
+
+<split left="1" right="1" gap="1">
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/page-component.png" alt="" style="width: 200px; object-fit: fill">
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/page-component-2.png" alt="" style="width: 200px; object-fit: fill">
+
+</split>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Integration tests
+
+Page component list of code
+
+```js
+export default class Page {
+  components = {};
+
+  constructor() {
+    this.components = {
+      store: new Store(),
+      card: new Card(product),
+    };
+    this.render();
+    this.renderComponents();
+  }
+
+  get template() {
+    return `
+      <div>
+        <h1>Page</h1>
+    
+        <div data-element="store"></div>
+        <div data-element="card"></div>
+      </div>
+    `;
+  }
+
+  render() {
+    const wrapper = document.createElement("div");
+
+    wrapper.innerHTML = this.template;
+
+    this.element = wrapper.firstElementChild;
+  }
+
+  renderComponents() {
+    const subElements = this.element.querySelectorAll("[data-element]");
+
+    for (const element of subElements) {
+      const name = element.dataset.element;
+
+      element.append(this.components[name].element);
+    }
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Integration tests
+
+Spec example of Page component
+
+```js
+describe("Page", () => {
+  let page;
+
+  beforeEach(() => {
+    page = new Page();
+    document.body.append(page.element);
+  });
+
+  afterEach(() => {
+    page = null;
+    document.body.innerHTML = "";
+  });
+
+  it("should add product to cart", () => {
+    const { addToCartBtn } = page.components.card.subElements;
+
+    addToCartBtn.dispatchEvent(new CustomEvent("pointerdown"));
+
+    const counterValue = page.components.store.subElements.counter.innerHTML;
+
+    expect(counterValue).toBe("1");
+  });
+
+  it("should remove product from cart", () => {
+    const { addToCartBtn } = page.components.card.subElements;
+
+    addToCartBtn.dispatchEvent(new CustomEvent("pointerdown"));
+    addToCartBtn.dispatchEvent(new CustomEvent("pointerdown"));
+
+    const counterValue = page.components.store.subElements.counter.innerHTML;
+
+    expect(counterValue).toBe("0");
+  });
+});
+
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tests and code quality
+
+Code quality attributes:
+
++ Readability
++ Reusability
++ Flexibility
++ Reliability
++ Maintainability
++ **Testability**
++ Other "abilities"
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Testability
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/testability-1.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### SOLID and unit tests
+
+Let's talk a little bit about code structuring
+ 
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/solid.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### SOLID: Dependency inversion principle
+
+It'a all about relationship between low and high level modules
+
+<img src="master-class/📖 SOLID principles with JavaScript examples/imgs/dependency-inversion.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  SOLID: Dependency inversion principle
+
+ Let's change our Card component according to DI principle 
+
+```js
+export default class Card {
+  constructor(url = "", requestService = {}) {
+    this.url = url;
+    this.requestService = requestService;
+
+    this.render();
+    this.loadData();
+  }
+
+  get template() {
+    // some logic here...
+  }
+  render() {
+    // some logic here...
+  }
+
+  async loadData() {
+    const data = await this.requestService.get(this.url);
+    const [product] = data;
+
+    this.update(product);
+  }
+
+  update(data = {}) {
+    // some logic here...
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### SOLID: Dependency inversion principle
+
+We moved logic for backend call to separate entity
+
+```js
+const httpRequest = {
+  async get(url = "", options = {}) {
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+
+      return result;
+    } catch (error) {
+      throw new Error(`Error: something went wrong ${error.message}`);
+    }
+  },
+};
+
+const url = "https://online-store.bootcamp.place/api/products?_page=1&_limit=1";
+const card = new Card(url, httpRequest);
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### SOLID: Dependency inversion principle
+
+The "httpRequest" module can be covered by tests separately
+
+```js [| 10, 24]
+import httpRequest from "./http-request";
+
+describe("httpRequest", () => {
+  test("should successfully make a GET request", async () => {
+    const mockUrl = "https://example.com";
+    const mockResponse = { data: "Mock data" };
+
+    // Mocking the fetch function
+    fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockResponse),
+    });
+
+    const result = await httpRequest.get(mockUrl);
+
+    expect(fetch).toHaveBeenCalledWith(mockUrl, {});
+    expect(result).toEqual(mockResponse);
+  });
+
+  test("should handle errors during GET request", async () => {
+    const mockUrl = "https://example.com";
+    const mockErrorMessage = "Mock error message";
+
+    // Mocking the fetch function to simulate an error
+    fetch.mockRejectedValueOnce(new Error(mockErrorMessage));
+
+    await expect(httpRequest.get(mockUrl)).rejects.toThrow(
+      `Error: something went wrong ${mockErrorMessage}`,
+    );
+  });
+});
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### E2E tests
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/e2e-tools.png" alt="" style="object-fit: scale-down">
+
+
+- [Puppeteer](https://pptr.dev/)
+- [cypress](https://www.cypress.io/)
+- [playwright](https://playwright.dev/)
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Coverage
+
+Istanbul
+
+<img src="master-class/📖 Unit-testing-for-QAO/imgs/test-coverage.png" alt="" style="width: 1200px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Code Climate
+
+Code climate for client [shop.bootcamp.place](https://shop.bootcamp.place)
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/codeclimate-client-shop.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Code Climate
+
+Code climate for backend [shop.bootcamp.place](https://shop.bootcamp.place)
+
+<img src="master-class/📖 Unit-testing-for-JS-stream/imgs/codeclimate-backend-shop.png" alt="" style="object-fit: scale-down">
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Q&A
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Homework
+
+<https://classroom.github.com/a/RHyjtOX->
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
