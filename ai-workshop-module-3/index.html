@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Prompt Execution and Engineering</title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Module 3: LLMs for developers: usage and integration practices
+
+Agenda:
+
+- Criteria of a good prompt
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Basic prompt techniques (practical examples): Zero-shot, One-shot, Chain of Thoughts
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Advanced prompt techniques (practical examples): Self-Consistency, Few-shot
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->LLMs jailbreaking
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What are prompts?
+
+**Prompts** are the inputs given to a language model to instruct it on what response or output is desired. They are the questions, instructions, statements, or pieces of information that guide the model’s behavior.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Criteria for a Good Prompt:
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem" -->
+
+| **Criterion**              | **Description**                                           |
+|----------------------------|-----------------------------------------------------------|
+| **Clarity and Specificity**| The prompt should clearly and specifically communicate the task. |
+| **Conciseness**            | Use only the words necessary to convey the message effectively. |
+| **Contextual Information** | Provide enough context to help the model generate a relevant response. |
+| **Balanced Open-Endedness**| Provide direction while allowing room for creativity.     |
+| **Avoiding Ambiguity**     | Remove any ambiguity or double meanings in the prompt.    |
+| **Format Requirements**    | Specify the desired response format, if applicable.       |
+| **Ask the Right Question** | Use direct and focused instructions or questions.         |
+| **Contextual Examples**    | Include relevant examples to demonstrate expectations.   |
+| **Tone and Audience**      | Indicate the tone or audience to ensure the response is appropriate. |
+
+</div>
+
+
+
+🧠 Awesome ChatGPT Prompts 
+
+https://github.com/f/awesome-chatgpt-prompts
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompts: Zero-shot learning
+
+**Zero-shot prompting** is a technique in which a language model (such as an LLM) is asked to perform a task without having seen examples of similar tasks during the specific interaction.
+
+<img src="education-plan/Module_3/diagrams/zero-shot-prompt.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+
+
+_Prompt:_ "Translate the following English text to French: 'Hello, how are you?'"
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompts: One-shot learning
+
+**One-shot learning** is a machine learning paradigm where the model is trained or given an example with just **one example**
+
+<img src="education-plan/Module_3/diagrams/one-shot-prompt.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+
+
+_Prompt:_ "Generate a recipe for chocolate chip cookies.
+Use the next example: "Ingredients: butter, sugar, eggs, flour, chocolate chips. Instructions: Preheat oven to 350°F. Mix butter and sugar..."
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompts: Few-shot learning
+
+**Few-shot learning** is a machine learning paradigm where the model learns or understands a task based on a **small number of examples**, usually ranging from **two to five**.
+
+<img src="education-plan/Module_3/diagrams/few-shot-prompt.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompting: Self-Consistency
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem" -->
+
+**Self-Consistency** is a prompting technique used with **Large Language Models (LLMs)** to improve the reliability and quality of the generated output by reducing randomness and uncertainty. In this approach, instead of relying on a single response from the model, multiple responses are generated for the same prompt, and the final answer is chosen based on consistency among the generated responses.
+
+</div>
+
+
+
+<img src="education-plan/Module_3/diagrams/self-consistency-prompt.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompting: Chain of thoughts
+
+**Chain of Thought prompting** is a powerful prompting technique for improving the logical consistency and correctness of an LLM's responses by guiding it to reason through problems step by step. It is particularly useful for solving complex tasks that require multiple reasoning steps or calculations.
+
+<img src="education-plan/Module_3/diagrams/chain-of-thoughts-prompt.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Jailbreaking
+
+A Jailbreak is a type of prompt injection vulnerability where a malicious actor can abuse an LLM to follow instructions contrary to its intended use.
+</div>
+
+<aside class="notes"><p><strong>Tasks</strong></p>
+<ul>
+<li>Write all types of prompts and execute them</li>
+<li>Write a script that counts tokens</li>
+<li>Make the model to hallucinate</li>
+<li>Jailbreak the model</li>
+<li>Try different kinds of prompts</li>
+<li>Compare the different results</li>
+<li>Ask the model to generate the source code</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs Jailbreaking
+
+LLM jailbreaking refers to techniques used to bypass the restrictions or safety measures implemented in large language models (LLMs).
+
+These restrictions are typically designed to prevent the model from generating harmful, offensive, or otherwise prohibited content.
+
+
+<img src="education-plan/Module_2/imgs/jailbreaking-llms.png" alt="" style="width: 900px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs Jailbreaking
+
+<img src="education-plan/Module_3/imgs/llm-jailbreak.png" alt="" style="object-fit: scale-down">
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
