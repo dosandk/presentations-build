@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Introduction to the AI and LLMs concepts</title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Workshop: LLMs for developers: usage and integration practices.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Disclaimer
+
+This course does not require a background in data engineering. Our focus is to provide developers with a ground-up knowledge of building and integrating LLM solutions
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## What this course is about
+
+- Comprehensive overview of LLM capabilities, architecture, and applications
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Accelerating developer routines with LLMS: IDEs and plugins, terminal integration, local LLM execution, etc. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Mastering different prompting techniques based on real examples
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Building LLM-powered applications: assistants, chatbots, agents, etc.
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Diving into LangChain and LangGraph
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Tracing and evaluation of LLM applications with LangSmith
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Course Goals
+
+- Explain how LLMs work in simple terms with vivid examples
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Outline the capabilities of modern LLMs and how we can utilize it
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Demonstrate how LLMs can accelerate and enhance the development process
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Showcase for code-level integration with LLMs based on JavaScript
+</div>
+
+<aside class="notes"><p>Prerequisites:</p>
+<ul>
+<li>Python and JavaScript knowledge on the basic level of syntax understanding.</li>
+<li><a href="https://colab.research.google.com/">Google Colab</a> account</li>
+<li><a href="https://github.com/">Github</a> account</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Workshop mentors
+
+- Getting familiar with mentors
+</div>
+
+<aside class="notes"><p>TODO: add photos and a short intro</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Workshop Overview
+
+- **Module 1:** Introduction to the AI and LLMs concepts <!-- .element: style="color: green" -->
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Module 2:** LLMs architecture, characteristics, parameters; Working with Local LLMS
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->**Module 3:** Prompt Engineering
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->**Module 4:** Extending LLM Knowledge with External Data
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->**Module 5:** Agents. Use LLM to choose a sequence of actions to take
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->**Module 6:** Evaluate & Trace LLM Application with LangSmith
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->**Module 7:** Showcase of LLM Integration into JavaScript Project
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Module 1:  Introduction to AI and LLMs
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What is GenAI (Generative Artificial Intelligence)
+
+GenAI is a branch of AI that focuses on creating entirely new content. This content can come in many forms, like text, images, music, and videos.
+
+<img src="education-plan/Module_1/diagrams/ai-genai-overlap-diagram.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### midjourney
+
+[midjourney](https://www.midjourney.com/) - Text to image
+
+<img src="education-plan/Module_1/imgs/midjourney-discord-interface.png" alt="" style="width: 1100px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>prompt: Fantasy forest at sunset, sun rays filtering through the trees, mystical atmosphere, ancient temple ruins covered with vines, small fireflies around, calm and mysterious mood, warm color palette with golden, green, and brown tones</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### elevenlabs
+
+[elevenlabs](https://elevenlabs.io/) - Text to audio
+
+<img src="education-plan/Module_1/imgs/elevenlabs-web-interface.png" alt="" style="width: 1100px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>text: Imagine standing on a quiet beach at dawn, the first rays of sunlight stretching over the horizon. The waves roll in softly, and a gentle breeze whispers through the air, carrying the salty scent of the sea. You close your eyes, taking in the peace and vastness around you, feeling completely at ease. In this moment, everything feels possible.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### videogen
+
+[videogen](https://videogen.io/) - Text to video 
+
+[Demo](https://app.videogen.io/project/95df2113-9db3-4707-b8d1-e529728cb57c)
+
+<img src="education-plan/Module_1/imgs/videogen-web-interface.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### GenAI vs LLMs
+
+GenAI creates entirely new content based on its understanding of data, LLMs retrieve existing content from their data set based on your input.
+
+<img src="education-plan/Module_1/diagrams/GenAI-vs-LLMs.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## What is LLMs?
+
+**LLMs (Large Language Models)** are AI models trained on massive text data to understand and generate human-like language for tasks like text generation, translation, and question answering.
+
+<img src="education-plan/Module_1/imgs/llms.png" alt="" style="width: 200px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs in the context of AI
+
+<img src="education-plan/Module_1/diagrams/ai-llms-overlap-diagram.excalidraw.svg" alt="" style="width: .png | 500px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## How do LLMs work?
+
+<img src="education-plan/Module_1/diagrams/llms.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Popular LLM families
+
+<object data="/education-plan/Module_1/diagrams/popular-llms-families.excalidraw.svg"></object>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs sizes
+
+The "size" of a Large Language Model (LLM) typically refers to the number of **parameters** it has.
+
+The more parameters a model has, the more complex and powerful it can potentially be, allowing it to understand and generate text with greater nuance.
+
+<img src="education-plan/Module_1/imgs/llms-sizes.png" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Achievements unlocked: Emergent abilities of LLMs
+
+<img src="education-plan/Module_1/imgs/llms-achievements.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Multimodal LLMs
+
+<img src="education-plan/Module_1/imgs/multimodal-models.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs use cases in practice
+
+<img src="education-plan/Module_1/diagrams/llms-use-cases.excalidraw.svg" alt="" style="width: .pngpx; object-fit: fill">
+</div>
+
+<aside class="notes"><ul>
+<li>content generation (marketing materials, social media content, technical documentation)<ul>
+<li>conversational agents</li>
+<li>Knowledge-based agents</li>
+<li>basic code generation &amp; code analysis (routine tasks)</li>
+<li>personalized learning assistants</li>
+<li>sentiment analysis</li>
+<li>data analysis</li>
+<li>translations</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What LLMs are NOT good for?
+
+- Real-Time Systems with Millisecond Latency Requirements
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Interpreting Legal, Medical, or Financial Regulations (rephrase)
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Long-Term Memory and State Tracking
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Complex Software Engineering and Code Debugging
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Complex System Architecture Design
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Debugging & Code Review
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->Understanding Non-Standard Codebases
+- &shy;<!-- .element: class="fragment" data-fragment-index="7" -->Automated Testing and Quality Assurance
+- &shy;<!-- .element: class="fragment" data-fragment-index="8" -->Project Management and Planning
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLM limitations
+
+- No memory
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Not a human brain
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Limited context (input/output)
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Hallucinations
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Security
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Non-deterministic answers
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->Hard to validate responses
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs Not a human brain
+
+Strawberry problem
+
+<img src="education-plan/Module_1/imgs/strawberry-icon.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs Not a human brain
+
+Strawberry problem
+
+<img src="education-plan/Module_1/imgs/strawberry-problem.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><p>TODO: why did it happen and how to solve this problem?</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs Not a human brain
+
+<img src="education-plan/Module_1/imgs/numbers-problem.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><p>TODO: why did it happen and how to solve this problem?</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Open AI
+
+> OpenAI is an American artificial intelligence research organization founded in December 2015. CEO: Sam Altman.
+
+<img src="education-plan/Module_1/imgs/open-ai-preview-1.png" alt="" style="width: 500px; object-fit: fill">
+
+
+OpenAI is not only about ChatGPT. It's much more!
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Open AI Models
+
+<img src="education-plan/Module_1/imgs/oepn-ai-models.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Open AI playground
+
+<img src="education-plan/Module_1/imgs/openai-playground.png" alt="" style="width: 1100px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>text to image prompt: Fantasy forest at sunset, sun rays filtering through the trees, mystical atmosphere, ancient temple ruins covered with vines, small fireflies around, calm and mysterious mood, warm color palette with golden, green, and brown tones</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Local LLMs. Ollama from Meta (Facebook)
+
+<img src="education-plan/Module_1/imgs/olama-preview.png" alt="" style="width: 600px; object-fit: fill">
+
+
+[ollama.com](https://ollama.com)
+</div>
+
+<aside class="notes"><p>TODO: download &quot;ollama&quot; and run it in terminal</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Llama models
+
+<img src="education-plan/Module_1/imgs/olama-sizes.png" alt="" style="object-fit: scale-down">
+
+
+https://www.llama.com/llama-downloads
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ELEKS AI Policy
+
+[ELEKS Artificial Intelligence Usage](https://elekscloud.sharepoint.com/sites/GenAI/SitePages/Eleks-GenAI-Tools.aspx)
+
+<img src="education-plan/Module_1/imgs/eleks-ai-policy-1.png" alt="" style="object-fit: scale-down">
+
+<img src="education-plan/Module_1/imgs/eleks-ai-policy-2.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LM Studio
+
+<img src="education-plan/Module_1/imgs/lm-studio-search.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+https://lmstudio.ai
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LM Studio
+
+<img src="education-plan/Module_1/imgs/lm-studio-chat.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs like accelerators of the development process
+
+<img src="education-plan/Module_1/imgs/llms-accelerators.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Copilot
+
+<img src="education-plan/Module_1/imgs/github-copilot-logo.png" alt="" style="width: 1100px; object-fit: fill">
+
+<img src="education-plan/Module_1/imgs/copilot-in-vscode.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+[Using Claude 3.5 Sonnet in GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/using-claude-sonnet-in-github-copilot)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Github Copilot VSCode plugins
+
+<img src="education-plan/Module_1/imgs/github-copilot-vscode-plugin.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Copilot for CLI
+
+<img src="education-plan/Module_1/imgs/copilot-cli-integration.png" alt="" style="width: 800px; object-fit: fill">
+
+
+https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-the-cli
+</div>
+
+<aside class="notes"><p>TODO: add prompt examples:</p>
+<ul>
+<li>gh copilot explain &quot;how to list all files in directory&quot;</li>
+<li>gh copilot explain &quot;how to revert last git commit, but keep changes&quot;</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Copilot Alternatives
+
+- https://codeium.com
+- https://www.tabnine.com
+- integration with local LLMs
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Code review tools
+
+<img src="education-plan/Module_1/imgs/code-rabbit-logo.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+[The Role of AI in Modern Code Review](https://elekscloud.sharepoint.com/sites/GenAI/SitePages/AI-Code-Review.aspx)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### CodeRabbit
+
+<img src="education-plan/Module_1/imgs/coderabbit-codereview-example.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+[Code review example](https://github.com/dosandk/online-store/pull/6)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Local LLM models for autocompletion. 
+
+<split left="2" right="2" gap="1" style="display: flex; justify-content: center; align-items: center; border: 0;">
+
+<img src="education-plan/Module_1/imgs/continue-logo 2.png" alt="" style="width: 100px; object-fit: fill">
+
+[Continue](https://www.continue.dev)
+
+</split>
+
+
+<div class="block">
+
+<img src="education-plan/Module_1/imgs/continue-any-models.png" alt="" style="width: 600px; object-fit: fill">
+
+<img src="education-plan/Module_1/imgs/continue-any-context.png" alt="" style="width: 600px; object-fit: fill">
+
+<img src="education-plan/Module_1/imgs/continue-any-components.png" alt="" style="width: 600px; object-fit: fill">
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Continue VSCode plugin
+
+<img src="education-plan/Module_1/imgs/continue-vscode-plugin.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor
+
+<img src="education-plan/Module_1/imgs/cursor-composer-preview.png" alt="" style="width: 1100px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>cmd + I - open composer
+cmd + shift + I - open composer to fullscreen</p>
+<p>Please generate todo web application using pure JavaScript without any frameworks, please follow best coding practices like SOLID, DRY, and KISS. The application should be nice and attractive, so please use Bootstrap 5 for styling.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor settings
+
+<img src="education-plan/Module_1/imgs/cursor-settings.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ITerm2 integration with OpenAI
+
+<img src="education-plan/Module_1/imgs/iterm2-ai-integration.png" alt="" style="width: 700px; object-fit: fill">
+
+
+[Link](https://iterm2.com/ai-plugin.html)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ITerm2 integration with OpenAI
+
+<div class="block">
+
+<img src="education-plan/Module_1/imgs/iterm2-ai-config-2.png" alt="" style="width: 610px; object-fit: fill">
+
+<img src="education-plan/Module_1/imgs/iterm2-ai-prompt-example.png" alt="" style="width: 500px; object-fit: fill">
+
+
+</div>
+</div>
+
+<aside class="notes"><p>prompt:
+how to find all “package.json” files under the current directory and rename them to “package-old.json”</p>
+<p>chow to run npm command “npm install” for all directories under the current if package.json file located inside the nested directory</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### IDEs alternatives
+
+ChatGPT + Vim
+
+<img src="education-plan/Module_1/imgs/neovim-logo.png" alt="" style="width: 400px; object-fit: fill">
+
+<img src="education-plan/Module_1/imgs/openai-logo.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ChatGPT + Vim
+
+<img src="education-plan/Module_1/imgs/gpt-vim-integration.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Local knowledge base.
+
+<img src="education-plan/Module_1/imgs/obsidian-logo.png" alt="" style="width: 100px; object-fit: fill">
+
+[Obsidian](https://obsidian.md/)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Obsidian
+
+<img src="education-plan/Module_1/imgs/obsidian-interface.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### [Alfred](https://www.alfredapp.com/)
+
+<img src="education-plan/Module_1/imgs/alfred-gallery-preview.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Alfred Workflows
+
+<img src="education-plan/Module_1/imgs/alfred-workflows.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### QA session
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
