@@ -181,16 +181,6 @@ This process of cataloging pieces of a textual sequence is called **tokenizatio
 </aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Practice time
-
-<img src="education-plan/Module_2/imgs/jupyter-logo.png" alt="" style="width: 500px; object-fit: fill">
-</div>
-
-<aside class="notes"><p>Link: <a href="http://localhost:8888/notebooks/examples/tokenization-embeddings.ipynb#Chunks-tokenezation">http://localhost:8888/notebooks/examples/tokenization-embeddings.ipynb#Chunks-tokenezation</a>
-Show the process of text tokenization</p>
-</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
 ### What’s the difference between tokens and characters?
 
 > According to the ChatGPT LLM tokenizer, some general rules of thumb for defining tokens are that one token generally corresponds to ~4 characters of text for common English text, translating to roughly ¾ of a word (so 100 tokens ~= 75 words).
@@ -204,21 +194,22 @@ Show the process of text tokenization</p>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### Practice time
+
+<img src="education-plan/Module_2/imgs/jupyter-logo.png" alt="" style="width: 500px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>Link: <a href="http://localhost:8888/notebooks/examples/tokenization-embeddings.ipynb#Chunks-tokenezation">http://localhost:8888/notebooks/examples/tokenization-embeddings.ipynb#Chunks-tokenezation</a>
+Show the process of text tokenization</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### What is Embedding?
 
 Embedding is a high-dimensional (768, 1536, etc) representation of data that captures the semantic meaning, relationships, and contextual information of the original input
 
 <img src="education-plan/Module_2/assets/Embeddings_1.png" alt="" style="object-fit: scale-down">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Practice time
-
-<img src="education-plan/Module_2/imgs/jupyter-logo.png" alt="" style="width: 500px; object-fit: fill">
-</div>
-
-<aside class="notes"><p>Show the process of text embedding</p>
-</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### What is high--dimension space?
@@ -264,7 +255,7 @@ A common way to define how 2 vectors are similar is to calculate a `cosine simil
 <img src="education-plan/Module_2/imgs/jupyter-logo.png" alt="" style="width: 500px; object-fit: fill">
 </div>
 
-<aside class="notes"><p>Show the process of text embedding</p>
+<aside class="notes"><p>Link: <a href="http://localhost:8888/notebooks/examples/tokenization-embeddings.ipynb">http://localhost:8888/notebooks/examples/tokenization-embeddings.ipynb</a></p>
 </aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -344,31 +335,17 @@ The **decoder** is responsible for generating output sequences, such as translat
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Transformers Block Part 3
-
-<img src="education-plan/Module_2/diagrams/transformer-architecture-3.png" alt="" style="object-fit: scale-down">
-
-
-<div class="block">
-
-<!-- .element: style="font-size: 1.5rem" -->
-
-- The **encoder** reads the input sequence (e.g., a sentence in English) and outputs context-rich representations for each input token.
-- The **decoder** takes these encoder outputs and, along with its own self-attention mechanism, generates the output sequence (e.g., a translated sentence in French) step by step. It uses the encoded input sequence to inform its generation process.
-
-</div>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Attention Mechanism
+### Attention Mechanism 
 
 **Attention Mechanism**: The attention mechanism helps the model understand the context by assigning attention weights to each token in the sequence relative to others.
 
-[Attention Is All You Need](https://arxiv.org/pdf/1706.03762)
+[Attention Is All You Need 2017](https://arxiv.org/pdf/1706.03762)
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Attention Mechanism
+
+The main goal is to capture contextual information and relationships between words.
 
 <img src="education-plan/Module_2/assets/Attention_mechanism.png" alt="" style="width: 1000px; object-fit: fill">
 
@@ -379,6 +356,8 @@ The **decoder** is responsible for generating output sequences, such as translat
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Next word prediction
+
+Feed-forward neural network or MLP (Multilayer Perceptron) 
 
 Programmin is one ... 
 
@@ -398,6 +377,100 @@ Programmin is one ...
 | step       | < 0.01%           |
 | such       | < 0.01%           |
 | big        | < 0.01%           |
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Transformers Block Part 3
+
+<img src="education-plan/Module_2/diagrams/transformer-architecture-3.png" alt="" style="object-fit: scale-down">
+
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem" -->
+
+- The **encoder** reads the input sequence (e.g., a sentence in English) and outputs context-rich representations for each input token.
+- The **decoder** takes these encoder outputs and, along with its own self-attention mechanism, generates the output sequence (e.g., a translated sentence in French) step by step. It uses the encoded input sequence to inform its generation process.
+- The **encoder-decoder** attention layer helps the decoder focus on relevant parts of the input sentence.
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Encoder-only Models
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem; text-align: left" -->
+
+The transformer encoder architecture is used for tasks like text classification, where the model must classify a piece of text into one of several predefined categories, such as sentiment analysis, topic classification, or spam detection.
+
+ **Examples:** BERT, RoBERTa
+
+**What they can do:**
+
+- **Text classification:** Spam detection, sentiment analysis _(Input: a sentence, Output: a label like "positive" or "negative")_
+- **Named Entity Recognition (NER):** Extract entities like names, dates, locations from text.
+- **Question answering (extractive):** Given a context and a question, extract the correct answer from the context.
+
+**What they cannot do:**
+
+- **Generate text:** They cannot generate new sequences of text since they are designed to understand and encode existing text.  
+    _(Example: They can classify a sentence but cannot write a continuation of it.)_
+- **Translate text:** Since there's no decoder to generate output in another language.
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Decoder-only Models
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem; text-align: left" -->
+
+The transformer decoder architecture is used for tasks like language generation, where the model must generate a sequence of words based on an input prompt or context.
+
+**Examples:** GPT (Generative Pre-trained Transformer), GPT-2, GPT-3, GPT-4
+
+**What they can do:** 
+
+- **Text generation:** Generate coherent text given a prompt _(Input: a prompt like "Once upon a time", Output: a continuation like "there was a brave knight who...")_
+- **Summarization:** Summarize a given text by generating a shorter version _(Input: a paragraph, Output: a shorter summary)_
+- **Dialogue systems (chatbots):** Engage in conversations by generating appropriate responses.
+
+**What they cannot do:**
+
+- **Directly encode input for complex tasks like classification:** Decoder-only models don't inherently "understand" the entire input at once like encoder-only models. They work better when they need to generate something rather than analyze.
+- **Translate with high accuracy (compared to Encoder-Decoder models):** While they can translate text (e.g., GPT models can), they aren't as specialized for it as encoder-decoder models.
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Encoder-Decoder Models
+
+<div class="block">
+
+<!-- .element: style="font-size: 1.5rem; text-align: left" -->
+
+The transformer encoder-decoder architecture is used for tasks like language translation, where the model must take in a sentence in one language and output a sentence in another language.
+
+**Examples:** T5 (Text-To-Text Transfer Transformer), BART, Seq2Seq models with Attention
+
+**What they can do:**
+
+- **Machine Translation:** Given a sentence in one language, generate its translation in another language _(Input: "How are you?" in English, Output: "Як справи?" in Ukrainian)_
+- **Summarization:** Generate a summary of a given text _(Input: a long article, Output: a short summary)_
+- **Text generation:** Just like decoder-only models, they can generate text.
+- **Question answering (generative):** Generate answers based on given context and question.
+
+**What they cannot do:**
+
+- **Be as lightweight as encoder-only or decoder-only models:** Since they have both an encoder and a decoder, they require more memory and compute power.
+- **Generate very long sequences efficiently:** For extremely long text generation, decoder-only models (like GPT) tend to perform better.
 
 </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -437,20 +510,20 @@ The whole process of LLM word prediction looks like this:
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Sum up 
+### Sum up
 
 <div class="block">
 
 <!-- .element: style="font-size: 1.5rem" -->
 
 - **Tokenization**: The input text is split into smaller units (tokens).
-- **Embeddings**: Each token is first mapped  to an embedding vector. The initial token embeddings are passed through multiple layers of the network to create **contextual embeddings**
-- **Encoding**: The input is encoded, and relationships between tokens are processed via the **attention mechanism**.
-- **Decoding**: The model generates text sequentially, predicting one token at a time. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Embeddings**: Each token is first mapped  to an embedding vector. The initial token embeddings are passed through multiple layers of the network to create **contextual embeddings**
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->**Encoding**: The input is encoded, and relationships between tokens are processed via the **attention mechanism**.
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->**Decoding**: The model generates text sequentially, predicting one token at a time. 
 	- For each token, the model outputs a probability distribution over the vocabulary
 	- **Token Selection**: Various sampling techniques (e.g., greedy search, beam search, top-k sampling, top-p sampling) are applied to choose the next token.
-- **Sequence Generation**: The selected token is added to the sequence, and the process repeats until the desired text length is achieved.
-- **Post-processing**: Optional steps for refining the output, such as grammar correction and punctuation adjustment.
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->**Sequence Generation**: The selected token is added to the sequence, and the process repeats until the desired text length is achieved.
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->**Post-processing**: Optional steps for refining the output, such as grammar correction and punctuation adjustment.
 
 </div>
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -466,7 +539,7 @@ The whole process of LLM word prediction looks like this:
 
 The "size" of a Large Language Model (LLM) typically refers to the number of **parameters** it has.
 
-<img src="education-plan/Module_2/diagrams/llm-sizes.excalidraw.svg" alt="" style="width: .png | 800px; object-fit: fill">
+<img src="education-plan/Module_2/diagrams/llm-sizes.excalidraw.svg" alt="" style="width: .png | 500px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -611,6 +684,10 @@ Prompt: &quot;Please give me the recipe for curry chicken&quot;</p>
 </aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+TODO: add Hallucinations example
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### LLMs Hallucinations
 
 - LLMs are just trying to guess the next word with limited or no understanding of what they’re "talking about"
@@ -677,7 +754,7 @@ https://huggingface.co
 
 ### Hugging Face
 
-<img src="education-plan/Module_1/imgs/hugging-face-llama-card.png" alt="" style="object-fit: scale-down">
+<img src="education-plan/Module_1/imgs/hugging-face-llama-card.png" alt="" style="width: 1000px; object-fit: fill">
 
 
 https://huggingface.co/meta-llama/Llama-3.2-1B
@@ -689,7 +766,7 @@ https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct
 
 https://huggingface.co/
 
-<img src="education-plan/Module_2/assets/Hugging_face.png" alt="" style="object-fit: scale-down">
+<img src="education-plan/Module_2/assets/Hugging_face.png" alt="" style="width: 900px; object-fit: fill">
 
 
 > "The platform where the machine learning community collaborates on models, datasets, and applications"
@@ -698,7 +775,7 @@ https://huggingface.co/
 
 ### Open AI models cost
 
-<img src="education-plan/Module_1/imgs/langsmith-preview.png" alt="" style="object-fit: scale-down">
+<img src="education-plan/Module_1/imgs/langsmith-preview.png" alt="" style="width: 1000px; object-fit: fill">
 </div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
