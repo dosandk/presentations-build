@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Introduction to the AI and LLMs concepts</title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Workshop: LLMs for developers: usage and integration practices. Part 2
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### LLMs like accelerators of the development process
+
+<img src="ELEKS/education-plan/Module_1/imgs/llms-accelerators.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Table of Contents
+
+<split gap="3">
+
+<div class="block">
+
+1. **Code Completion**
+2. **Integrated Development Environments (IDEs)**
+3. **MCP (Model Context Protocol)**
+4. **Terminal Productivity**
+5. **Knowledge Base**
+6. **Code Review**
+7. **Research & Investigation**
+8. **Process Automation**
+9. **Q&A**
+
+</div>
+
+
+
+</split>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Code completion
+
+<img src="ELEKS/education-plan/Module_1/imgs/code-completion-bg-1.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Github Copilot
+
+<img src="ELEKS/education-plan/Module_1/imgs/github-copilot-logo.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### GitHub Copilot settings
+
+<img src="ELEKS/education-plan/Module_1/imgs/github-copilot-settings-part1.png" alt="" style="width: 800px; object-fit: fill">
+
+
+[Your Github Copilot](https://github.com/settings/copilot/features)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### GitHub Copilot supported models
+
+<img src="ELEKS/education-plan/Module_1/imgs/github-copilot-supported-models.png" alt="" style="width: 650px; height: 600px; object-fit: fill">
+
+
+[Supported AI models in Copilot](https://docs.github.com/en/copilot/using-github-copilot/using-claude-sonnet-in-github-copilot)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### GitHub Copilot Alternatives
+
+- [Codeium](https://codeium.com)
+- [Tabnine](https://www.tabnine.com)
+- [Amazon CodeWhisperer](https://aws.amazon.com/codewhisperer/)
+- [JetBrains AI Assistant](https://www.jetbrains.com/ai/)
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Integrated development environments (IDEs)
+
+<img src="ELEKS/education-plan/Module_1/imgs/ide-bg.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Visual Studio Code
+
+**Visual Studio Code** (commonly called **VS Code**) is a free, open-source code editor developed by Microsoft.
+
+
+<img src="ELEKS/education-plan/Module_1/imgs/copilot-in-vscode.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Github Copilot VSCode plugins
+
+<img src="ELEKS/education-plan/Module_1/imgs/github-copilot-vscode-plugin.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Local LLM models for autocompletion
+
+<split left="2" right="2" gap="1" style="display: flex; justify-content: center; align-items: center; border: 0;">
+
+<img src="ELEKS/education-plan/Module_1/imgs/continue-logo 2.png" alt="" style="width: 100px; object-fit: fill">
+
+[Continue](https://www.continue.dev)
+
+</split>
+
+<div class="block">
+
+<img src="ELEKS/education-plan/Module_1/imgs/continue-any-models.png" alt="" style="width: 600px; object-fit: fill">
+
+<img src="ELEKS/education-plan/Module_1/imgs/continue-any-context.png" alt="" style="width: 600px; object-fit: fill">
+
+<img src="ELEKS/education-plan/Module_1/imgs/continue-any-components.png" alt="" style="width: 600px; object-fit: fill">
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Continue VSCode plugin
+
+<img src="ELEKS/education-plan/Module_1/imgs/continue-vscode-plugin.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Cursor
+
+<img src="ELEKS/education-plan/Module_1/imgs/cursor-composer-preview.png" alt="" style="width: 1100px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>cmd + I - open composer
+cmd + shift + I - open composer to fullscreen</p>
+<p>Please generate todo web application using pure JavaScript without any frameworks, please follow best coding practices like SOLID, DRY, and KISS. The application should be nice and attractive, so please use Bootstrap 5 for styling.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor settings
+
+<img src="ELEKS/education-plan/Module_1/imgs/cursor-settings.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor Models settings
+
+<img src="ELEKS/education-plan/Module_1/imgs/coursor-settings-2.png" alt="" style="width: 800px; height: 600px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Windsurf. 
+
+Tab Tab Tab...Ship
+
+<img src="ELEKS/education-plan/Module_1/imgs/windsurf-preview.png" alt="" style="width: 800px; height: 550px; object-fit: fill">
+
+
+https://windsurf.com/download
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Neovim
+
+<img src="ELEKS/education-plan/Module_1/imgs/neovim-logo.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### ChatGPT + Vim
+
+<img src="ELEKS/education-plan/Module_1/imgs/openai-logo.png" alt="" style="width: 400px; object-fit: fill">
+
+<img src="ELEKS/education-plan/Module_1/imgs/gpt-vim-integration.png" alt="" style="width: 900px; height: 550px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### MCP (Model Context Protocol)
+
+Model Context Protocol (MCP) is an open protocol that enables LLMs to access external tools and data sources.
+
+<img src="ELEKS/education-plan/Module_1/imgs/mcp-claude.png" alt="" style="width: 800px; object-fit: fill">
+
+
+https://www.anthropic.com/news/model-context-protocol
+https://github.com/slowmist/MCP-Security-Checklist
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### MCP market-places
+
+- https://smithery.ai/
+- https://glama.ai/mcp
+- https://cursor.directory/
+- https://www.lmsystems.ai/
+- https://mcp.so/
+- https://www.pulsemcp.com/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor MCP library
+
+<img src="ELEKS/education-plan/Module_1/imgs/cursor-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://cursor.directory/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### VSCode MCP library
+
+<img src="ELEKS/education-plan/Module_1/imgs/visual-studio-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://code.visualstudio.com/mcp
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Figma MCP
+
+<img src="ELEKS/education-plan/Module_1/imgs/figma-mcp.png" alt="" style="width: 800px; object-fit: fill">
+
+
+https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful MCP servers
+
+**Database & Storage:**
+- [MongoDB MCP](https://github.com/mongodb-js/mongodb-mcp-server) - Database operations
+- [Firebase MCP](https://firebase.google.com/docs/cli/mcp-server) - Firebase integration
+- [PostgreSQL MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/postgres) - SQL database access
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful MCP servers
+
+
+**Development Tools:**
+- [Playwright MCP](https://github.com/microsoft/playwright-mcp) - Browser automation
+- [context7 MCP](https://github.com/upstash/context7) - Context management
+- [Git MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/git) - Version control
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful MCP servers
+
+**Productivity:**
+- [Slack MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/slack) - Team communication
+- [Google Drive MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive) - File management
+- [Notion MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/notion) - Knowledge base
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful MCP servers
+
+**Official Lists:**
+- https://github.com/modelcontextprotocol/servers
+- [ARCHIVED](https://github.com/modelcontextprotocol/servers-archived)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### OpenAI
+
+<img src="ELEKS/education-plan/Module_1/imgs/openai-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://platform.openai.com/playground/prompts?models=gpt-4o-mini
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal productivity
+
+<img src="ELEKS/education-plan/Module_1/imgs/terminal-preview.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Warp
+
+<img src="ELEKS/education-plan/Module_1/imgs/warp-preview.png" alt="" style="width: 800px; object-fit: fill">
+
+
+http://warp.dev/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### GitHub Copilot for CLI
+
+<img src="ELEKS/education-plan/Module_1/imgs/copilot-cli-integration.png" alt="" style="width: 800px; object-fit: fill">
+
+
+https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-the-cli
+</div>
+
+<aside class="notes"><p>TODO: add prompt examples:</p>
+<ul>
+<li>gh copilot explain &quot;how to list all files in directory&quot;</li>
+<li>gh copilot explain &quot;how to revert last git commit, but keep changes&quot;</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### ITerm2 integration with OpenAI
+
+<img src="ELEKS/education-plan/Module_1/imgs/iterm2-ai-integration.png" alt="" style="width: 700px; object-fit: fill">
+
+
+[Link](https://iterm2.com/ai-plugin.html)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### ITerm2 integration with OpenAI
+
+<div class="block">
+
+<img src="ELEKS/education-plan/Module_1/imgs/iterm2-ai-config-2.png" alt="" style="width: 610px; object-fit: fill">
+
+<img src="ELEKS/education-plan/Module_1/imgs/iterm2-ai-prompt-example.png" alt="" style="width: 500px; object-fit: fill">
+
+
+</div>
+</div>
+
+<aside class="notes"><p>prompt:
+how to find all “package.json” files under the current directory and rename them to “package-old.json”</p>
+<p>chow to run npm command “npm install” for all directories under the current if package.json file located inside the nested directory</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Knowledge base
+
+<img src="ELEKS/education-plan/Module_1/imgs/knowledge-base-bg.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Local knowledge base with Obsidian
+
+**Obsidian** is a powerful, cross-platform app for creating and organizing notes using Markdown (a lightweight text format).
+
+Obsidian features:
+
+- Links
+- Graph
+- Canvas
+- Plugins
+- AI integrations
+
+<img src="ELEKS/education-plan/Module_1/imgs/obsidian-logo.png" alt="" style="width: 100px; object-fit: fill">
+
+[Obsidian](https://obsidian.md)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Obsidian
+
+<img src="ELEKS/education-plan/Module_1/imgs/obsidian-interface.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Obsidian Graph View
+
+<img src="ELEKS/education-plan/Module_1/imgs/obsidian-graph-view.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Code Review
+
+<img src="ELEKS/education-plan/Module_1/imgs/code-review-bg.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### CodeRabbit
+
+**CodeRabbit** is an AI-powered code review platform designed to integrate directly with your Git workflow (GitHub, GitLab, Bitbucket, Azure DevOps)
+
+<img src="ELEKS/education-plan/Module_1/imgs/code-rabbit-logo.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+[The Role of AI in Modern Code Review](https://elekscloud.sharepoint.com/sites/GenAI/SitePages/AI-Code-Review.aspx)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### CodeRabbit
+
+<img src="ELEKS/education-plan/Module_1/imgs/coderabbit-codereview-example.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+[Code review example](https://github.com/dosandk/online-store/pull/6)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### GitHub Copilot Code Review
+
+<img src="ELEKS/education-plan/Module_1/imgs/github-copilot-review.png" alt="" style="width: 800px; object-fit: fill">
+
+
+https://github.com/bootcamp-places/online-editor-tasks/pull/62
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### GitHub Copilot Code Review
+
+<img src="ELEKS/education-plan/Module_1/imgs/github-copilot-code-review-in-code.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Research and investigation
+
+<img src="ELEKS/education-plan/Module_1/imgs/research-investigation-cover.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Perplexity
+
+**Perplexity** is a free AI-powered answer engine that provides accurate, trusted, and real-time answers to any question.
+
+<img src="ELEKS/education-plan/Module_1/imgs/perplexity-preview.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://www.perplexity.ai/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### NotebookLM
+
+**NotebookLM** is Google’s AI‑powered research and note‑taking assistant or Personal research companion
+
+<img src="ELEKS/education-plan/Module_1/imgs/notebooklm-preview.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://notebooklm.google.com/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### NotebookLM
+
+<img src="ELEKS/education-plan/Module_1/imgs/notebook-lm-preview-2.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+https://notebooklm.google.com/notebook/dea0c698-871b-48af-a8ef-0a49700c94c3
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Google Colab
+
+Colab ("Colaboratory") is a hosted Jupyter Notebook service that requires no setup to use and provides free access to computing resources, including GPUs and TPUs
+
+<img src="ELEKS/education-plan/Module_1/imgs/google-colab-preview.png" alt="" style="width: 750px; height: 450px; object-fit: fill">
+
+
+https://colab.google/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Google Colab: BertViz Interactive Tutorial 
+
+[DEMO](https://colab.research.google.com/drive/1hXIQ77A4TYS4y3UthWF-Ci7V7vVUoxmQ?usp=sharing#scrollTo=-GlgO5WBOYeF)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Huggingface Google Colab library
+
+<img src="ELEKS/education-plan/Module_1/imgs/huggingface-google-colab-lib.png" alt="" style="width: 900px; height: 600px; object-fit: fill">
+
+
+https://huggingface.co/docs/transformers/en/notebooks
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Process automation
+
+<img src="ELEKS/education-plan/Module_1/imgs/process-automation-bg.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flowise. Build AI Agents Visually
+
+<img src="ELEKS/education-plan/Module_1/imgs/flowise-preview.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://flowiseai.com/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Flowise. Local Server
+
+<img src="ELEKS/education-plan/Module_1/imgs/flowise-local-preview.png" alt="" style="width: 1100px; object-fit: fill">
+
+
+http://localhost:3000/chatflows
+</div>
+
+<aside class="notes"><p>Commands to run:</p>
+<p>z Flowise
+pnpm start</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### N8N. Flexible AI workflow automation
+
+<img src="ELEKS/education-plan/Module_1/imgs/n8n-preview.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+- https://n8n.io/
+- https://app.n8n.cloud/dashboard
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### [Alfred](https://www.alfredapp.com/)
+
+<img src="ELEKS/education-plan/Module_1/imgs/alfred-gallery-preview.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Alfred Workflows
+
+<img src="ELEKS/education-plan/Module_1/imgs/alfred-workflows.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Q&A Session
+
+<img src="ELEKS/education-plan/Module_1/imgs/q&a-bg2.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
