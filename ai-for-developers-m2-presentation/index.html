@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+body .reveal table  {
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+/* <aside class="notes"><p>keep fragment layout (no title jump); strip chrome while hidden */
+.reveal .slides section .fragment:not(.visible) {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+</style></p>
+<h2 id="module-2-master-your-ide">Module #2: Master your IDE</h2>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Table of Contents
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Cursor core features — _the road to Level 5_
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Beyond the IDE — _Cursor ecosystem_
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Q&A
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cursor Core Features
+
+<img src="master-classes/ai-dev-setup/02-module/imgs/cursor-intro.png" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## From 0️⃣ to Level 5 in one module.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Where you talk to the Agent — IDE, Agents Window, CLI</li>
+<li class="fragment" data-fragment-index="2">What the Agent can do — built-in tools &amp; sandbox</li>
+<li class="fragment" data-fragment-index="3">How to direct it — prompting, modes, models</li>
+<li class="fragment" data-fragment-index="4">How it understands your code — indexing</li>
+</ul>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📍 Starting point — Level 1
+
+|      Level       | What it looks like                      |
+| :-------------- | --------------------------------------- |
+| **1 — No usage** | Pure manual coding, AI ignored          |
+|  2 — Awareness   | Tried the tool a few times              |
+|  3 — Basic use   | Simple isolated tasks, generic prompts  |
+|  4 — Task-level  | Regular use for small role tasks        |
+|  5 — Structured  | Multi-file context, `@` refs, manual QA |
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ⬇️ Install Cursor
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Download &amp; sign in to Cursor</li>
+<li class="fragment" data-fragment-index="2">Say <em>"hello"</em> in the chat (<code>Cmd+I</code>)</li>
+</ul>
+
+> **🏆 Achievement: Level 1 passed. Congratulations!!!**
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="3" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📶 Level 2 unlocked — Awareness
+
+You now: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="2">Have Cursor installed and signed in</li>
+<li class="fragment" data-fragment-index="3">Have tried the chat — a few <em>"hellos"</em> count</li>
+</ul>
+
+> 🎉 Cursor is in — a few _"hellos"_ count. You're on the board! 🚀
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐴 Whoa, whoa — _not so fast_
+
+<div class="block">
+
+A few _"hellos"_ ≠ Level 5. You unlocked **Awareness**, not a black belt.
+
+First — the ways you talk to your Agent.
+</div>
+
+
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 🛑 Put the cowboy hat down. We walk before we gallop.
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🎙️ Where you talk to the Agent
+
+Three **surfaces**, one Agent underneath.
+
+|                | IDE                      | Agents Window                      | CLI                          |
+| -------------- | ------------------------ | ---------------------------------- | ---------------------------- |
+| **What it is** | Code editor + Agent chat | Agent-first workspace _(Cursor 3)_ | Terminal agent — `agent`     |
+| **Best for**   | Hands-on coding + review | Orchestrating agents               | Automation, SSH, scripts, CI |
+| **Metaphor**   | _edit files_             | _manage runs_                      | _talk to agent in shell_     |
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+notes:
+
+Це один і той самий агент — різниця лише в інтерфейсі та сценарії використання. Важливо не плутати: surfaces — це «де живе агент», а режими Ask/Plan/Agent/Debug (розберемо далі) доступні всередині кожного surface. Далі — по слайду на кожен.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🖥️ Surface 1: IDE (classic editor)
+
+The familiar VS Code experience — Agent in the sidebar.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Full editor: splits, extensions, debugger, git UI</li>
+<li class="fragment" data-fragment-index="2">Tight loop: edit ↔ chat ↔ accept/reject diffs in place</li>
+<li class="fragment" data-fragment-index="3">Default Cursor experience + full ecosystem of VS Code extensions</li>
+</ul>
+
+> ✅ Hands-on coding, visual review, co-editing </br>
+> ⚠️ Weak at parallel / cloud / multi-repo orchestration
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Основна проблема цього surface: легко залишатися «file-first», коли задача насправді «керувати багатьма агентами»
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🪟 Surface 2: Agents Window
+
+Agent-centric UI — local / cloud / SSH agents in one place.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Multi-workspace: agents across repos</li>
+<li class="fragment" data-fragment-index="2">Parallel &amp; cloud agents; handoff local ↔ cloud; worktrees</li>
+<li class="fragment" data-fragment-index="3">Diffs, commits, PR flow — without leaving the window</li>
+</ul>
+
+> ✅ Supervise many runs: prompt → review → merge </br>
+> ⚠️ Not a full IDE; overkill for "fix this one file"
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Це вища абстракція роботи: агенти пишуть більшість коду, розробник спостерігає.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ⌨️ Surface 3: CLI — `agent`
+
+The same agent brain in your terminal.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Interactive <code>agent "…"</code> / headless <code>agent -p "…"</code></li>
+<li class="fragment" data-fragment-index="2">Same modes: <code>Shift+Tab</code>, <code>/plan</code>, <code>/ask</code>, <code>/debug</code></li>
+<li class="fragment" data-fragment-index="3"><code>/shell</code> — run quick commands inside the session</li>
+<li class="fragment" data-fragment-index="4"><code>&amp;</code> prefix → Cloud Agent; <code>/open</code> → GUI review</li>
+</ul>
+
+> ✅ Scriptable: SSH, tmux, CI, scripts </br>
+> ⚠️ Text-first — not suited for design / UI work
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🧭 How to choose
+
+| Your situation                        | Surface           |
+| ------------------------------------- | ----------------- |
+| Coding + reviewing in the editor      | **IDE**           |
+| Many agents / cloud / multi-repo      | **Agents Window** |
+| SSH / scripts / CI / stay in terminal | **CLI** (`agent`) |
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 💡 Tip: Start in the IDE. Switch to other modes later if needed.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
+
+notes:
+
+Agents Window і CLI стають потрібними, коли з'являються паралельність і автоматизація (рівні 6+).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📶 Level 3 unlocked — Basic individual use
+
+You now: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="2">Chat for questions &amp; snippets</li>
+<li class="fragment" data-fragment-index="3">Paste small bits into one file — no project context</li>
+</ul>
+
+> 🎉 Chat beats Google for quick questions — Level 3 unlocked! 🚀
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐴 Still walking — lots of road left
+
+<div class="block">
+
+Chat beats Google. Cool. The Agent still doesn't _touch_ your code.
+
+Time to plug it in.
+</div>
+
+
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 🔌 From chat-about-code → Agent-in-the-codebase.
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🧰 Built-in tools
+
+What the Agent can do **on its own**:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Terminal</strong> — run shell commands, monitor output</li>
+<li class="fragment" data-fragment-index="2"><strong>Search</strong> — semantic + Instant Grep</li>
+<li class="fragment" data-fragment-index="3"><strong>Browser</strong> — open, click, screenshot, read console</li>
+<li class="fragment" data-fragment-index="4"><strong>Canvases</strong> — interactive artifacts next to chat</li>
+<li class="fragment" data-fragment-index="5"><strong>Worktrees</strong> — isolated git checkouts per task</li>
+</ul>
+
+> _No limit on tool calls per task._
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 💻 Tools: Terminal
+
+Agent runs shell commands and reads the output (tests, builds, git).
+
+Shell commands run through a **sandbox** by default — controlled by **run mode**:
+
+| Mode                        | Behavior                             |
+| --------------------------- | ------------------------------------ |
+| **Auto-review** _(default)_ | allowlist → sandbox → LLM classifier |
+| **Allowlist**               | only pre-approved commands auto-run  |
+| **Run Everything**          | no sandbox, no prompts — full risk   |
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 💡 Tip: Stay on **Auto-review**. Let the Agent run tests, builds, git — approve when it asks.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
+
+notes:
+
+Sandbox стосується **лише shell / terminal** — не file edits, browser чи MCP.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🛡️ Tools: Terminal — sandbox limits
+
+What the sandbox blocks by default:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Network</strong> — blocked (incl. private ranges &amp; cloud metadata)</li>
+<li class="fragment" data-fragment-index="2"><strong>Protected paths</strong> — <code>.git/config</code>, <code>.ssh</code>, <code>.cursorignore</code>, hooks</li>
+<li class="fragment" data-fragment-index="3">Writes outside the workspace (<code>/tmp</code> allowed)</li>
+</ul>
+
+> 💡 Tip: Configure via `.cursor/sandbox.json` — extra paths, network allowlist. Agent **asks for approval** when it needs more.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔎 Tools: Search
+
+Agent combines search tools as needed:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Semantic</strong> — "where do we handle authentication?"</li>
+<li class="fragment" data-fragment-index="2"><strong>Instant Grep</strong> — exact symbols, regex; faster than ripgrep</li>
+<li class="fragment" data-fragment-index="3"><strong>Explore subagent</strong> — parallel searches in a separate context; returns a summary</li>
+</ul>
+
+> 💡 Tip: _"Use a subagent to find where Stripe webhooks are handled"_ — you get paths, not 20 files in chat.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Семантичний пошук — поверх індексу. Instant Grep — exact match / regex. Часто агент використовує обидва в одній задачі. Explore subagent — швидша модель, окреме вікно; багато паралельних запитів без роздування основного чату. Можна попросити явно: "use a subagent to find…".
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌐 Tools: Browser
+
+A browser pane **inside Cursor**, fully driven by the Agent.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Navigates, clicks, types, scrolls</li>
+<li class="fragment" data-fragment-index="2">Takes screenshots to verify visual changes</li>
+<li class="fragment" data-fragment-index="3">Reads console errors, logs, and HTTP</li>
+<li class="fragment" data-fragment-index="4"><code>/use-browser</code> — tell the Agent to verify in a real browser</li>
+<li class="fragment" data-fragment-index="5"><code>@Browser</code> / <strong>Design Mode</strong> — attach context or send a selected element</li>
+</ul>
+
+> 💡 Tip: The Agent can test its own UI changes.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
+
+notes:
+
+Сценарій: агент змінив фронтенд → відкрив сторінку → клікнув → скриншот/консоль → виправив. `/use-browser` — змушує перевіряти UI в браузері, а не з коду.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📊 Tools: Canvases
+
+Live React apps for interactive artifacts next to chat — dashboards, tables, diagrams.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><code>/canvas</code> — create one (or just ask)</li>
+<li class="fragment" data-fragment-index="2"><strong>Publish</strong> — share a live link with the team</li>
+</ul>
+
+> 💡 Tip: _"Show failing tests as a sortable table using /canvas"_ — filter beats a wall of logs.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="3" -->
+
+notes:
+
+Технічно це live React apps (`.canvas.tsx`, `cursor/canvas` SDK): reopen, edit, iterate. Агент може сам відкрити canvas, коли візуал кращий за текст. Share / Publish — платні плани; privacy mode має дозволяти storage.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌳 Tools: Worktrees
+
+Each task gets its own **git checkout**.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>/worktree</strong> — isolate one task</li>
+<li class="fragment" data-fragment-index="2"><strong>/best-of-n</strong> — same task, multiple models in parallel</li>
+<li class="fragment" data-fragment-index="3"><strong>/apply-worktree</strong> — bring results back</li>
+</ul>
+
+> 💡 Tip: Best in the **Agents Window** — supervise parallel runs without leaving that surface.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Основа паралелізації. Найзручніше в Agents Window: бачите кілька runs поруч, без перемикання в IDE. Setup-команди для нового worktree — у `.cursor/worktrees.json`. Місток до Multitask далі.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📎 From code to chat
+
+Fastest paths into the conversation:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Select code → <code>Cmd+L</code> — add selection to chat</li>
+<li class="fragment" data-fragment-index="2">Copy anything → <code>Cmd+V</code> in chat — clipboard as context</li>
+<li class="fragment" data-fragment-index="3"><code>Cmd+K</code> — inline edit right in the file</li>
+<li class="fragment" data-fragment-index="4">Terminal output → <strong>@Terminals</strong></li>
+</ul>
+
+> 💡 Tip: Cmd+V in chat also pastes screenshots — browser errors, Figma, failing UI.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🎚️ Cursor modes
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">🤖 <strong>Agent</strong> <em>(default)</em> — build &amp; execute, all tools</li>
+<li class="fragment" data-fragment-index="2">📋 <strong>Plan</strong> — design before coding</li>
+<li class="fragment" data-fragment-index="3">💬 <strong>Ask</strong> — explore &amp; understand (read-only)</li>
+<li class="fragment" data-fragment-index="4">🐛 <strong>Debug</strong> — hunt hard bugs with runtime logs</li>
+<li class="fragment" data-fragment-index="5">⚡ <strong>Multitask</strong> — parallel agents <em>(via Agents Window)</em></li>
+</ul>
+
+> 💡 Tip: Switch: `Shift+Tab` in the chat input, or the mode picker.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
+
+notes:
+
+Кожен режим — різний рівень автономії AI. Правило: спершу зрозумій, потім сплануй, тоді виконуй. Multitask — не пункт у пікері режимів, а спосіб роботи через Agents Window і worktrees; розберемо окремо.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 💬 Ask mode
+
+**Read-only.** The AI answers and explores the code, but **makes no changes**.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Explains code, architecture, and errors</li>
+<li class="fragment" data-fragment-index="2">Can read git history via a read-only terminal</li>
+<li class="fragment" data-fragment-index="3">The safest mode to start with</li>
+</ul>
+
+> 🎯 **Best for:** answers, not changes — explore before you edit.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📋 Plan mode
+
+**Plan** first, then code.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Explores the codebase and asks clarifying questions</li>
+<li class="fragment" data-fragment-index="2">Generates an editable plan — review before building</li>
+<li class="fragment" data-fragment-index="3">Plans can be saved to the workspace &amp; shared with the team</li>
+</ul>
+
+> 🎯 **Best for:** complex features, many files, unclear requirements.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Cursor сам пропонує Plan mode, коли бачить у промпті ознаки складної задачі. План зберігається в home directory або в workspace ("Save to workspace") — командний артефакт.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🤖 Agent mode
+
+The default and most powerful mode — **runs the task to completion**.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Reads and edits files</li>
+<li class="fragment" data-fragment-index="2">Runs terminal commands</li>
+<li class="fragment" data-fragment-index="3">Searches the codebase and iterates on its own</li>
+</ul>
+
+> 🎯 **Best for:** familiar, well-defined tasks — features, refactoring, tests.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐛 Debug mode
+
+For **hard-to-reproduce** bugs.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Generates multiple root-cause hypotheses</li>
+<li class="fragment" data-fragment-index="2">Instruments the app with runtime logs</li>
+<li class="fragment" data-fragment-index="3">Uses real runtime data — variables, paths, timing</li>
+<li class="fragment" data-fragment-index="4">Fixes the cause, then verifies with you</li>
+</ul>
+
+> 🎯 **Best for:** bugs you can't reproduce from the code alone.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🗺️ Recommended workflow
+
+`Ask` → understood → `Plan` → agreed → `Agent` → done
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="2">Complex task → start with <strong>Plan</strong></li>
+<li class="fragment" data-fragment-index="3">Simple and familiar → go straight to <strong>Agent</strong></li>
+<li class="fragment" data-fragment-index="4">Not sure what the code does → <strong>Ask</strong></li>
+</ul>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ⚡ Multitask — parallel agents
+
+Several agents on the same problem, **without conflicts**.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Agents Window + worktrees — isolated checkouts per agent</li>
+<li class="fragment" data-fragment-index="2"><code>/best-of-n</code> — same task across multiple models</li>
+<li class="fragment" data-fragment-index="3"><strong>Multi-Agent Judging</strong> — Cursor evaluates all runs and recommends the best one, with an explanation</li>
+</ul>
+
+> 💡 Tip: Parallel runs burn tokens fast — use when the approach is unclear, not for a one-file fix.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Після завершення всіх паралельних агентів Cursor сам оцінює результати і коментує, чому обрав саме цей варіант. Цей режим очевидно дорогий
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📶 Level 4 unlocked — Task-level support
+
+You now: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="2">AI daily for small tasks</li>
+<li class="fragment" data-fragment-index="3">Pick the mode for the job — <code>Ask</code> / <code>Plan</code> / <code>Agent</code></li>
+<li class="fragment" data-fragment-index="4">Let the Agent run its own tools</li>
+</ul>
+
+> 🎉 Daily driver, right mode for the job — Task-level, nice work! 🚀
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🏇 A little faster from here
+
+<div class="block">
+
+Daily driver unlocked. Next: more _granular_ context control.
+
+We'll pick up the pace.
+</div>
+
+
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 🏇 Walked enough. Light gallop to Level 5.
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🏷️ Prompting: `@` mentions
+
+Point the Agent at exact context:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>@Files &amp; Folders</strong> — code to work with</li>
+<li class="fragment" data-fragment-index="2"><strong>@Terminals</strong> — terminal output as context</li>
+<li class="fragment" data-fragment-index="3"><strong>@Past Chats</strong> — reference previous conversation(s)</li>
+<li class="fragment" data-fragment-index="4"><strong>@Commit / @Branch</strong> — working-state diff / diff vs main</li>
+<li class="fragment" data-fragment-index="5"><strong>@Browser</strong> / <strong>Images</strong> — live pane, or paste / drag (<code>Cmd+V</code>)</li>
+</ul>
+
+> 📌 **Rule:** narrow, relevant context beats the whole project.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ⚙️ Prompting: `/` commands
+
+`@` adds **context** — `/` triggers an **action**.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>/summarize</strong> — compress a long chat, free context</li>
+<li class="fragment" data-fragment-index="2"><strong>/worktree</strong> — isolate a risky change in its own checkout</li>
+<li class="fragment" data-fragment-index="3"><strong>/use-browser</strong> — verify UI in a real browser</li>
+</ul>
+
+> 💡 Tip: Also, via `/`: create & run **Rules**, **Skills**, **Agents**
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🧠 Choosing a model
+
+One picker (`Cmd+/` to cycle), different jobs.
+
+| Need                          | Pick                                     |
+| ----------------------------- | ---------------------------------------- |
+| Everyday edits, speed & price | **Auto** (Cost / Balance / Intelligence) |
+| Deep reasoning, tricky logic  | a **frontier** model                     |
+| Huge context / many files     | a **large-context** model                |
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 💡 Tip: **Model × Mode:** cheap & fast for `Agent` routine, strongest for `Plan` / `Debug`.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
+
+notes:
+
+Auto — розумний дефолт: Cursor Router читає кожен запит і підбирає модель за типом і складністю задачі. Три режими Auto: Cost (фіксована ціна), Balance, Intelligence. Свідомо перемикайтесь на потужнішу модель лише коли задача справді складна.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔄 Switching models mid-chat
+
+You _can_ switch models in the same chat — but it has a cost.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Codebase <strong>index stays</strong> — no re-indexing</li>
+<li class="fragment" data-fragment-index="2">Chat <strong>history is re-sent</strong> to the new model from scratch</li>
+<li class="fragment" data-fragment-index="3">That usually means <strong>slower + more expensive</strong> turns after the switch</li>
+</ul>
+
+> 💡 Tip: Prefer one model per task. Need a different model? Often better to open a **new chat**.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🆕 When to open a new chat
+
+Watch the **context ring** next to the input — when it's full, answers get worse.
+
+| Situation                           | What to do                        |
+| ----------------------------------- | --------------------------------- |
+| Same task, chat got bloated         | `/summarize` — stay in the thread |
+| Want another approach, keep history | **Fork Chat** from a message      |
+| New task / new topic / new model    | **New chat**                      |
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📇 Codebase indexing
+
+Cursor builds a **semantic map** of your repo — so Agent can find code by meaning, not only by exact text.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Runs <strong>automatically</strong> in the background</li>
+<li class="fragment" data-fragment-index="2">Re-indexes only <strong>what changed</strong></li>
+<li class="fragment" data-fragment-index="3">Makes semantic Search and codebase-aware chat work</li>
+</ul>
+
+> 💡 Tip: iterating on rules / skills / agents? sometimes **Reindex** — a stale index can feed old (or deleted) versions.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔐 Indexing & privacy
+
+Good news — most of it works out of the box:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Cursor already skips the usual noise — <code>node_modules</code>, .lock, binaries, <code>.env</code>, .etc</li>
+<li class="fragment" data-fragment-index="2"><strong><code>.gitignore</code></strong> is respected automatically</li>
+</ul>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔐 Before you start coding
+
+<ol style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Check <strong><code>.cursorignore</code></strong> — secrets &amp; sensitive paths</li>
+<li class="fragment" data-fragment-index="2">Check <strong>Privacy Mode</strong> enabled — Cursor Settings → General → Privacy Mode</li>
+<li class="fragment" data-fragment-index="3">Follow <strong>ELEKS AI Usage Policy</strong> &amp; approved MCP connectors <em>(Module #1)</em></li>
+</ol>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 📌 Always review AI output
+
+AI is a co-author — **you** ship the code.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Never Accept All blindly — read the <strong>diff</strong>, hunk by hunk</li>
+<li class="fragment" data-fragment-index="2">Check intent: does it match the task? edge cases? tests?</li>
+<li class="fragment" data-fragment-index="3">Wrong? <strong>Reject</strong> / ask to redo — or <strong>Restore checkpoint</strong> and start over</li>
+</ul>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🎯 Level 5 unlocked — Structured use
+
+You now: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="2"><code>@</code> refs — multi-file, codebase-aware context</li>
+<li class="fragment" data-fragment-index="3">Debug with AI</li>
+<li class="fragment" data-fragment-index="4">Review &amp; tweak every change</li>
+</ul>
+
+> 🎉🏁 You've crossed from **AI-Supported** into **AI-Assisted** — congrats! 🚀
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Beyond the IDE
+
+<img src="master-classes/ai-dev-setup/02-module/imgs/cursor-advanced.png" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cursor advanced features:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Cloud Agents &amp; Automations</li>
+<li class="fragment" data-fragment-index="2">Security agents &amp; Bugbot</li>
+<li class="fragment" data-fragment-index="3">Integrations — GitHub, Teams</li>
+<li class="fragment" data-fragment-index="4">PR Routing &amp; Approval</li>
+<li class="fragment" data-fragment-index="5">SDK (TypeScript)</li>
+</ul>
+
+notes:
+
+Ця секція — оглядова: показуємо, що екосистема Cursor виходить далеко за межі редактора. Глибоке занурення (автоматизації, оркестрація) — це рівні 6–10 і теми наступних модулів; тут — «що існує і навіщо».
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ☁️ Cloud Agents
+
+The same Agent, running in **Cursor-managed cloud VMs**.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">Launch from: web (<code>cursor.com/agents</code>), IDE, iOS, Slack, Teams, GitHub, API</li>
+<li class="fragment" data-fragment-index="2">Full dev environment: clones repo, installs deps, runs tests</li>
+<li class="fragment" data-fragment-index="3">Delivers <strong>merge-ready PRs</strong> with artifacts</li>
+<li class="fragment" data-fragment-index="4">Runs in parallel — doesn't depend on your machine</li>
+</ul>
+
+> _Example: a ticket from Slack / `@cursor` on GitHub → agent implements, tests, opens a PR._
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+
+notes:
+
+Ключова відмінність від локального агента: власне ізольоване середовище з мережею, секретами і startup-командами — може сам зібрати і протестувати. Типовий сценарій: делегували задачу з телефона чи Slack → отримали готовий PR. Раніше називались Background Agents.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ⏰ Automations
+
+Cloud agents that run **without you** — on a schedule or on events.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Schedule</strong> — cron / hourly / daily</li>
+<li class="fragment" data-fragment-index="2"><strong>Events</strong> — PR &amp; push, Slack messages, Linear issues, Sentry errors, PagerDuty incidents, webhooks</li>
+<li class="fragment" data-fragment-index="3"><strong>Setup</strong>: trigger → plain-language instructions → tools → repo scope</li>
+</ul>
+
+> 📌 **Rule:** Cloud Agent = you start it. Automation = a trigger starts it.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Створюються на cursor.com/automations або командою /automate. Білінг — за usage хмарних агентів. Приклади: review recent commits for bugs, weekly codebase-change summary, triage bugs from Slack.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔒 Security agents
+
+Two Cursor-managed agents on Cloud Agents infra:
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Security Reviewer</strong> — checks every PR for vulnerabilities <em>before merge</em></li>
+<li class="fragment" data-fragment-index="2"><strong>Vulnerability Scanner</strong> — scans the codebase at rest, on a schedule</li>
+<li class="fragment" data-fragment-index="3">Custom instructions, per-team checks, posts to Slack / issue trackers</li>
+</ul>
+
+> 💡 Tip: Can still run them locally (`/review-security`) if not enabled for the team.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
+
+notes:
+
+Нуль додаткового сетапу — працюють поверх Cloud Agents. Є аналітика: знайдені вразливості, час до фіксу, resolution rate. Ручні аналоги — /review-security і /review прямо в агенті.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔍 Bugbot
+
+Automated **code review** on every pull request.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1">GitHub, GitLab, Bitbucket, Azure DevOps</li>
+<li class="fragment" data-fragment-index="2">Inline comments: bug + severity + suggested fix + "Fix in Cursor" link</li>
+<li class="fragment" data-fragment-index="3">Guided by team rules and <code>.cursor/BUGBOT.md</code></li>
+<li class="fragment" data-fragment-index="4"><strong>Autofix</strong> — spawns a Cloud Agent to fix found issues</li>
+</ul>
+
+> 💡 Tip: Can still run locally (`/review`) if not enabled for the team.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+
+notes:
+
+Тригериться автоматично на кожне оновлення PR, вручну — коментарем `cursor review` / `bugbot run`, або інкрементально (тільки нові зміни). Два рівні ретельності: Default і High. Читає наявні коментарі PR, щоб не дублювати.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🔗 Integrations: GitHub & Teams
+
+_One example_ — also Slack, Jira, Linear, GitLab, Bitbucket, etc.
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="2"><strong>GitHub</strong> — the hub: Cloud Agents, Bugbot, PR create &amp; review</li>
+<li class="fragment" data-fragment-index="3">Comment <code>@cursor</code> on a PR or issue → agent picks it up</li>
+<li class="fragment" data-fragment-index="4"><strong>Microsoft Teams</strong> — <code>@Cursor</code> in chats &amp; channels</li>
+<li class="fragment" data-fragment-index="5">Launch agents, pick repo/model, get PR links; thread-aware follow-ups</li>
+</ul>
+
+> 💡 Tip: Start with **GitHub** — it unlocks Cloud Agents, Bugbot, and PRs.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
+
+notes:
+
+GitHub-інтеграція — least-privilege permissions, підтримує GitHub Enterprise Server. Teams: інсталяція через дашборд або Microsoft Marketplace; є вибір repo (`repo=`), env, Privacy Mode. Аналогічна інтеграція є для Slack, Jira, Linear, GitLab, Bitbucket.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🚦 PR Routing & Approval
+
+An approval agent that **routes and gates** pull requests.
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Triggers</strong> — PR opened / updated / commented</li>
+<li class="fragment" data-fragment-index="2"><strong>Signals</strong> — Bugbot, Security, risk score</li>
+<li class="fragment" data-fragment-index="3"><strong>Rules</strong> — custom prompt + <code>APPROVAL_POLICY.md</code></li>
+<li class="fragment" data-fragment-index="4"><strong>Tools</strong> — request reviewers, approve; Slack / Teams / MCP</li>
+</ul>
+
+> _Example: Assigns reviewers → auto-approves low-risk → else humans decide_
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+
+notes:
+
+Cursor-managed agent на Automations (як Bugbot і Security), не інтеграція. Сигнали: чекає Bugbot/Security, якщо увімкнені; їх findings блокують auto-approve. Policy-файли в репо мають пріоритет над custom prompt. Обов'язково хоча б одна primary action: Request Reviewers або Approve PR.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🧩 SDK (TypeScript)
+
+`npm install @cursor/sdk` — the same Agent, **programmatically**.
+
+```ts
+const agent = await Agent.create({ ... });
+const run = agent.send("fix flaky tests in ci/");
+for await (const event of run.stream()) { ... }
+```
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>CI</strong> — tests fail in GitHub Actions → agent fixes the code</li>
+<li class="fragment" data-fragment-index="2"><strong>Your product</strong> — users talk to the Agent inside <em>your</em> app's chat</li>
+<li class="fragment" data-fragment-index="3"><strong>Your tools</strong> — Agent can hit internal APIs (deploy, status, …)</li>
+<li class="fragment" data-fragment-index="4"><strong>Resume</strong> — save state in SQLite, JSONL, your DB — or Cursor Cloud</li>
+</ul>
+
+> 🎯 **Best for:** when Cursor UI can't be the trigger — CI, your product, your APIs.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+
+notes:
+
+Use cases з доків: auto-fix боти в CI/CD, автоматичні review-пасси, bug triage, вбудовані агенти у власний продукт, оркестрація. Resume: `Agent.resume(agentId)` — локально store (SQLite / JSONL / свій Redis·Postgres), cloud — на сервері Cursor. Потрібен Node.js 22.13+, авторизація через CURSOR_API_KEY. Є також Python SDK.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### The path beyond Level 5
+
+Next we **climb the levels**. 🪜
+
+We'll show our AI infra on a test project — it covers the **main development processes**.
+
+<!-- .element: style="font-size: 2.0rem" -->
+
+> 📌 Not a theory map — a working example you can steal.
+
+<!-- .element: style="font-size: 2.0rem" -->
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🤨 Q&A session
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1600,"height":800,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

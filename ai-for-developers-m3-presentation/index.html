@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## AI for Developers: Adoption via Engineering Practices
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Module #3: Teach Your Agent
+
+**Agenda:**
+
+- Rules
+- Skills
+- MCP-servers
+- Hooks
+- Slash commands
+- Q&A session
+- Useful Links
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Agent Rules
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompt Examples
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/prompt-example.png" alt="" style="width: 800px; object-fit: fill">
+</div>
+
+<aside class="notes"><p>You are a senior frontend developer. Implement this task correctly and bug-free, following
+established best practices.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prompt Examples
+
+<div class="block">
+
+<!-- prettier-ignore -->
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->You are an expert developer. Write clean, efficient, production-ready code without bugs
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Act as a 10x senior engineer. Solve this task in the best possible way and follow all
+  best practices
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->You are a world-class frontend developer. Make sure the implementation is perfect,
+  scalable, maintainable, and bug-free
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Think like a senior developer and carefully consider all edge cases before writing the
+  code
+
+</div>
+
+
+
+<!-- .element: style="font-size: 2rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### Why rules?
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/goldfish-memory.png" alt="" style="width: 400px; height: 400px; object-fit: fill">
+
+
+</div>
+
+
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+LLMs keep **no memory** between completions — every chat starts blank.
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+notes:
+
+- Without guidance, the model falls back to generic behavior
+- You end up repeating the same instructions again and again
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rules
+
+> Rules = persistent, reusable context injected at the **start** of the model context
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### How context works
+
+- **Context** = all the information the model sees to answer a prompt.
+- Rules are placed **first**, so they shape everything that follows.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rules as system prompts
+
+System prompts are the foundational instructions that dictate an AI's behavior.
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/system-prompt.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rules as system prompts
+
+Key elements a rule can define:
+
+- **Behavioral framing** — the AI's role, personality, or expertise
+- **Constraint setting** — limitations and hard rules for responses
+- **Context provision** — background and situational information
+- **Ethical guidance** — guidelines and value alignment
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 1.8rem" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What are rules?
+
+
+
+> Rules are project-specific instructions that define how AI should behave in your
+> workspace.
+
+- Provide **system-level** instructions to the Agent
+- Bundle prompts, conventions, and workflows in one place
+- Included in **every** AI conversation within the project
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+
+</div>
+<div class="container-body-right">
+
+</div>
+</div>
+
+
+
+### From prompt to rule
+
+**🔴 prompt** <!-- .element: style="font-size: 1.8rem" -->
+
+```md
+You are a senior frontend developer. Implement this task  
+without bugs, follow best practices, write clean, scalable, and maintainable code.
+```
+
+<!-- .element: style="font-size: 1.5rem" -->
+
+**✅ rule** <!-- .element: style="font-size: 1.8rem" -->
+
+<!-- prettier-ignore -->
+```md
+---  
+description: Frontend implementation guidelines
+alwaysApply: true
+---  
+
+- Follow existing project patterns and conventions.
+- Reuse existing components, hooks, utilities, and services before creating new ones.
+- Prefer simple solutions over unnecessary abstractions.
+- Keep UI, business logic, and data access separated.
+- Preserve existing behavior unless the task explicitly requires a change.
+- Do not introduce new dependencies unless there is a clear requirement.
+- Add or update tests when changing existing behavior.
+- Remove unused code, imports, and debug statements before completing the task.
+```
+
+<!-- .element: style="font-size: 1rem" -->
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Time to practice
+
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Which rule provides the least actionable guidance and should probably NOT be a project rule?
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Rule A
+
+<!-- prettier-ignore -->
+```md
+---  
+description: React component guidelines
+globs: ["src/**/*.tsx"]
+---  
+
+- Prefer existing shared components before creating new ones.
+- Keep components focused on presentation and user interaction.
+- Move reusable business logic into custom hooks or services.
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Rule B
+
+<!-- prettier-ignore -->
+```md
+---  
+description: Code quality guidelines
+alwaysApply: true
+---  
+
+- Write clean, readable, and maintainable code.
+- Follow software engineering best practices.
+- Make sure the implementation is scalable and production-ready.
+- Always write high-quality code with no bugs.
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Rule C
+
+<!-- prettier-ignore -->
+```md
+---  
+description: API integration guidelines
+globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
+---  
+
+- Reuse the existing API client for HTTP requests.
+- Keep API response types explicitly defined.
+- Handle loading and error states consistently with existing project patterns.
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- prettier-ignore -->
+```md
+---  
+description: React component guidelines
+globs: ["src/**/*.tsx"]
+---  
+
+- Prefer existing shared components before creating new ones.
+- Keep components focused on presentation and user interaction.
+- Move reusable business logic into custom hooks or services.
+```
+
+<!-- prettier-ignore -->
+```md
+---  
+description: Code quality guidelines
+alwaysApply: true
+---  
+
+- Write clean, readable, and maintainable code.
+- Follow software engineering best practices.
+- Make sure the implementation is scalable and production-ready.
+- Always write high-quality code with no bugs.
+```
+
+<!-- prettier-ignore -->
+```md
+---  
+description: API integration guidelines
+globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
+---  
+
+- Reuse the existing API client for HTTP requests.
+- Keep API response types explicitly defined.
+- Handle loading and error states consistently with existing project patterns.
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Four rule types
+
+<div class="block">
+
+- **Project Rules** - stored in `.cursor/rules`, version-controlled, scoped to your
+  codebase
+- **User Rules** - global to your Cursor environment; used by Agent (Chat) only
+- **Team Rules** - team-wide, managed from the dashboard (Team & Enterprise plans)
+- **AGENTS.md** - plain-markdown agent instructions; simple alternative to `.cursor/rules`
+  </div>
+
+ <!-- .element: style="font-size: 1.8rem" -->
+
+notes:
+
+User Rules не впливають на Tab та Inline Edit (Cmd/Ctrl+K) — тільки на Agent/Chat.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### How rules activate
+
+<div class="block">
+
+| Rule Type               | Applied when...                                  |
+| :---------------------- | ------------------------------------------------ |
+| Always Apply            | Every chat session                               |
+| Apply Intelligently     | Agent decides it's relevant based on description |
+| Apply to Specific Files | A file matches a specified glob pattern          |
+| Apply Manually          | You `@-mention` it in chat (e.g., `@my-rule`)    |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### How rules activate
+
+Under the hood, three frontmatter fields decide when a rule is included:
+
+<div class="block">
+
+| alwaysApply | description | globs    | Behavior                                                         |
+| :---------- | :---------- | :------- | :--------------------------------------------------------------- |
+| `true`      | -           | -        | Always included. `globs` and `description` are ignored.          |
+| `false`     | -           | Provided | Auto-attached when a matching file is in context.                |
+| `false`     | Provided    | Omitted  | Agent reads the description and pulls the rule in when relevant. |
+| `false`     | Omitted     | Omitted  | Included only when you `@-mention` the rule in chat.             |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+
+`alwaysApply: false` - default behavior
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Project rules: file structure
+
+Project rules live in `.cursor/rules` as `.mdc` files and are version-controlled.
+
+```
+.cursor/rules/
+  react-patterns.mdc       # Recognized as a project rule
+  api-guidelines.md        # Ignored (wrong extension)
+  frontend/                # Organize rules in folders
+    components.mdc
+```
+
+A plain `.md` file has no frontmatter, so the rules system ignores it.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Glob patterns
+
+Scope a rule to the files it should apply to:
+
+<div class="block">
+
+| Pattern                       | Matches                               |
+| :---------------------------- | :------------------------------------ |
+| `*`                           | Any single file-name segment          |
+| `**`                          | Any number of directories (recursive) |
+| `**/*.ts`                     | All `.ts` files in any directory      |
+| `src/**/*.tsx`                | All `.tsx` files under `src/`         |
+| `docs/**/*.md, docs/**/*.mdx` | Multiple patterns (comma-separated)   |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rule: Always applied
+
+<!-- prettier-ignore -->
+```md
+---  
+alwaysApply: true
+---  
+
+- All source files must include the company copyright header
+- When you are unsure about implementation details, read the relevant
+  source files before proposing changes
+- Never modify generated files in the `dist/` or `build/` directories
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rule: Auto-attached by file pattern
+
+<!-- prettier-ignore -->
+```md
+---  
+globs: src/components/**/*.tsx
+alwaysApply: false
+---  
+
+- Use named exports, not default exports
+- Co-locate styles in a module CSS file next to the component
+- Keep components under 200 lines. Extract subcomponents into the same
+  directory when a file grows beyond that
+- Prefer composition over prop drilling. Pass children or render props
+  instead of threading data through multiple layers
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Agent-selected based on description
+
+<!-- prettier-ignore -->
+```md
+---  
+description: RPC service conventions and patterns for the backend
+alwaysApply: false
+---  
+
+- Define each service in its own file under `src/services/`
+- Always validate inputs at the service boundary before passing data
+  to internal functions
+- Return structured error objects with a `code` and `message` field,
+  never throw raw strings
+- Add a `@service-template.ts` reference file when creating a new
+  service for the standard boilerplate
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Manual - only via @-mention
+
+`@migration-template.sql`
+
+<!-- prettier-ignore -->
+```mdc
+---  
+alwaysApply: false
+---  
+
+- Every database migration must have both `up` and `down` functions so it can be fully reversed
+- Never alter a column type in-place. Add a new column, backfill, then drop the old one in a separate migration
+- Reference the template for the expected file structure
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### AGENTS.MD
+
+A plain markdown file for agent instructions - no metadata, no config. Place it in the
+project root as a simple alternative to `.cursor/rules`.
+
+```md
+# Project Instructions
+
+## Code Style
+
+- Use TypeScript for all new files
+- Prefer functional components in React
+- Use snake_case for database columns
+
+## Architecture
+
+- Follow the repository pattern
+- Keep business logic in service layers
+```
+
+Cursor also reads `AGENTS.md` files in **subdirectories** — the closer file wins.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Useful tip
+
+Generate `CLAUDE.md` and create a soft link to `AGENTS.md`
+
+- `claude init`
+- `ln -s CLAUDE.md AGENTS.MD`
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Precedence & Nested Rules
+
+When several rules apply, they are all **merged** - earlier sources win on conflict:
+
+`Team Rules` --> `Project Rules` --> `User Rules`
+
+- Nested `AGENTS.md` combine with parent directories
+- More specific (deeper) instructions take precedence
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creating rules
+
+You don't have to write `.mdc` by hand:
+
+- **In chat** — run `/create-rule` and describe the need; the Agent writes the frontmatter
+  and saves it to `.cursor/rules`
+- **From Customize** — Customize → Rules → **Add Rule**
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What good rules contain
+
+Rules are where you encode your **persistent conventions**:
+
+- Coding principles you always follow — **SOLID**, **DRY**, **KISS**, **YAGNI**, avoid
+  premature optimization
+- Team best practices and do's / don'ts
+- Project-specific patterns, boilerplate, and references
+
+notes:
+
+Довідник принципів: https://github.com/webpro/programming-principles
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Best practices
+
+Good rules are focused, actionable, and scoped.
+
+- Keep rules under **500 lines**
+- Split large rules into multiple, composable rules
+- Provide concrete examples or referenced files
+- Avoid vague guidance — write rules like clear internal docs
+- Reuse rules when you catch yourself repeating prompts in chat
+- **Reference** files instead of copying them — keeps rules short and fresh
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Time to Practice
+
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What to avoid in rule: select rule
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rule A
+
+<!-- prettier-ignore -->
+```mdc
+---  
+description: API client patterns for this project
+globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
+---  
+
+- Reuse `src/api/client.ts` for all HTTP requests — do not create new fetch wrappers.
+- Define response types next to the endpoint function that uses them.
+- Match error handling to the pattern in `src/api/users.ts`.
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rule B
+
+<!-- prettier-ignore -->
+```mdc
+---  
+description: Complete ESLint and Prettier style guide
+alwaysApply: true
+---  
+
+# Project Style Guide
+
+## TypeScript
+
+- Strict mode enabled — no implicit any
+- Prefer `interface` for object shapes; use `type` for unions
+- Explicit return types on exported functions
+
+## Formatting
+
+- 2-space indent, semicolons required, single quotes
+- Max line length: 100 characters
+- Import order: external → internal → relative
+
+## React
+
+- Functional components only, hooks at top level
+- ... (400+ more lines copied from the team wiki)
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Rule C
+
+<!-- prettier-ignore -->
+```mdc
+---  
+description: Common development commands
+alwaysApply: true
+---  
+
+- Run `npm install` before starting work
+- Use `npm run dev` to start the local server
+- Run `npm test` to execute the test suite
+- Use `npm run lint` to check code style
+- Run `npm run build` before deploying
+- Use `git status` to review changes before committing
+```
+
+notes:
+
+- Rule A — добрий: scoped globs + посилання на файли замість копіювання
+- Rule B — копіювання style guide; краще linter + коротке rule
+- Rule C — документування команд, які Agent і так знає
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What to avoid
+
+<!-- prettier-ignore -->
++ 🔴 Copying entire style guides - use a **linter** instead
++ 🔴 Documenting every command — the Agent already knows common tools
++ 🔴 Writing rules for rare edge cases
++ 🔴 Duplicating code that already lives in your codebase
+
+<div class="block">
+
+> Start simple. Add a rule only when you notice the Agent making the **same mistake
+> repeatedly**.
+
+</div>
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Agent Skills
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What is Agent Skills?
+
+> Agent Skills are a lightweight, open format for extending AI agent capabilities with
+> specialized knowledge and workflows.
+
+```bash
+my-skill/
+├── SKILL.md          # Required: metadata + instructions
+├── scripts/          # Optional: executable code
+├── references/       # Optional: documentation
+├── assets/           # Optional: templates, resources
+└── ...               # Any additional files or directories
+```
+</div>
+
+<aside class="notes"><p>Injected directly into the conversation</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor skills examples
+
+File: "my-skill.md"
+
+<!-- prettier-ignore -->
+```mdc 
+---  
+name: my-skill
+description: Description of what the skill does and when to use it.
+---  
+
+# My Skill
+
+Detailed instructions for the agent.
+
+## When to Use
+
+- Use this skill when...
+- This skill is helpful for...
+
+## Instructions 
+
+- Step-by-step guidance for the agent
+- Domain-specific conventions
+- Best practices and patterns
+Use the ask questions tool if you need to clarify requirements
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### Cursor rules vs skills
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+**Use Rules for:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ Project-wide coding standards</li><!-- .element: class="fragment" data-fragment-index="1" -->
+  <li>✅ Architecture constraints</li><!-- .element: class="fragment" data-fragment-index="3" -->
+  <li>✅ Required patterns (error handling, logging)</li><!-- .element: class="fragment" data-fragment-index="5" -->
+  <li>✅ Framework conventions</li><!-- .element: class="fragment" data-fragment-index="7" -->
+  <li>✅ Security requirements</li><!-- .element: class="fragment" data-fragment-index="9" -->
+</ul>
+
+</div>
+
+
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+**Use Skills for:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ Multi-step workflows (scaffold component, API endpoint)</li><!-- .element: class="fragment" data-fragment-index="2" -->
+  <li>✅ Complex operations (refactoring, migrations)</li><!-- .element: class="fragment" data-fragment-index="4" -->
+  <li>✅ Context-specific tasks (review PR, analyze performance)</li><!-- .element: class="fragment" data-fragment-index="6" -->
+  <li>✅ Domain-specific knowledge (blockchain, ML)</li><!-- .element: class="fragment" data-fragment-index="8" -->
+  <li>✅ Specialized tooling integration</li><!-- .element: class="fragment" data-fragment-index="10" -->
+</ul>
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Time to practice
+
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Skill A - Compliance With Project Architecture
+
+<!-- prettier-ignore -->
+```md[1-4|6-9]
+---  
+name: architecture-compliance
+description: Frontend architecture guidelines
+---  
+
+- Keep UI, business logic, and data access separated.
+- Reuse existing components, hooks, and services before creating new ones.
+- Follow the existing project structure and architectural patterns.
+- Avoid introducing new dependencies without a clear requirement.
+```
+
+notes:
+
+fake skill, це список принципів а не план виконання
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Skill B - Follow Code Review Guidelines
+
+<!-- prettier-ignore -->
+```md[1-4|6-10]
+---  
+name: review-guidelines
+description: Guidelines for reviewing code
+---  
+
+- Prefer simple and readable solutions over unnecessary abstractions.
+- Check for duplicated logic and opportunities to reuse existing code.
+- Verify that changes follow existing project conventions.
+- Pay attention to error handling and relevant edge cases.
+- Do not approve changes that introduce unnecessary complexity.
+```
+
+notes:
+
+fake skill, це список принципів а не план виконання
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Skill C - New Feature Implementation
+
+<!-- prettier-ignore -->
+```md[1-4|6-14]
+---  
+name: implement-feature
+description: Process for implementing new frontend features
+---  
+
+When implementing a new feature:
+
+- Analyze the requirements and identify affected areas.
+- Explore the existing codebase for similar functionality.
+- Create a technical implementation plan.
+- Implement the feature incrementally.
+- Run relevant tests and linting.
+- Review the changes for regressions and unnecessary complexity.
+- Summarize the implementation and verification results.
+```
+
+notes:
+
+Є чіткий multi-step workflow: analyze -> explore -> plan -> implement -> test -> review ->
+summarize.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### How to migrate cursor rules to skills
+
+**Command:** `/migrate-to-skills`
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful references
+
+- Standard: https://agentskills.io/home
+- Markets:
+  - https://skillsmp.com
+  - https://www.skills.sh
+  - https://skillhub.club
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## MCP (Model Context Protocol) servers
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### MCP
+
+Model Context Protocol (MCP) is an open protocol that enables LLMs to access external
+tools and data sources.
+
+<img src="master-classes/llms-for-developers/Module_1/imgs/mcp-claude.png" alt="" style="width: 800px; object-fit: fill">
+
+
+https://www.anthropic.com/news/model-context-protocol
+https://github.com/slowmist/MCP-Security-Checklist
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### MCP market-places
+
+- https://smithery.ai/
+- https://glama.ai/mcp
+- https://cursor.directory/
+- https://www.lmsystems.ai/
+- https://mcp.so/
+- https://www.pulsemcp.com/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cursor MCP library
+
+<img src="master-classes/llms-for-developers/Module_1/imgs/cursor-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://cursor.directory/
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### VSCode MCP library
+
+<img src="master-classes/llms-for-developers/Module_1/imgs/visual-studio-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://code.visualstudio.com/mcp
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Figma MCP
+
+<img src="master-classes/llms-for-developers/Module_1/imgs/figma-mcp.png" alt="" style="width: 600px; object-fit: fill">
+
+
+https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful MCP servers
+
+**Official Lists:**
+
+- https://github.com/modelcontextprotocol/servers
+- [ARCHIVED](https://github.com/modelcontextprotocol/servers-archived)
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### OpenAI
+
+<img src="master-classes/llms-for-developers/Module_1/imgs/openai-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://platform.openai.com/playground/prompts?models=gpt-4o-mini
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Time To Practice
+
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+
+
+Check how to get information about a task in your task-tracking system
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🪝 Agent Hooks
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### What are hooks?
+
+> Hooks let you **observe, control, and extend** the agent loop with custom scripts or LLM
+> checks.
+
+- Run **before or after** defined stages of the agent lifecycle
+- Exchange **JSON over stdin/stdout** with spawned processes
+- Can **allow**, **deny**, **ask**, rewrite input, or inject context
+
+notes:
+
+Hooks — це не React hooks і не git hooks. Це механізм Cursor для перехоплення подій
+агента.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Where hooks fit
+
+- **Rules** - persistent guidance injected into context
+- **Skills** - reusable workflows the agent pulls in when relevant
+- **Hooks** - runtime gates and automation around agent events
+  - Format files after edits
+  - Block risky shell commands
+  - Audit tool usage
+  - Scan prompts for secrets
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Three hook surfaces
+
+Cursor separates hooks by **what triggers them**:
+
+<div class="block">
+
+| Surface           | Examples                                              | Typical use                                 |
+| :---------------- | :---------------------------------------------------- | :------------------------------------------ |
+| **Agent**         | `beforeShellExecution`, `afterFileEdit`, `preToolUse` | Gate terminal/MCP calls, post-process edits |
+| **Tab**           | `beforeTabFileRead`, `afterTabFileEdit`               | Redact secrets, format inline completions   |
+| **App lifecycle** | `workspaceOpen`                                       | Load plugins or bootstrap workspace state   |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+
+notes:
+
+Agent hooks — основний фокус презентації. Tab hooks — для автономного Tab, не Agent Chat.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### How hooks work
+
+```text
+Agent event fires
+      ↓
+Cursor reads hooks.json
+      ↓
+Hook script receives JSON on stdin
+      ↓
+Script returns JSON on stdout (or exit code)
+      ↓
+Cursor allows, blocks, asks, or continues
+```
+
+- Config reloads automatically when `hooks.json` changes
+- Debug via **Settings → Hooks** or the **Hooks** output channel
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Where hooks live
+
+<div class="block">
+
+| Scope       | Config                 | Scripts             | Best for                                      |
+| :---------- | :--------------------- | :------------------ | :-------------------------------------------- |
+| **Project** | `.cursor/hooks.json`   | `.cursor/hooks/*`   | Team standards, version-controlled guardrails |
+| **User**    | `~/.cursor/hooks.json` | `~/.cursor/hooks/*` | Personal automation across all projects       |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+
+**Path rule:** project hooks run from the **repo root** — use `.cursor/hooks/format.sh`,
+not `./hooks/format.sh`.
+
+notes:
+
+Cloud agents load **project** hooks from the repo, not user-level `~/.cursor/hooks.json`.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### hooks.json schema
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+Every project-level config needs `"version": 1`:
+
+<!-- prettier-ignore -->
+```json
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/format.sh"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/approve-network.sh",
+        "matcher": "curl|wget|nc ",
+        "timeout": 10,
+        "failClosed": true
+      }
+    ]
+  }
+}
+```
+
+</div>
+
+
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+<!-- prettier-ignore -->
+| Field        | Purpose                                          |
+| :----------- | :----------------------------------------------- |
+| `command`    | Script or shell command to run                   |
+| `type`       | `"command"` (default) or `"prompt"`              |
+| `matcher`    | Optional regex filter — run only when it matches |
+| `timeout`    | Max seconds before the hook is killed            |
+| `failClosed` | If `true`, failure/timeout **blocks** the action |
+
+</div>
+
+<!-- .element: style="font-size: 1.5rem" -->
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Hook types
+
+#### Command-based (default)
+
+Deterministic scripts — best for auditable, exact behavior.
+
+<!-- prettier-ignore -->
+```json
+{
+  "beforeShellExecution": [{
+    "command": ".cursor/hooks/approve-network.sh",
+    "timeout": 30,
+    "matcher": "curl|wget"
+  }]
+}
+```
+
+#### Prompt-based
+
+LLM evaluates a natural-language policy — quick to set up, less deterministic.
+
+<!-- prettier-ignore -->
+```json
+{
+  "beforeShellExecution": [{
+    "type": "prompt",
+    "prompt": "Does this command look safe? Only allow read-only operations. Input: $ARGUMENTS",
+    "timeout": 10
+  }]
+}
+```
+
+notes:
+
+Prompt hooks are **not** available in cloud agents — command hooks only.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Agent hook events
+
+<div class="block">
+
+| Lifecycle        | Events                                            |
+| :--------------- | :------------------------------------------------ |
+| Session          | `sessionStart`, `sessionEnd`                      |
+| Tools (generic)  | `preToolUse`, `postToolUse`, `postToolUseFailure` |
+| Subagents        | `subagentStart`, `subagentStop`                   |
+| Shell            | `beforeShellExecution`, `afterShellExecution`     |
+| MCP              | `beforeMCPExecution`, `afterMCPExecution`         |
+| Files            | `beforeReadFile`, `afterFileEdit`                 |
+| Prompt & context | `beforeSubmitPrompt`, `preCompact`                |
+| Completion       | `stop`, `afterAgentResponse`, `afterAgentThought` |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pick the narrowest event
+
+Use the **smallest hook surface** that solves the problem:
+
+<div class="block">
+
+| Goal                              | Event                  |
+| :-------------------------------- | :--------------------- |
+| Block or approve shell commands   | `beforeShellExecution` |
+| Audit shell output                | `afterShellExecution`  |
+| Format files after agent edits    | `afterFileEdit`        |
+| Block or rewrite any tool call    | `preToolUse`           |
+| Add context after a tool succeeds | `postToolUse`          |
+| Control subagent (Task) execution | `subagentStart`        |
+| Chain subagent follow-up loops    | `subagentStop`         |
+| Scan prompts for secrets / policy | `beforeSubmitPrompt`   |
+| Gate MCP tool calls               | `beforeMCPExecution`   |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+
+notes:
+
+Prefer `beforeShellExecution` over `preToolUse` when you only care about terminal
+commands.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Matchers
+
+Run hooks only when they matter — matchers use **JavaScript regex**, not POSIX/grep.
+
+<div class="block">
+
+| Event family                     | Matcher matches                                         |
+| :------------------------------- | :------------------------------------------------------ |
+| `beforeShellExecution`           | Full shell command string                               |
+| `preToolUse` / `postToolUse`     | Tool type: `Shell`, `Read`, `Write`, `Task`, `MCP: ...` |
+| `subagentStart` / `subagentStop` | Subagent type: `generalPurpose`, `explore`, …           |
+| `afterFileEdit`                  | Tool type: `Write` or `TabWrite`                        |
+| `beforeSubmitPrompt`             | Value `UserPromptSubmit`                                |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+
+> Start **without** a matcher, confirm the hook fires, then tighten the filter.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Hook responses
+
+Return only fields supported by the event:
+
+<div class="block">
+
+| Event                                        | Key stdout fields                                                      |
+| :------------------------------------------- | :--------------------------------------------------------------------- |
+| `beforeShellExecution`, `beforeMCPExecution` | `permission`: `allow` · `deny` · `ask`, plus optional messages         |
+| `preToolUse`                                 | `permission`, `updated_input` to rewrite the tool call                 |
+| `postToolUse`                                | `additional_context`; MCP tools also support `updated_mcp_tool_output` |
+| `subagentStart`                              | `permission`, `user_message`                                           |
+| `subagentStop`                               | `followup_message`                                                     |
+| `sessionStart`                               | `additional_context`                                                   |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+
+**Exit codes:** `0` = success · `2` = block (same as `deny`) · other = fail-open unless
+`failClosed: true`
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Example: auto-format after edits
+
+`.cursor/hooks.json`
+
+<!-- prettier-ignore -->
+```json
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [{
+      "command": ".cursor/hooks/format.sh",
+      "matcher": "Write"
+    }]
+  }
+}
+```
+
+`.cursor/hooks/format.sh`
+
+<!-- prettier-ignore -->
+```bash
+#!/bin/bash
+input=$(cat)
+file_path=`$(echo "$`input" | jq -r '.file_path // empty')
+ -z "$file_path"  && exit 0
+npx prettier --write "$file_path" 2>/dev/null
+exit 0
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Example: gate network commands
+
+<!-- prettier-ignore -->
+```bash
+#!/bin/bash
+input=$(cat)
+command=`$(echo "$`input" | jq -r '.command // empty')
+
+if wget|nc ; then
+  echo '{
+    "permission": "ask",
+    "user_message": "This command may make a network request. Review before continuing.",
+    "agent_message": "A hook flagged this as a possible network call."
+  }'
+  exit 0
+fi
+
+echo '{ "permission": "allow" }'
+exit 0
+```
+
+Set `"failClosed": true` when a crashed hook should **deny** by default.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Example: audit log
+
+Fire-and-forget logging — read stdin, write to a log, always exit 0:
+
+<!-- prettier-ignore -->
+```bash
+#!/bin/bash
+json_input=$(cat)
+timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+echo "[`$timestamp] $`json_input" >> /tmp/agent-audit.log
+exit 0
+```
+
+Attach the same script to multiple events: `beforeShellExecution`, `afterFileEdit`,
+`stop`, …
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### When to use hooks
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+**Use hooks when:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ You need <strong>runtime enforcement</strong> (block, ask, rewrite)</li><!-- .element: class="fragment" data-fragment-index="1" -->
+  <li>✅ Behavior should run on <strong>every matching event</strong></li><!-- .element: class="fragment" data-fragment-index="3" -->
+  <li>✅ You want audit trails or post-edit automation</li><!-- .element: class="fragment" data-fragment-index="5" -->
+  <li>✅ Policy depends on the <strong>actual command or file</strong></li><!-- .element: class="fragment" data-fragment-index="7" -->
+</ul>
+
+</div>
+
+
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+**Use rules/skills when:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ You want to <strong>guide</strong> the model's reasoning</li><!-- .element: class="fragment" data-fragment-index="2" -->
+  <li>✅ Instructions belong in <strong>context</strong>, not code</li><!-- .element: class="fragment" data-fragment-index="4" -->
+  <li>✅ The agent should <strong>choose</strong> when to apply a workflow</li><!-- .element: class="fragment" data-fragment-index="6" -->
+  <li>✅ Team conventions, not security gates</li><!-- .element: class="fragment" data-fragment-index="8" -->
+</ul>
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+notes:
+
+Hooks complement rules — rules shape behavior; hooks enforce it at execution time.
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Best practices
+
+<div class="block">
+
+- Choose the **narrowest event** (`beforeShellExecution` > `preToolUse`)
+- Make scripts **executable** (`chmod +x`) and verify dependencies (`jq`, `node`, …)
+- Start simple — no matcher first, then add filtering
+- Set `failClosed: true` for security-sensitive gates
+- Keep scripts **fast** — hooks block the agent loop
+- Return **valid JSON** only; test with the real event, not mocks alone
+
+</div>
+
+
+
+<!-- .element: style="font-size: 2rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Troubleshooting
+
+<div class="block">
+
+| Symptom                        | Check                                                                      |
+| :----------------------------- | :------------------------------------------------------------------------- |
+| Hook never fires               | `"version": 1` present? Paths relative to project root? Script executable? |
+| Hook fires too often           | Tighten the `matcher`; verify JS regex syntax                              |
+| Hook crashes silently          | Open **Hooks** output channel; add logging to `/tmp/hooks.log`             |
+| Action still proceeds on error | Set `"failClosed": true` or return exit code `2` to block                  |
+| Changes ignored                | Save `hooks.json` — Cursor reloads on save; restart if needed              |
+
+</div>
+
+
+
+<!-- .element: style="font-size: 1.8rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Time to practice
+
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Which hook event fits best?
+
+- **Scenario A:** Auto-run Prettier on every file the agent writes.
+- **Scenario B:** Block `curl` and `wget` unless the user approves.
+- **Scenario C:** Log every shell command and its exit code for compliance.
+- **Scenario D:** Inject project onboarding docs when a new agent session starts.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Which hook event fits best?
+
+<div class="block">
+
+|  #  | Scenario                        | Best event             |
+| :-: | :------------------------------ | :--------------------- |
+|  A  | Auto-format agent writes        | `afterFileEdit`        |
+|  B  | Gate network shell commands     | `beforeShellExecution` |
+|  C  | Log shell output after run      | `afterShellExecution`  |
+|  D  | Inject context at session start | `sessionStart`         |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful references
+
+- Docs: https://cursor.com/docs/hooks
+- Cursor Cookbook (hook examples): https://github.com/cursor/cookbook
+- Create a hook in chat: `/create-hook`
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Slash Commands
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Slash Commands
+
+- Rule → persistent constraint
+- Skill → reusable capability/workflow
+- Slash Command → explicit user-triggered action
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### Slash Commands vs Rules
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+**Use Commands When:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ Simple, focused task</li><!-- .element: class="fragment" data-fragment-index="1" -->
+  <li>✅ Explicit user invocation desired</li><!-- .element: class="fragment" data-fragment-index="3" -->
+  <li>✅ Personal productivity shortcuts</li><!-- .element: class="fragment" data-fragment-index="5" -->
+  <li>✅ One-time operations</li><!-- .element: class="fragment" data-fragment-index="7" -->
+</ul>
+
+</div>
+
+
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+**Use Cursor Rules When:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ Context-aware automatic activation</li><!-- .element: class="fragment" data-fragment-index="2" -->
+  <li>✅ File-type specific guidance</li><!-- .element: class="fragment" data-fragment-index="4" -->
+  <li>✅ Team standardization</li><!-- .element: class="fragment" data-fragment-index="6" -->
+  <li>✅ Always-on conventions</li><!-- .element: class="fragment" data-fragment-index="8" -->
+</ul>
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="block">
+
+**Example:**
+
+- **Command:** `/generate-tests` - Explicitly generate tests when asked
+- **Rule:** Auto-attach testing conventions to `*.test.ts` files </div>
+
+
+<!-- .element: class="fragment" data-fragment-index="9" -->
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### Slash Commands vs Skills
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+**Use Commands When:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ Simple, focused task</li><!-- .element: class="fragment" data-fragment-index="1" -->
+  <li>✅ Explicit user invocation desired</li><!-- .element: class="fragment" data-fragment-index="3" -->
+  <li>✅ Personal productivity shortcuts</li><!-- .element: class="fragment" data-fragment-index="5" -->
+  <li>✅ One-time operations</li><!-- .element: class="fragment" data-fragment-index="7" -->
+
+</ul>
+
+</div>
+
+
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+**Use Skills When:**
+
+<ul style="font-size: 1.8rem">
+  <li>✅ Multi-step workflows</li><!-- .element: class="fragment" data-fragment-index="2" -->
+  <li>✅ Agent discovers when relevant</li><!-- .element: class="fragment" data-fragment-index="4" -->
+  <li>✅ Domain-specific knowledge</li><!-- .element: class="fragment" data-fragment-index="6" -->
+  <li>✅ Scripts, refs, assets bundled</li><!-- .element: class="fragment" data-fragment-index="8" -->
+</ul>
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="block">
+
+**Example:**
+
+- **Command:** `/fix-lint` — simple fix; only runs when you type `/fix-lint`
+- **Skill:** `split-to-prs` — multi-step process; agent pulls it when the branch gets too
+large </div>
+
+
+<!-- .element: class="fragment" data-fragment-index="9" -->
+
+notes:
+
+Skills з `disable-model-invocation: true` поводяться як slash command — агент не підтягує
+їх сам. `/migrate-to-skills` конвертує старі commands у такі skills.
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Common Use Cases
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Code Quality
+
+- `/review-code` - Code review
+- `/refactor-clean` - Clean code refactoring
+- `/fix-lint` - Fix linting issues
+- `/improve-types` - Improve TypeScript types
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Testing
+
+- `/generate-tests` - Generate unit tests
+- `/test-edge-cases` - Add edge case tests
+- `/test-coverage` - Check test coverage
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Documentation
+
+- `/document-function` - Document function
+- `/add-comments` - Add code comments
+- `/explain-code` - Explain complex code
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Performance
+
+- `/optimize-performance` - Performance optimization
+- `/analyze-complexity` - Analyze time complexity
+- `/reduce-bundle` - Reduce bundle size
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Security
+
+- `/security-audit` - Security vulnerability check
+- `/sanitize-input` - Add input validation
+- `/check-auth` - Review authentication
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Time to practice
+
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+
+
+Create slash commands for `code-review`
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Q&A session
+
+<img src="master-classes/ai-dev-setup/imgs/questions.png" alt="" style="width: 1100px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Useful Links
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
