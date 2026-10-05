@@ -199,8 +199,8 @@ We split the flow on purpose. </div>
 
 notes:
 
-Наголосити: ми не женемось за повною AI-автоматизацією імплементації. Вартість + контроль.
-Три великі етапи з людським входом між ними.
+Stress this: we are not chasing full AI automation of implementation. Cost + control.
+Three large stages, with a human gate between them.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -241,8 +241,8 @@ Clarify → assess → plan → implement → test → validate
 
 notes:
 
-Попросити залу назвати ці етапи до першого рядка коду — уточнення, оцінка ризику, план,
-перевірки.
+Ask the room to name these stages before the first line of code — clarification, risk
+assessment, a plan, checks.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -278,11 +278,11 @@ notes:
 
 notes:
 
-- Не імплементує і не питає юзера — лише один блок: verdict / clarification / ERROR
-- High Complexity → Octopus; Low Complexity → Spark
-- Знаємо що будувати, ризик неясний → High Complexity
-- Не знаємо що будувати (немає одного речення Task) → clarification
-- До 3 питань з опціями; питає оркестратор, агент тільки віддає блок
+- Does not implement and does not ask the user — one block: verdict or NEEDS_CLARIFICATION
+- Any High dimension → Octopus; all Low → Spark
+- We know what to build, the risk is unclear → complex
+- No one-sentence Task → clarification
+- Up to 3 questions with options; the parent asks. At most 3 clarification rounds, then stop with no executor
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -293,12 +293,13 @@ notes:
 
 notes:
 
-- Усе послідовно: triage → один виконавець → тести → summary → ADR
-- Поки Spark або Octopus працює, оркестратор сам не редагує код.
-- Spark і Octopus ніколи разом — лише один, і лише після triage.
-- Тести: спочатку unituna, потім e2eagle; обидва чекаємо до кінця.
-- ADR — in background після погодження, не чекаємо завершення
-- Commit - лише якщо явно вказано в промпті.
+- Sequential: triage → one executor → tests → summary → ADR
+- While Spark or Octopus is working, the parent does not edit code itself
+- One executor, and only after triage
+- Tests: classify none / unit / e2e / both. Ask only if not none. Writers only on Yes. Both means Unituna, then E2eagle, and wait
+- Clarification re-runs triage (max 3). Escalation relaunches the executor — no new triage
+- ADR waits in the foreground after approval
+- Commit — only if the prompt says so explicitly
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -308,8 +309,8 @@ From a request to a validated change — one conducted workflow.
 
 notes:
 
-Перейти в Cursor. Показати запуск implement skill, complexity verdict, вибір Spark або
-Octopus, виконання та фінальний structured summary. Код пояснювати вже під час demo.
+Switch to Cursor. Show launching the implement skill, the complexity verdict, the choice of Spark
+or Octopus, the run, and the final structured summary. Explain the code during the demo.
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -336,8 +337,8 @@ Inspect → map risk → choose level → write → run → review
 
 notes:
 
-Попросити залу назвати ці етапи: де потрібен unit, де E2E, а де новий тест не дасть
-цінності. Генерація — не перший крок.
+Ask the room to name these stages: where a unit test is needed, where E2E is, and where a new
+test adds no value. Generation is not the first step.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -407,11 +408,11 @@ notes:
 - **Cover** - Git diff only. Gaps: behavior (unit) or journey (e2e).
 - **Prove** - Run the suite. New tests pass; no speculative coverage.
 - **Return** - DONE / ESCALATED / BLOCKED + files. Parent summarizes. No commit.
-- ESCALATED — треба рішення людини: неясна поведінка, не той рівень тесту (unit vs e2e vs
-  integration), треба міняти прод-код, існуючі тести суперечать очікуванню. Спекулятивні
-  тести не писати.
-- BLOCKED — середовище: не стартує suite, зламана інфра, немає як прогнати тести. У
-  відповіді — команда, яка впала.
+- ESCALATED — a human decision is needed: unclear behavior, the wrong test level (unit vs e2e vs
+  integration), production code has to change, existing tests contradict the expectation. Do not
+  write speculative tests.
+- BLOCKED — the environment: the suite won't start, infra is broken, there is no way to run the
+  tests. The reply names the command that failed.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -421,9 +422,9 @@ Route the risk, cue the specialist, inspect the evidence.
 
 notes:
 
-У live demo спочатку показати Unituna на зміненій поведінці. Потім E2eagle для
-user-visible journey, якщо зміна його зачіпає. Звернути увагу на structured output і
-validation, а не на кількість створених тестів.
+In the live demo, first show Unituna on changed behavior. Then E2eagle for a
+user-visible journey, if the change touches one. Draw attention to structured output and
+validation, not to how many tests were created.
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -450,8 +451,8 @@ Scope → coverage → security → defects → intent → gates → report
 
 notes:
 
-Попросити назвати етапи окрім correctness: security, tests, acceptance criteria, scope,
-complexity, duplication та project-specific conventions.
+Ask them to name stages besides correctness: security, tests, acceptance criteria, scope,
+complexity, duplication, and project-specific conventions.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -506,9 +507,9 @@ complexity, duplication та project-specific conventions.
 
 notes:
 
-- Domain checks — не завжди. Лише якщо в diff є відповідні файли.
-- Приклади: UI-кіт (у SkillStack — ELEKS UI), security rules (Firestore), Zod/API схеми.
-- Зміна кнопки ≠ аудит rules. Зміна Cloud Function ≠ рев’ю дизайн-системи.
+- Domain checks — not always. Only if the diff has the relevant files.
+- Examples: a UI kit (in SkillStack — ELEKS UI), security rules (Firestore), Zod/API schemas.
+- A button change ≠ a rules audit. A Cloud Function change ≠ a design-system review.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -535,9 +536,9 @@ One diff. Many specialists. One actionable report.
 
 notes:
 
-Запустити review skill на змінах із попередніх demo. Показати classification, паралельні
-review dimensions та unified report. Наголосити: AI дає перший системний pass, але
-фінальний approve залишається за людиною.
+Launch the review skill on the changes from the previous demos. Show classification, the parallel
+review dimensions, and the unified report. Stress: AI gives the first systematic pass, but
+the final approve stays with a human.
 </div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -557,8 +558,8 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 
 notes:
 
-Підбадьорити: вони вже вміють оркеструвати. «Але» — це не кінець шляху (Level 9–10), не
-лекція і не «ви провалили модуль».
+Encourage them: they already know how to orchestrate. The "but" is not the end of the path
+(Level 9–10), not a lecture, and not "you failed the module."
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 

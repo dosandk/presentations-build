@@ -207,7 +207,7 @@ Three **surfaces**, one Agent underneath.
 
 notes:
 
-Це один і той самий агент — різниця лише в інтерфейсі та сценарії використання. Важливо не плутати: surfaces — це «де живе агент», а режими Ask/Plan/Agent/Debug (розберемо далі) доступні всередині кожного surface. Далі — по слайду на кожен.
+It's the same agent — the only difference is the interface and the use case. Don't mix these up: surfaces are "where the agent lives," while Ask/Plan/Agent/Debug modes (covered next) are available inside every surface. Next: one slide per surface.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -228,7 +228,7 @@ The familiar VS Code experience — Agent in the sidebar.
 
 notes:
 
-Основна проблема цього surface: легко залишатися «file-first», коли задача насправді «керувати багатьма агентами»
+The main trap of this surface: it's easy to stay "file-first" when the job is actually "steer many agents."
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -249,7 +249,7 @@ Agent-centric UI — local / cloud / SSH agents in one place.
 
 notes:
 
-Це вища абстракція роботи: агенти пишуть більшість коду, розробник спостерігає.
+This is a higher abstraction of the work: agents write most of the code, the developer watches.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -287,7 +287,7 @@ The same agent brain in your terminal.
 
 notes:
 
-Agents Window і CLI стають потрібними, коли з'являються паралельність і автоматизація (рівні 6+).
+Agents Window and the CLI become necessary once you have parallelism and automation (levels 6+).
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -363,7 +363,7 @@ Shell commands run through a **sandbox** by default — controlled by **run mode
 
 notes:
 
-Sandbox стосується **лише shell / terminal** — не file edits, browser чи MCP.
+The sandbox applies **only to shell / terminal** — not file edits, the browser, or MCP.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -399,7 +399,7 @@ Agent combines search tools as needed:
 
 notes:
 
-Семантичний пошук — поверх індексу. Instant Grep — exact match / regex. Часто агент використовує обидва в одній задачі. Explore subagent — швидша модель, окреме вікно; багато паралельних запитів без роздування основного чату. Можна попросити явно: "use a subagent to find…".
+Semantic search runs on top of the index. Instant Grep is exact match / regex. The agent often uses both in one task. The Explore subagent is a faster model in its own window: many parallel queries without bloating the main chat. You can ask explicitly: "use a subagent to find…".
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -421,7 +421,7 @@ A browser pane **inside Cursor**, fully driven by the Agent.
 
 notes:
 
-Сценарій: агент змінив фронтенд → відкрив сторінку → клікнув → скриншот/консоль → виправив. `/use-browser` — змушує перевіряти UI в браузері, а не з коду.
+Scenario: the agent changed the frontend → opened the page → clicked → screenshot/console → fixed it. `/use-browser` forces it to check the UI in the browser, not from the code.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -440,7 +440,7 @@ Live React apps for interactive artifacts next to chat — dashboards, tables, d
 
 notes:
 
-Технічно це live React apps (`.canvas.tsx`, `cursor/canvas` SDK): reopen, edit, iterate. Агент може сам відкрити canvas, коли візуал кращий за текст. Share / Publish — платні плани; privacy mode має дозволяти storage.
+Technically these are live React apps (`.canvas.tsx`, `cursor/canvas` SDK): reopen, edit, iterate. The agent can open a canvas itself when a visual beats text. Share / Publish are paid plans; privacy mode has to allow storage.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -460,7 +460,7 @@ Each task gets its own **git checkout**.
 
 notes:
 
-Основа паралелізації. Найзручніше в Agents Window: бачите кілька runs поруч, без перемикання в IDE. Setup-команди для нового worktree — у `.cursor/worktrees.json`. Місток до Multitask далі.
+The basis of parallelization. Most convenient in the Agents Window: you see several runs side by side, without switching back to the IDE. Setup commands for a new worktree live in `.cursor/worktrees.json`. A bridge to Multitask, covered next.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -497,7 +497,7 @@ Fastest paths into the conversation:
 
 notes:
 
-Кожен режим — різний рівень автономії AI. Правило: спершу зрозумій, потім сплануй, тоді виконуй. Multitask — не пункт у пікері режимів, а спосіб роботи через Agents Window і worktrees; розберемо окремо.
+Each mode is a different level of AI autonomy. The rule: understand first, then plan, then execute. Multitask is not an item in the mode picker; it's a way of working through the Agents Window and worktrees — covered separately.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -533,7 +533,7 @@ notes:
 
 notes:
 
-Cursor сам пропонує Plan mode, коли бачить у промпті ознаки складної задачі. План зберігається в home directory або в workspace ("Save to workspace") — командний артефакт.
+Cursor itself suggests Plan mode when the prompt looks like a complex task. The plan is saved in the home directory or in the workspace ("Save to workspace") — a team artifact.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -600,7 +600,7 @@ Several agents on the same problem, **without conflicts**.
 
 notes:
 
-Після завершення всіх паралельних агентів Cursor сам оцінює результати і коментує, чому обрав саме цей варіант. Цей режим очевидно дорогий
+After all parallel agents finish, Cursor itself scores the results and comments on why it picked that variant. This mode is obviously expensive.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -691,7 +691,7 @@ One picker (`Cmd+/` to cycle), different jobs.
 
 notes:
 
-Auto — розумний дефолт: Cursor Router читає кожен запит і підбирає модель за типом і складністю задачі. Три режими Auto: Cost (фіксована ціна), Balance, Intelligence. Свідомо перемикайтесь на потужнішу модель лише коли задача справді складна.
+Auto is a smart default: Cursor Router reads each request and picks a model by task type and complexity. Three Auto modes: Cost (fixed price), Balance, Intelligence. Switch to a more powerful model on purpose only when the task is genuinely hard.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -808,7 +808,7 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 
 notes:
 
-Ця секція — оглядова: показуємо, що екосистема Cursor виходить далеко за межі редактора. Глибоке занурення (автоматизації, оркестрація) — це рівні 6–10 і теми наступних модулів; тут — «що існує і навіщо».
+This section is an overview: we show that the Cursor ecosystem goes far beyond the editor. The deep dive (automations, orchestration) is levels 6–10 and the topics of later modules; here it's "what exists and why."
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -829,7 +829,7 @@ The same Agent, running in **Cursor-managed cloud VMs**.
 
 notes:
 
-Ключова відмінність від локального агента: власне ізольоване середовище з мережею, секретами і startup-командами — може сам зібрати і протестувати. Типовий сценарій: делегували задачу з телефона чи Slack → отримали готовий PR. Раніше називались Background Agents.
+The key difference from a local agent: its own isolated environment with network, secrets, and startup commands — it can build and test on its own. Typical scenario: you delegated a task from your phone or Slack → you got a ready PR. Previously called Background Agents.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -849,7 +849,7 @@ Cloud agents that run **without you** — on a schedule or on events.
 
 notes:
 
-Створюються на cursor.com/automations або командою /automate. Білінг — за usage хмарних агентів. Приклади: review recent commits for bugs, weekly codebase-change summary, triage bugs from Slack.
+Created at cursor.com/automations or with the /automate command. Billing is cloud-agent usage. Examples: review recent commits for bugs, weekly codebase-change summary, triage bugs from Slack.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -869,7 +869,7 @@ Two Cursor-managed agents on Cloud Agents infra:
 
 notes:
 
-Нуль додаткового сетапу — працюють поверх Cloud Agents. Є аналітика: знайдені вразливості, час до фіксу, resolution rate. Ручні аналоги — /review-security і /review прямо в агенті.
+Zero extra setup — they run on top of Cloud Agents. There is analytics: vulnerabilities found, time to fix, resolution rate. Manual counterparts are /review-security and /review right in the agent.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -890,7 +890,7 @@ Automated **code review** on every pull request.
 
 notes:
 
-Тригериться автоматично на кожне оновлення PR, вручну — коментарем `cursor review` / `bugbot run`, або інкрементально (тільки нові зміни). Два рівні ретельності: Default і High. Читає наявні коментарі PR, щоб не дублювати.
+Triggers automatically on every PR update, manually via a `cursor review` / `bugbot run` comment, or incrementally (new changes only). Two thoroughness levels: Default and High. It reads existing PR comments so it doesn't duplicate them.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -913,7 +913,7 @@ _One example_ — also Slack, Jira, Linear, GitLab, Bitbucket, etc.
 
 notes:
 
-GitHub-інтеграція — least-privilege permissions, підтримує GitHub Enterprise Server. Teams: інсталяція через дашборд або Microsoft Marketplace; є вибір repo (`repo=`), env, Privacy Mode. Аналогічна інтеграція є для Slack, Jira, Linear, GitLab, Bitbucket.
+The GitHub integration uses least-privilege permissions and supports GitHub Enterprise Server. Teams: install via the dashboard or Microsoft Marketplace; you can pick the repo (`repo=`), env, and Privacy Mode. The same kind of integration exists for Slack, Jira, Linear, GitLab, and Bitbucket.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -934,7 +934,7 @@ An approval agent that **routes and gates** pull requests.
 
 notes:
 
-Cursor-managed agent на Automations (як Bugbot і Security), не інтеграція. Сигнали: чекає Bugbot/Security, якщо увімкнені; їх findings блокують auto-approve. Policy-файли в репо мають пріоритет над custom prompt. Обов'язково хоча б одна primary action: Request Reviewers або Approve PR.
+A Cursor-managed agent on Automations (like Bugbot and Security), not an integration. Signals: it waits for Bugbot/Security if they are enabled; their findings block auto-approve. Policy files in the repo take priority over a custom prompt. At least one primary action is required: Request Reviewers or Approve PR.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -961,7 +961,7 @@ for await (const event of run.stream()) { ... }
 
 notes:
 
-Use cases з доків: auto-fix боти в CI/CD, автоматичні review-пасси, bug triage, вбудовані агенти у власний продукт, оркестрація. Resume: `Agent.resume(agentId)` — локально store (SQLite / JSONL / свій Redis·Postgres), cloud — на сервері Cursor. Потрібен Node.js 22.13+, авторизація через CURSOR_API_KEY. Є також Python SDK.
+Use cases from the docs: auto-fix bots in CI/CD, automatic review passes, bug triage, agents embedded in your own product, orchestration. Resume: `Agent.resume(agentId)` — locally a store (SQLite / JSONL / your own Redis·Postgres), in the cloud on Cursor's server. Requires Node.js 22.13+, auth via CURSOR_API_KEY. There is also a Python SDK.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 

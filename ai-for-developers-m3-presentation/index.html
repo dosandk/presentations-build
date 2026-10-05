@@ -491,7 +491,7 @@ globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
 
 notes:
 
-User Rules не впливають на Tab та Inline Edit (Cmd/Ctrl+K) — тільки на Agent/Chat.
+User Rules do not affect Tab or Inline Edit (Cmd/Ctrl+K) — only Agent/Chat.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -707,7 +707,7 @@ Rules are where you encode your **persistent conventions**:
 
 notes:
 
-Довідник принципів: https://github.com/webpro/programming-principles
+Principles reference: https://github.com/webpro/programming-principles
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -800,9 +800,9 @@ alwaysApply: true
 
 notes:
 
-- Rule A — добрий: scoped globs + посилання на файли замість копіювання
-- Rule B — копіювання style guide; краще linter + коротке rule
-- Rule C — документування команд, які Agent і так знає
+- Rule A — good: scoped globs + links to files instead of copying
+- Rule B — copying the style guide; better a linter + a short rule
+- Rule C — documenting commands the Agent already knows
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1006,7 +1006,7 @@ description: Frontend architecture guidelines
 
 notes:
 
-fake skill, це список принципів а не план виконання
+A fake skill: this is a list of principles, not an execution plan.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1028,7 +1028,7 @@ description: Guidelines for reviewing code
 
 notes:
 
-fake skill, це список принципів а не план виконання
+A fake skill: this is a list of principles, not an execution plan.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1054,7 +1054,7 @@ When implementing a new feature:
 
 notes:
 
-Є чіткий multi-step workflow: analyze -> explore -> plan -> implement -> test -> review ->
+There is a clear multi-step workflow: analyze -> explore -> plan -> implement -> test -> review ->
 summarize.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -1172,8 +1172,8 @@ Check how to get information about a task in your task-tracking system
 
 notes:
 
-Hooks — це не React hooks і не git hooks. Це механізм Cursor для перехоплення подій
-агента.
+Hooks are not React hooks and not git hooks. They are Cursor's mechanism for intercepting
+agent events.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1207,7 +1207,7 @@ Cursor separates hooks by **what triggers them**:
 
 notes:
 
-Agent hooks — основний фокус презентації. Tab hooks — для автономного Tab, не Agent Chat.
+Agent hooks are the focus of this presentation. Tab hooks are for autonomous Tab, not Agent Chat.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -2002,8 +2002,8 @@ large </div>
 
 notes:
 
-Skills з `disable-model-invocation: true` поводяться як slash command — агент не підтягує
-їх сам. `/migrate-to-skills` конвертує старі commands у такі skills.
+Skills with `disable-model-invocation: true` behave like a slash command — the agent does not
+pull them in on its own. `/migrate-to-skills` converts old commands into such skills.
 
 </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->

@@ -124,10 +124,13 @@ body .reveal table  {
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
+<img src="master-classes/ai-dev-setup/05-module/imgs/01-fuel-gauge-preview.png" alt="" style="width: 300px; object-fit: fill">
+
+
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2">Every completion reads your <strong>full context window</strong></li>
-<li class="fragment" data-fragment-index="3">Long chats, big diffs, and whole-repo dumps add up fast</li>
-<li class="fragment" data-fragment-index="4">Optimization = <strong>same outcome, fewer tokens</strong></li>
+<li class="fragment" data-fragment-index="2">Every reply re-reads your <strong>full context window</strong></li>
+<li class="fragment" data-fragment-index="3">Long chats, big diffs, and whole-repo dumps pile up fast</li>
+<li class="fragment" data-fragment-index="4">Optimization = <strong>same result, fewer tokens</strong></li>
 </ul>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -136,20 +139,20 @@ body .reveal table  {
 
 | What fills the tank                         | Why it hurts              |
 | ------------------------------------------- | ------------------------- |
-| Chat history + tool outputs                 | Re-sent on every turn     |
-| Rules, skills, MCP tool schemas             | Fixed overhead each run   |
+| Chat history + tool outputs                 | Sent again on every turn  |
+| Rules, skills, MCP tool schemas             | Fixed cost on every run   |
 | Pasted logs, full files, `@Codebase` sweeps | Easy to 10× a simple ask  |
-| Wrong model tier for a simple task          | Pay premium price for nothing |
+| Wrong model tier for a simple task          | Premium price for nothing |
 
 <!-- .element: style="font-size: 2.0rem" -->
 
-> 📌 **Rule:** if you can't list what's in context — you're packing too much.
+> 📌 **Rule:** if you can't list what's in context — you packed too much.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 
 notes:
 
-Покажіть usage dashboard у Cursor (Settings → Usage) або просто згадайте типовий сценарій «токени закінчились на другий день». Аудиторія має відчути, що це не абстракція.
+Show the usage dashboard in Cursor (Settings → Usage), or just mention the typical "tokens ran out on day two" scenario. The audience should feel this is not abstract.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -158,12 +161,12 @@ notes:
 **Where:** `Cursor Settings → General → Usage` (or account dashboard on cursor.com)
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>Before a big Agent run</strong> — write down your current usage</li>
-<li class="fragment" data-fragment-index="2"><strong>After the run</strong> — did one chat burn more fuel than a whole day of Ask?</li>
-<li class="fragment" data-fragment-index="3"><strong>Team habit</strong> — screenshot expensive chats; turn them into rules or skills</li>
+<li class="fragment" data-fragment-index="1"><strong>Before a big Agent run</strong> — note your current usage</li>
+<li class="fragment" data-fragment-index="2"><strong>After the run</strong> — did one chat burn more than a whole day of Ask?</li>
+<li class="fragment" data-fragment-index="3"><strong>Team habit</strong> — screenshot costly chats; turn them into rules or skills</li>
 </ul>
 
-> 💡 Tip: if you can't explain a jump in usage — open chat → scroll tool calls → count file reads.
+> 💡 Tip: usage jumped and you don't know why? Open the chat → scroll the tool calls → count the file reads.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -175,20 +178,20 @@ Task: _Login returns 401 after token refresh_
 
 | Expensive habit | Cheaper habit |
 | --------------- | ------------- |
-| Agent + max model, no `@` refs | Ask + fast model → locate → Agent on 2 files |
-| Paste full `npm test` output (800 lines) | Paste failing test name + 12-line stack |
-| 6 follow-ups in one 90-message chat | New chat after plan approved |
-| Agent re-explores repo every turn | `@src/auth/token.ts` `@src/api/client.ts` |
+| Agent + max model, no `@` refs | Ask + fast model → find it → Agent on 2 files |
+| Paste full `npm test` output (800 lines) | Paste the failing test name + 12-line stack |
+| 6 follow-ups in one 90-message chat | New chat once the plan is approved |
+| Agent re-scans the repo every turn | `@src/auth/token.ts` `@src/api/client.ts` |
 
 <!-- .element: style="font-size: 1.8rem" -->
 
-> 📌 **Rule:** same fix — pay for **precision**, not **exploration twice**.
+> 📌 **Rule:** same fix — pay for **precision**, not for **scanning twice**.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 
 notes:
 
-Покажіть обидва промпти в Cursor поруч — аудиторія має побачити різницю в кількості tool calls, не лише в тексті слайду.
+Show both prompts side by side in Cursor — the audience should see the difference in tool-call count, not only in the slide text.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -200,10 +203,10 @@ Count what travels with **every** message in this repo:
 <li class="fragment" data-fragment-index="1"><strong>Rules</strong> — `.cursor/rules/*.mdc` with <code>alwaysApply: true</code></li>
 <li class="fragment" data-fragment-index="2"><strong>MCP</strong> — `Cursor Settings → MCP` — enabled servers × tool count</li>
 <li class="fragment" data-fragment-index="3"><strong>Skills</strong> — `.cursor/skills/**/SKILL.md` the agent may load</li>
-<li class="fragment" data-fragment-index="4"><strong>Chat baggage</strong> — context ring full? → <code>/summarize</code> or start a new chat</li>
+<li class="fragment" data-fragment-index="4"><strong>Chat baggage</strong> — context full? → <code>/summarize</code> or start a new chat</li>
 </ul>
 
-> 🎯 **Best for:** before adding "just one more" MCP server or global rule.
+> 🎯 **Best for:** before you add "just one more" MCP server or global rule.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
 
@@ -225,40 +228,33 @@ That's not AI magic — that's a **leaky fuel line**.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🗺️ Where the fuel goes
+### 🗺️ Where does the fuel go?
 
-<img src="drawings/token-budget.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
+> 🎯 **Best for:** teams that want speed <em>and</em> a bill that makes sense.
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+
+<ul style="font-size: 2.0rem">
+<li class="fragment" data-fragment-index="1"><strong>Right engine</strong> — match model to task</li>
+<li class="fragment" data-fragment-index="2"><strong>Lean cargo</strong> — tighter prompts and context</li>
+<li class="fragment" data-fragment-index="3"><strong>Map first</strong> — plan before Agent mode burns fuel</li>
+<li class="fragment" data-fragment-index="4"><strong>Playbook</strong> — reuse what you built in Modules 1–5</li>
+</ul>
 
 
 notes:
 
-Пройдіться зліва направо: Human → context window (фіксований overhead + те, що ви самі напакували) → AI → tool loop назад у контекст → Human робить вузький fix, а не replay всього чату.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🎯 This module's mileage plan
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>Right engine</strong> — match model to task</li>
-<li class="fragment" data-fragment-index="2"><strong>Lean cargo</strong> — prompts and context discipline</li>
-<li class="fragment" data-fragment-index="3"><strong>Map first</strong> — plan before Agent mode burns fuel</li>
-<li class="fragment" data-fragment-index="4"><strong>Playbook</strong> — reuse what you already built in Modules 1–5</li>
-</ul>
-
-> 🎯 **Best for:** teams that want speed <em>and</em> a bill that makes sense.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+Walk left to right: Human → context window (fixed overhead + what you packed in yourself) → AI → the tool loop back into context → Human makes a narrow fix, not a replay of the whole chat.
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Right Engine
 
-<img src="drawings/model-picker.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
+<img src="master-classes/ai-dev-setup/05-module/imgs/right-engine-preview.png" alt="" style="object-fit: scale-down">
 
 
 notes:
 
-Пройдіться по смугах зверху вниз. Праворуч — два швидких питання для ескалації tier. Наголос: local = draft lane, не final QA.
+Walk the bands top to bottom. On the right — two quick questions for escalating the tier. Stress: local = draft lane, not final QA.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -273,7 +269,7 @@ notes:
 
 <!-- .element: style="font-size: 2.0rem" -->
 
-> 📌 **Rule:** upgrade the engine only when the road gets rough.
+> 📌 **Rule:** upgrade the engine only when the road gets hard.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -286,29 +282,29 @@ notes:
 | Chat input — model dropdown | Pick model for **this** thread |
 | `Cmd+/` (Mac) / `Ctrl+/` | Cycle models quickly |
 | **Auto** submenu | Cost · Balance · Intelligence — Cursor picks the model for you |
-| `Cursor Settings → Models` | Set defaults, add local/Ollama endpoint |
+| `Cursor Settings → Models` | Set defaults, add a local/Ollama endpoint |
 
 <!-- .element: style="font-size: 1.8rem" -->
 
-> 💡 Tip: set **Auto → Cost** as your daily default; use a top-tier model only for Plan and Debug threads.
+> 💡 Tip: make **Auto → Cost** your daily default; save a top-tier model for Plan and Debug threads.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 
 notes:
 
-Покажіть dropdown у чаті live. Auto → Cost — good default for the course narrative on token savings.
+Show the dropdown in chat live. Auto → Cost — good default for the course narrative on token savings.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🛠️ Task → model → mode (copy this)
+### 🛠️ Task → model → mode
 
 | Your task | Model | Mode | Why |
 | --------- | ----- | ---- | --- |
 | "Where is `refreshToken` handled?" | Auto / fast | **Ask** | Read-only, no edit loop |
 | Rename prop across 4 files | Auto / fast | **Agent** | Simple change, low risk |
-| Add OAuth + refresh flow (6+ files) | Balanced or top-tier | **Plan → Agent** | Planning is cheap; Agent stays focused |
+| Add OAuth + refresh flow (6+ files) | Balanced or top-tier | **Plan → Agent** | Planning is cheap; Agent stays on track |
 | Flaky prod bug, can't reproduce locally | Top-tier | **Debug** | Live evidence is worth the higher price |
-| Generate 20 CRUD stubs from OpenAPI | **Local** (Ollama) | Agent | High volume + private; you check the diffs |
+| Generate 20 CRUD stubs from OpenAPI | **Local** (Ollama) | Agent | High volume + private; you review the diffs |
 
 <!-- .element: style="font-size: 1.65rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -331,7 +327,7 @@ Agent + balanced: connect to existing service layer only
 
 <!-- .element: style="font-size: 1.5rem" -->
 
-> ✅ Draft locally </br> ⚠️ Never merge security/auth code without cloud + human review
+> ✅ Draft locally </br> ⚠️ Never merge security/auth code without a cloud + human review
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -339,9 +335,12 @@ Agent + balanced: connect to existing service layer only
 
 ### 🛑 Premium tier on autopilot
 
+<img src="master-classes/ai-dev-setup/05-module/imgs/boing-747.png" alt="" style="width: 600px; object-fit: fill">
+
+
 <div class="block">
 
-Using the deepest thinking model for lint fixes is like taking a **747 to the corner store**.
+Using the deepest thinking model for lint fixes is like taking a **Boeing 747 to the corner store**.
 
 Fine once. Expensive as a habit.
 </div>
@@ -359,12 +358,15 @@ Fine once. Expensive as a habit.
 ## Lean Cargo
 
 > Narrow, relevant context beats the whole project — every time.
-
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<img src="master-classes/ai-dev-setup/05-module/imgs/lean-cargo-preview.png" alt="" style="width: 600px; object-fit: fill">
+
+
 
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="2">Pack only what the Agent needs for <strong>this</strong> task</li>
-<li class="fragment" data-fragment-index="3">Say what "done" looks like — skip the essay</li>
+<li class="fragment" data-fragment-index="3">Say what "done" means — skip the essay</li>
 </ul>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -373,9 +375,9 @@ Fine once. Expensive as a habit.
 
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="1"><strong>One job per message</strong> — split "implement + test + docs"</li>
-<li class="fragment" data-fragment-index="2"><strong>State the limits first</strong> — files, patterns, what's out of scope</li>
+<li class="fragment" data-fragment-index="2"><strong>Set the limits first</strong> — files, patterns, what's out of scope</li>
 <li class="fragment" data-fragment-index="3"><strong>Examples &gt; adjectives</strong> — show one good diff, not "make it clean"</li>
-<li class="fragment" data-fragment-index="4"><strong>Reference, don't paste</strong> — `@file`, `@folder`, `@Docs`</li>
+<li class="fragment" data-fragment-index="4"><strong>Link, don't paste</strong> — `@file`, `@folder`, `@Docs`</li>
 </ul>
 
 > 📌 **Rule:** specific beats polite. "Fix login 401 in `auth.ts`" beats a paragraph of praise.
@@ -416,13 +418,13 @@ Done when: existing auth.test.ts passes; no new deps.
 | Situation | Attach | Skip |
 | --------- | ------ | ---- |
 | Bug in one feature | `@src/features/login/` + error snippet | `@Codebase` |
-| "Follow this pattern" | `@src/components/Button.tsx` as example | Pasting whole design doc |
-| API contract question | `@openapi.yaml` or `@src/types/api.ts` | Pasting Postman export |
+| "Follow this pattern" | `@src/components/Button.tsx` as the example | The whole design doc |
+| API contract question | `@openapi.yaml` or `@src/types/api.ts` | A Postman export |
 | Config / env issue | `@.env.example` `@docker-compose.yml` | Real secrets |
 
 <!-- .element: style="font-size: 1.75rem" -->
 
-> 💡 Tip: **2–5 files in the change area** beats "let the Agent explore."
+> 💡 Tip: **2–5 files near the change** beats "let the Agent explore."
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -442,9 +444,9 @@ AssertionError: expected 401, got 200
 @src/auth/tokenService.ts — suspect refreshToken() line ~42
 ```
 
-**Skip:** full GitHub Actions log, `node_modules`, every passing test file.
+**Skip:** the full GitHub Actions log, `node_modules`, every passing test file.
 
-> 📌 **Rule:** give the Agent a **needle**, not the **haystack**.
+> 📌 **Rule:** give the Agent the **needle**, not the **haystack**.
 
 <!-- .element: style="font-size: 1.5rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -455,8 +457,8 @@ AssertionError: expected 401, got 200
 | After first diff | Say this |
 | ---------------- | -------- |
 | Wrong null guard | `In tokenService.ts line 42: guard empty refreshToken before POST` |
-| Test still red | Paste **new** 5-line failure only — not whole run |
-| Wrong file touched | Reject diff → `Only edit files listed in plan step 2` |
+| Test still red | Paste **only** the new 5-line failure — not the whole run |
+| Wrong file touched | Reject the diff → `Only edit files listed in plan step 2` |
 | Third bad attempt | **Stop** → new chat + Plan with what you learned |
 
 <!-- .element: style="font-size: 1.75rem" -->
@@ -467,7 +469,7 @@ AssertionError: expected 401, got 200
 
 <div class="block">
 
-If your prompt says _"you are a world-class 10x senior engineer"_ and nothing about the bug — you're paying for **cargo**, not **direction**.
+If your prompt says _"you are a world-class 10x senior engineer"_ and nothing about the bug — you're paying for **cargo**, not for **direction**.
 </div>
 
 
@@ -482,12 +484,15 @@ If your prompt says _"you are a world-class 10x senior engineer"_ and nothing ab
 
 ## Map First
 
-> Ten minutes of plan saves an hour of Agent wandering.
+> Ten minutes of planning saves an hour of Agent wandering.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
+<img src="master-classes/ai-dev-setup/05-module/imgs/04-map-first.png" alt="" style="width: 600 px; object-fit: fill">
+
+
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2">Agent mode with no map = expensive exploration</li>
+<li class="fragment" data-fragment-index="2">Agent mode with no map = expensive wandering</li>
 <li class="fragment" data-fragment-index="3">Plan mode = cheap scouting</li>
 </ul>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -507,7 +512,7 @@ If your prompt says _"you are a world-class 10x senior engineer"_ and nothing ab
 
 notes:
 
-Live demo idea: одна й та сама задача — спочатку Agent одразу (багато tool calls), потім Plan → короткий Agent run. Порівняйте відчуття і кількість кроків.
+Live demo idea: the same task — first Agent immediately (many tool calls), then Plan → a short Agent run. Compare the feel and the number of steps.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -515,13 +520,13 @@ Live demo idea: одна й та сама задача — спочатку Agen
 
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="1">Mode picker → <strong>Plan</strong> (or accept when Cursor suggests it)</li>
-<li class="fragment" data-fragment-index="2">Agent explores read-only → asks 1–3 clarifying questions</li>
-<li class="fragment" data-fragment-index="3">You edit the plan inline — delete extra files/steps</li>
+<li class="fragment" data-fragment-index="2">Agent reads (no edits) → asks 1–3 clarifying questions</li>
+<li class="fragment" data-fragment-index="3">You edit the plan inline — remove extra files/steps</li>
 <li class="fragment" data-fragment-index="4"><strong>Build</strong> → switches to Agent with the plan attached</li>
-<li class="fragment" data-fragment-index="5"><strong>Save to workspace</strong> → `.cursor/plans/` — team file, reusable</li>
+<li class="fragment" data-fragment-index="5"><strong>Save to workspace</strong> → `.cursor/plans/` — shared, reusable file</li>
 </ul>
 
-> 💡 Tip: if the plan lists 12 files, cut it to 5 **before** Build.
+> 💡 Tip: if the plan lists 12 files, cut it to 5 **before** you Build.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -550,7 +555,7 @@ Deliver: plan with file list + test strategy before any edits.
 
 notes:
 
-Вставте цей промпт у Plan mode live. Покажіть як відредагувати план перед Build — це ключовий момент економії.
+Paste this prompt into Plan mode live. Show how to edit the plan before Build — that is the key savings moment.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -558,13 +563,13 @@ notes:
 
 | Vague (Agent wanders) | Focused (Agent executes) |
 | --------------------- | ------------------------ |
-| "Implement remember me" | "Steps 1–3 from `.cursor/plans/remember-me.md` only" |
+| "Implement remember me" | "Only steps 1–3 from `.cursor/plans/remember-me.md`" |
 | "Fix auth properly" | "Fix `refreshToken()` in `tokenService.ts`; do not rename exports" |
 | "Add tests" | "Add cases to `auth.test.ts` for empty refresh token + expired token" |
 
 <!-- .element: style="font-size: 1.7rem" -->
 
-> 📌 **Rule:** the plan is the contract — Agent prompt references **step numbers**, not wishes.
+> 📌 **Rule:** the plan is the contract — the Agent prompt points to **step numbers**, not wishes.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -578,9 +583,9 @@ notes:
 | 2 | Paste bug repro steps + limits → get plan | **Plan** |
 | 3 | Build steps 1–2 only (guard + test) | **Agent** |
 | 4 | Run `npm test auth.test.ts` yourself | terminal |
-| 5 | Paste new failure or **New chat** for step 3 | **Agent** / fresh |
+| 5 | Paste the new failure or **New chat** for step 3 | **Agent** / fresh |
 
-> 💡 Tip: step 5 in a **new chat** + `@plan.md` — not 40 messages of old tool output.
+> 💡 Tip: do step 5 in a **new chat** + `@plan.md` — not 40 messages of old tool output.
 
 <!-- .element: style="font-size: 1.65rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -590,7 +595,7 @@ notes:
 
 <div class="block">
 
-_"Just build the feature"_ with no acceptance criteria is how you get a **scenic tour** through every folder in the repo.
+_"Just build the feature"_ with no acceptance criteria is how you get a **scenic tour** of every folder in the repo.
 </div>
 
 
@@ -620,11 +625,11 @@ _"Just build the feature"_ with no acceptance criteria is how you get a **scenic
 
 | You built (Modules 2–4)     | Saves tokens by…                               |
 | --------------------------- | ---------------------------------------------- |
-| **Rules**                   | Add standards without re-typing them           |
-| **Skills**                  | Ready-made workflows without re-explaining     |
-| **MCP servers**             | Fetch live data instead of pasting huge docs   |
+| **Rules**                   | Adding standards without re-typing them        |
+| **Skills**                  | Reusing workflows without re-explaining        |
+| **MCP servers**             | Fetching live data instead of pasting huge docs |
 | **Hooks**                   | Auto-checks without another "please lint" chat |
-| **Subagents / specialists** | Small parallel tasks vs one overloaded chat    |
+| **Subagents / specialists** | Small parallel tasks instead of one huge chat  |
 | **Slash commands**          | One keystroke instead of a paragraph           |
 
 <!-- .element: style="font-size: 2.0rem" -->
@@ -652,12 +657,12 @@ alwaysApply: false
 - No drive-by refactors outside files in the task.
 ```
 
-**Saves:** 200 tokens × every message where you used to paste the same paragraph.
+**Saves:** 200 tokens × every message where you used to paste that same paragraph.
 
 notes:
 
-Покажіть файл з реального репо курсу `.cursor/rules/` якщо є. Поясніть різницю alwaysApply
-vs globs.
+Show a file from the course repo's `.cursor/rules/` if there is one. Explain the difference between alwaysApply
+and globs.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -667,9 +672,9 @@ vs globs.
 
 | Instead of                          | Do this                                                 |
 | ----------------------------------- | ------------------------------------------------------- |
-| Pasting 30-page Confluence spec     | Enable **Confluence/Jira MCP** → Agent pulls one page   |
-| Dumping Mongo schema in chat        | **MongoDB MCP** → `collection-schema` on one collection |
-| 5 marketplaces × 20 servers enabled | **3 servers** you use weekly — disable the rest         |
+| Pasting a 30-page Confluence spec   | Enable **Confluence/Jira MCP** → Agent pulls one page   |
+| Dumping the Mongo schema in chat    | **MongoDB MCP** → `collection-schema` on one collection |
+| 5 marketplaces × 20 servers enabled | Keep the **3 servers** you use weekly — disable the rest |
 
 <!-- .element: style="font-size: 1.75rem" -->
 
@@ -699,7 +704,7 @@ vs globs.
 npx eslint --fix "$FILE" 2>/dev/null || true
 ```
 
-**Saves:** no _"please run lint and fix warnings"_ message × N iterations.
+**Saves:** no _"please run lint and fix warnings"_ message, times every iteration.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -708,9 +713,9 @@ npx eslint --fix "$FILE" 2>/dev/null || true
 | Tool                 | Practical use                                                             |
 | -------------------- | ------------------------------------------------------------------------- |
 | `/implement` skill   | One keystroke → full workflow in `SKILL.md`, not a paragraph prompt       |
-| `/summarize`         | Context ring &gt;70% — shrink history, keep the same chat                 |
+| `/summarize`         | Context over 70% — shrink history, keep the same chat                     |
 | Subagent **explore** | _"find all usages of refreshToken"_ — narrow search, main chat stays lean |
-| Subagent **shell**   | Run test matrix — short summary back, not the full log in parent chat     |
+| Subagent **shell**   | Run the test matrix — short summary back, not the full log in the main chat |
 
 <!-- .element: style="font-size: 1.75rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -721,23 +726,23 @@ npx eslint --fix "$FILE" 2>/dev/null || true
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="1"><code>docs/ai-handbook.md</code> — model table (Ask/Plan/Agent defaults)</li>
 <li class="fragment" data-fragment-index="2"><strong>PR checklist</strong> — Plan required if &gt;3 files; max 5 `@` refs</li>
-<li class="fragment" data-fragment-index="3"><strong>Usage review</strong> — monthly: top 3 expensive chat patterns → rule/skill</li>
+<li class="fragment" data-fragment-index="3"><strong>Usage review</strong> — monthly: turn the top 3 costly chat patterns into a rule/skill</li>
 <li class="fragment" data-fragment-index="4"><strong>MCP allowlist</strong> — which servers per repo; no personal experiments in prod repos</li>
 </ul>
 
-> 🎯 **Best for:** 1-page handbook the team actually signs — not 40 pages.
+> 🎯 **Best for:** a 1-page handbook the team actually signs — not 40 pages.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
 
 notes:
 
-Покажіть приклад ai-handbook.md — буквально half-page markdown з таблицею model defaults.
+Show an ai-handbook.md example — literally a half-page markdown file with a model-defaults table.
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Course Finale
 
-> From _"hello"_ in chat to organized, measured workflows.
+> From _"hello"_ in chat to organized, measurable workflows.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -781,24 +786,24 @@ docs/ai-handbook.md       # model defaults + when to Plan
 
 <!-- .element: style="font-size: 1.45rem" -->
 
-> 🎯 **Best for:** new dev onboarding in 15 minutes, not a wiki novel.
+> 🎯 **Best for:** onboarding a new dev in 15 minutes, not a wiki novel.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### 🏃 Day-1 workflow — one feature, tracked
 
 <ol style="font-size: 1.85rem">
-<li class="fragment" data-fragment-index="1"><strong>Ask</strong> + Auto — locate pattern file (`Cmd+L`, attach `@` example)</li>
+<li class="fragment" data-fragment-index="1"><strong>Ask</strong> + Auto — find the pattern file (`Cmd+L`, attach an `@` example)</li>
 <li class="fragment" data-fragment-index="2"><strong>Plan</strong> — paste JIRA + acceptance criteria → Save to workspace</li>
-<li class="fragment" data-fragment-index="3"><strong>Agent</strong> — _"Build plan steps 1–2 only"_ → review diff</li>
-<li class="fragment" data-fragment-index="4"><strong>Terminal</strong> — you run tests (not Agent re-run loop)</li>
-<li class="fragment" data-fragment-index="5"><strong>New chat</strong> — step 3 of plan + paste failure snippet only</li>
+<li class="fragment" data-fragment-index="3"><strong>Agent</strong> — _"Build plan steps 1–2 only"_ → review the diff</li>
+<li class="fragment" data-fragment-index="4"><strong>Terminal</strong> — you run the tests (not an Agent re-run loop)</li>
+<li class="fragment" data-fragment-index="5"><strong>New chat</strong> — plan step 3 + paste only the failure snippet</li>
 <li class="fragment" data-fragment-index="6"><strong>PR</strong> — human review; Bugbot optional for the diff</li>
 </ol>
 
 notes:
 
-Пройдіться по кроках як checklist — це фінальний "operating system" курсу. Кожен крок прив'язаний до секцій Module 6.
+Walk the steps as a checklist — this is the course's final "operating system." Each step is tied to sections of Module 6.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -808,8 +813,8 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="2">Pick models by task risk — not by hype</li>
-<li class="fragment" data-fragment-index="3">Pack lean context and check output carefully</li>
-<li class="fragment" data-fragment-index="4">Plan first, checkpoint often, new chat when needed</li>
+<li class="fragment" data-fragment-index="3">Pack lean context and check the output carefully</li>
+<li class="fragment" data-fragment-index="4">Plan first, checkpoint often, start a new chat when needed</li>
 <li class="fragment" data-fragment-index="5">Reuse rules, skills, and MCP instead of re-prompting</li>
 </ul>
 
@@ -822,18 +827,18 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 ### 🎯 Keep doing this Monday
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>One task</strong> you will run through Plan → Agent this week</li>
+<li class="fragment" data-fragment-index="1"><strong>One task</strong> to run through Plan → Agent this week</li>
 <li class="fragment" data-fragment-index="2"><strong>One rule or skill</strong> to replace a repeated prompt</li>
-<li class="fragment" data-fragment-index="3"><strong>One metric</strong> — usage, PR cycle time, or fewer re-work loops</li>
+<li class="fragment" data-fragment-index="3"><strong>One metric</strong> — usage, PR cycle time, or fewer rework loops</li>
 </ul>
 
-> 💡 Tip: optimization is a **habit loop**, not a one-time settings tweak.
+> 💡 Tip: optimization is a **habit**, not a one-time settings tweak.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 
 notes:
 
-Закінчіть призовом до action — хай кожен запише одну конкретну зміну в робочому процесі на наступний тиждень. Потім Q&A.
+Close with a call to action — have everyone write down one concrete change to their workflow for next week. Then Q&A.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -841,14 +846,14 @@ notes:
 
 | Pick | Concrete action |
 | ---- | ---------------- |
-| **A** | Move your top repeated prompt → `.cursor/rules/*.mdc` with `globs` |
-| **B** | Run one feature through Plan → save plan → Agent by steps |
-| **C** | Disable 2 unused MCP servers; measure next Agent run |
-| **D** | Add `afterFileEdit` hook for format/lint — remove one repeated chat step |
+| **A** | Move your most-repeated prompt → `.cursor/rules/*.mdc` with `globs` |
+| **B** | Run one feature through Plan → save the plan → Agent by steps |
+| **C** | Disable 2 unused MCP servers; measure the next Agent run |
+| **D** | Add an `afterFileEdit` hook for format/lint — drop one repeated chat step |
 
 <!-- .element: style="font-size: 1.75rem" -->
 
-> 💡 Tip: write which letter you picked — accountability beats intention.
+> 💡 Tip: write down which letter you picked — accountability beats intention.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -860,7 +865,7 @@ notes:
 
 The goal was never _"use less AI."_
 
-It's **more outcome per token** — and knowing when to spend.
+It's **more outcome per token** — and knowing when to spend more.
 </div>
 
 
