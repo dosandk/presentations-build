@@ -127,20 +127,20 @@ body .reveal table  {
 <li class="fragment" data-fragment-index="1">Where you talk to the Agent — IDE, Agents Window, CLI</li>
 <li class="fragment" data-fragment-index="2">What the Agent can do — built-in tools &amp; sandbox</li>
 <li class="fragment" data-fragment-index="3">How to direct it — prompting, modes, models</li>
-<li class="fragment" data-fragment-index="4">How it understands your code — indexing</li>
+<li class="fragment" data-fragment-index="4">Before you code — ignore files, Privacy Mode, policy</li>
 </ul>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### 📍 Starting point — Level 1
 
-|      Level       | What it looks like                      |
-| :-------------- | --------------------------------------- |
+| Level            | What it looks like                      |
+| :--------------- | --------------------------------------- |
 | **1 — No usage** | Pure manual coding, AI ignored          |
-|  2 — Awareness   | Tried the tool a few times              |
-|  3 — Basic use   | Simple isolated tasks, generic prompts  |
-|  4 — Task-level  | Regular use for small role tasks        |
-|  5 — Structured  | Multi-file context, `@` refs, manual QA |
+| 2 — Awareness    | Tried the tool a few times              |
+| 3 — Basic use    | Simple isolated tasks, generic prompts  |
+| 4 — Task-level   | Regular use for small role tasks        |
+| 5 — Structured   | Multi-file context, `@` refs, manual QA |
 
 <!-- .element: style="font-size: 2.0rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -180,8 +180,7 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 
 A few _"hellos"_ ≠ Level 5. You unlocked **Awareness**, not a black belt.
 
-First — the ways you talk to your Agent.
-</div>
+First — the ways you talk to your Agent. </div>
 
 
 
@@ -207,7 +206,9 @@ Three **surfaces**, one Agent underneath.
 
 notes:
 
-It's the same agent — the only difference is the interface and the use case. Don't mix these up: surfaces are "where the agent lives," while Ask/Plan/Agent/Debug modes (covered next) are available inside every surface. Next: one slide per surface.
+It's the same agent — the only difference is the interface and the use case. Don't mix
+these up: surfaces are "where the agent lives," while Ask/Plan/Agent/Debug modes (covered
+next) are available inside every surface. Next: one slide per surface.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -221,14 +222,15 @@ The familiar VS Code experience — Agent in the sidebar.
 <li class="fragment" data-fragment-index="3">Default Cursor experience + full ecosystem of VS Code extensions</li>
 </ul>
 
-> ✅ Hands-on coding, visual review, co-editing </br>
-> ⚠️ Weak at parallel / cloud / multi-repo orchestration
+> ✅ Hands-on coding, visual review, co-editing </br> ⚠️ Weak at parallel / cloud /
+> multi-repo orchestration
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 
 notes:
 
-The main trap of this surface: it's easy to stay "file-first" when the job is actually "steer many agents."
+The main trap of this surface: it's easy to stay "file-first" when the job is actually
+"steer many agents."
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -242,14 +244,15 @@ Agent-centric UI — local / cloud / SSH agents in one place.
 <li class="fragment" data-fragment-index="3">Diffs, commits, PR flow — without leaving the window</li>
 </ul>
 
-> ✅ Supervise many runs: prompt → review → merge </br>
-> ⚠️ Not a full IDE; overkill for "fix this one file"
+> ✅ Supervise many runs: prompt → review → merge </br> ⚠️ Not a full IDE; overkill for
+> "fix this one file"
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 
 notes:
 
-This is a higher abstraction of the work: agents write most of the code, the developer watches.
+This is a higher abstraction of the work: agents write most of the code, the developer
+watches.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -258,14 +261,14 @@ This is a higher abstraction of the work: agents write most of the code, the dev
 The same agent brain in your terminal.
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Interactive <code>agent "…"</code> / headless <code>agent -p "…"</code></li>
+<li class="fragment" data-fragment-index="1">Launch by typing <code>agent</code> in the terminal</li>
 <li class="fragment" data-fragment-index="2">Same modes: <code>Shift+Tab</code>, <code>/plan</code>, <code>/ask</code>, <code>/debug</code></li>
 <li class="fragment" data-fragment-index="3"><code>/shell</code> — run quick commands inside the session</li>
 <li class="fragment" data-fragment-index="4"><code>&amp;</code> prefix → Cloud Agent; <code>/open</code> → GUI review</li>
 </ul>
 
-> ✅ Scriptable: SSH, tmux, CI, scripts </br>
-> ⚠️ Text-first — not suited for design / UI work
+> ✅ Scriptable: SSH, tmux, CI, scripts </br> ⚠️ Text-first — not suited for design / UI
+> work
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -287,7 +290,8 @@ The same agent brain in your terminal.
 
 notes:
 
-Agents Window and the CLI become necessary once you have parallelism and automation (levels 6+).
+Agents Window and the CLI become necessary once you have parallelism and automation
+(levels 6+).
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -312,8 +316,7 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Chat beats Google. Cool. The Agent still doesn't _touch_ your code.
 
-Time to plug it in.
-</div>
+Time to plug it in. </div>
 
 
 
@@ -331,7 +334,7 @@ What the Agent can do **on its own**:
 
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="1"><strong>Terminal</strong> — run shell commands, monitor output</li>
-<li class="fragment" data-fragment-index="2"><strong>Search</strong> — semantic + Instant Grep</li>
+<li class="fragment" data-fragment-index="2"><strong>Search</strong> — Instant Grep, then read the files</li>
 <li class="fragment" data-fragment-index="3"><strong>Browser</strong> — open, click, screenshot, read console</li>
 <li class="fragment" data-fragment-index="4"><strong>Canvases</strong> — interactive artifacts next to chat</li>
 <li class="fragment" data-fragment-index="5"><strong>Worktrees</strong> — isolated git checkouts per task</li>
@@ -357,7 +360,8 @@ Shell commands run through a **sandbox** by default — controlled by **run mode
 
 <!-- .element: style="font-size: 2.0rem" -->
 
-> 💡 Tip: Stay on **Auto-review**. Let the Agent run tests, builds, git — approve when it asks.
+> 💡 Tip: Stay on **Auto-review**. Let the Agent run tests, builds, git — approve when it
+> asks.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 
@@ -377,7 +381,8 @@ What the sandbox blocks by default:
 <li class="fragment" data-fragment-index="3">Writes outside the workspace (<code>/tmp</code> allowed)</li>
 </ul>
 
-> 💡 Tip: Configure via `.cursor/sandbox.json` — extra paths, network allowlist. Agent **asks for approval** when it needs more.
+> 💡 Tip: Configure via `.cursor/sandbox.json` — extra paths, network allowlist. Agent
+> **asks for approval** when it needs more.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -385,21 +390,24 @@ What the sandbox blocks by default:
 
 ### 🔎 Tools: Search
 
-Agent combines search tools as needed:
+Semantic search is gone. Exact match first, a subagent when the question is broad.
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>Semantic</strong> — "where do we handle authentication?"</li>
-<li class="fragment" data-fragment-index="2"><strong>Instant Grep</strong> — exact symbols, regex; faster than ripgrep</li>
-<li class="fragment" data-fragment-index="3"><strong>Explore subagent</strong> — parallel searches in a separate context; returns a summary</li>
+<li class="fragment" data-fragment-index="2"><strong>Instant Grep</strong> — symbols and regex, then it opens the matching files</li>
+<li class="fragment" data-fragment-index="3"><strong>Explore</strong> — faster model; broad search in its own context; the chat gets a summary</li>
 </ul>
 
-> 💡 Tip: _"Use a subagent to find where Stripe webhooks are handled"_ — you get paths, not 20 files in chat.
+> 💡 Tip: You don't have to ask. Explore starts on a wide question like: _"where do we
+> handle…"_ — or you launch it: _"use a subagent to find…"_
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 
 notes:
 
-Semantic search runs on top of the index. Instant Grep is exact match / regex. The agent often uses both in one task. The Explore subagent is a faster model in its own window: many parallel queries without bloating the main chat. You can ask explicitly: "use a subagent to find…".
+Instant Grep is local and respects `.cursorignore` and `.gitignore`. Explore uses a faster
+model, so a symbol lookup is better left on Instant Grep.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -421,7 +429,8 @@ A browser pane **inside Cursor**, fully driven by the Agent.
 
 notes:
 
-Scenario: the agent changed the frontend → opened the page → clicked → screenshot/console → fixed it. `/use-browser` forces it to check the UI in the browser, not from the code.
+Scenario: the agent changed the frontend → opened the page → clicked → screenshot/console
+→ fixed it. `/use-browser` forces it to check the UI in the browser, not from the code.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -434,13 +443,16 @@ Live React apps for interactive artifacts next to chat — dashboards, tables, d
 <li class="fragment" data-fragment-index="2"><strong>Publish</strong> — share a live link with the team</li>
 </ul>
 
-> 💡 Tip: _"Show failing tests as a sortable table using /canvas"_ — filter beats a wall of logs.
+> 💡 Tip: _"Show failing tests as a sortable table using /canvas"_ — filter beats a wall
+> of logs.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="3" -->
 
 notes:
 
-Technically these are live React apps (`.canvas.tsx`, `cursor/canvas` SDK): reopen, edit, iterate. The agent can open a canvas itself when a visual beats text. Share / Publish are paid plans; privacy mode has to allow storage.
+Technically these are live React apps (`.canvas.tsx`, `cursor/canvas` SDK): reopen, edit,
+iterate. The agent can open a canvas itself when a visual beats text. Share / Publish are
+paid plans; privacy mode has to allow storage.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -454,13 +466,16 @@ Each task gets its own **git checkout**.
 <li class="fragment" data-fragment-index="3"><strong>/apply-worktree</strong> — bring results back</li>
 </ul>
 
-> 💡 Tip: Best in the **Agents Window** — supervise parallel runs without leaving that surface.
+> 💡 Tip: Best in the **Agents Window** — supervise parallel runs without leaving that
+> surface.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 
 notes:
 
-The basis of parallelization. Most convenient in the Agents Window: you see several runs side by side, without switching back to the IDE. Setup commands for a new worktree live in `.cursor/worktrees.json`. A bridge to Multitask, covered next.
+The basis of parallelization. Most convenient in the Agents Window: you see several runs
+side by side, without switching back to the IDE. Setup commands for a new worktree live in
+`.cursor/worktrees.json`. A bridge to Multitask, covered next.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -497,7 +512,9 @@ Fastest paths into the conversation:
 
 notes:
 
-Each mode is a different level of AI autonomy. The rule: understand first, then plan, then execute. Multitask is not an item in the mode picker; it's a way of working through the Agents Window and worktrees — covered separately.
+Each mode is a different level of AI autonomy. The rule: understand first, then plan, then
+execute. Multitask is not an item in the mode picker; it's a way of working through the
+Agents Window and worktrees — covered separately.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -533,7 +550,8 @@ Each mode is a different level of AI autonomy. The rule: understand first, then 
 
 notes:
 
-Cursor itself suggests Plan mode when the prompt looks like a complex task. The plan is saved in the home directory or in the workspace ("Save to workspace") — a team artifact.
+Cursor itself suggests Plan mode when the prompt looks like a complex task. The plan is
+saved in the home directory or in the workspace ("Save to workspace") — a team artifact.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -594,13 +612,15 @@ Several agents on the same problem, **without conflicts**.
 <li class="fragment" data-fragment-index="3"><strong>Multi-Agent Judging</strong> — Cursor evaluates all runs and recommends the best one, with an explanation</li>
 </ul>
 
-> 💡 Tip: Parallel runs burn tokens fast — use when the approach is unclear, not for a one-file fix.
+> 💡 Tip: Parallel runs burn tokens fast — use when the approach is unclear, not for a
+> one-file fix.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 
 notes:
 
-After all parallel agents finish, Cursor itself scores the results and comments on why it picked that variant. This mode is obviously expensive.
+After all parallel agents finish, Cursor itself scores the results and comments on why it
+picked that variant. This mode is obviously expensive.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -626,8 +646,7 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Daily driver unlocked. Next: more _granular_ context control.
 
-We'll pick up the pace.
-</div>
+We'll pick up the pace. </div>
 
 
 
@@ -646,7 +665,7 @@ Point the Agent at exact context:
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="1"><strong>@Files &amp; Folders</strong> — code to work with</li>
 <li class="fragment" data-fragment-index="2"><strong>@Terminals</strong> — terminal output as context</li>
-<li class="fragment" data-fragment-index="3"><strong>@Past Chats</strong> — reference previous conversation(s)</li>
+<li class="fragment" data-fragment-index="3"><strong>@Past Chats / Plans</strong> — earlier conversations, or a plan saved from Plan mode</li>
 <li class="fragment" data-fragment-index="4"><strong>@Commit / @Branch</strong> — working-state diff / diff vs main</li>
 <li class="fragment" data-fragment-index="5"><strong>@Browser</strong> / <strong>Images</strong> — live pane, or paste / drag (<code>Cmd+V</code>)</li>
 </ul>
@@ -685,13 +704,16 @@ One picker (`Cmd+/` to cycle), different jobs.
 
 <!-- .element: style="font-size: 2.0rem" -->
 
-> 💡 Tip: **Model × Mode:** cheap & fast for `Agent` routine, strongest for `Plan` / `Debug`.
+> 💡 Tip: **Model × Mode:** cheap & fast for `Agent` routine, strongest for `Plan` /
+> `Debug`.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
 
 notes:
 
-Auto is a smart default: Cursor Router reads each request and picks a model by task type and complexity. Three Auto modes: Cost (fixed price), Balance, Intelligence. Switch to a more powerful model on purpose only when the task is genuinely hard.
+Auto is a smart default: Cursor Router reads each request and picks a model by task type
+and complexity. Three Auto modes: Cost (fixed price), Balance, Intelligence. Switch to a
+more powerful model on purpose only when the task is genuinely hard.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -705,7 +727,8 @@ You _can_ switch models in the same chat — but it has a cost.
 <li class="fragment" data-fragment-index="3">That usually means <strong>slower + more expensive</strong> turns after the switch</li>
 </ul>
 
-> 💡 Tip: Prefer one model per task. Need a different model? Often better to open a **new chat**.
+> 💡 Tip: Prefer one model per task. Need a different model? Often better to open a **new
+> chat**.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -725,40 +748,21 @@ Watch the **context ring** next to the input — when it's full, answers get wor
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 📇 Codebase indexing
+### 🔐 Security & Privacy
 
-Cursor builds a **semantic map** of your repo — so Agent can find code by meaning, not only by exact text.
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Runs <strong>automatically</strong> in the background</li>
-<li class="fragment" data-fragment-index="2">Re-indexes only <strong>what changed</strong></li>
-<li class="fragment" data-fragment-index="3">Makes semantic Search and codebase-aware chat work</li>
-</ul>
-
-> 💡 Tip: iterating on rules / skills / agents? sometimes **Reindex** — a stale index can feed old (or deleted) versions.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🔐 Indexing & privacy
-
-Good news — most of it works out of the box:
+Check what the Agent can see.
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Cursor already skips the usual noise — <code>node_modules</code>, .lock, binaries, <code>.env</code>, .etc</li>
-<li class="fragment" data-fragment-index="2"><strong><code>.gitignore</code></strong> is respected automatically</li>
+<li class="fragment" data-fragment-index="1"><strong><code>.cursorignore</code></strong> — the hard block for secrets and sensitive paths</li>
+<li class="fragment" data-fragment-index="2"><strong>Default Ignore List</strong> + <code>.gitignore</code> — node_modules, lockfiles, binaries, .env, .etc stay out</li>
+<li class="fragment" data-fragment-index="3"><strong>Privacy Mode</strong> — your code is not used for training. Settings → General</li>
+<li class="fragment" data-fragment-index="4"><strong>Policy</strong> — ELEKS AI Usage Policy and approved MCP connectors <em>(Module #1)</em></li>
 </ul>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🔐 Before you start coding
+> 📌 **Rule:** `.gitignore` keeps a file out of git. `.cursorignore` keeps the agent off
+> it.
 
-<ol style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Check <strong><code>.cursorignore</code></strong> — secrets &amp; sensitive paths</li>
-<li class="fragment" data-fragment-index="2">Check <strong>Privacy Mode</strong> enabled — Cursor Settings → General → Privacy Mode</li>
-<li class="fragment" data-fragment-index="3">Follow <strong>ELEKS AI Usage Policy</strong> &amp; approved MCP connectors <em>(Module #1)</em></li>
-</ol>
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -801,35 +805,36 @@ You now: <!-- .element: class="fragment" data-fragment-index="1" -->
 <ul style="font-size: 2.0rem">
 <li class="fragment" data-fragment-index="1">Cloud Agents &amp; Automations</li>
 <li class="fragment" data-fragment-index="2">Security agents &amp; Bugbot</li>
-<li class="fragment" data-fragment-index="3">Integrations — GitHub, Teams</li>
+<li class="fragment" data-fragment-index="3">Integrations</li>
 <li class="fragment" data-fragment-index="4">PR Routing &amp; Approval</li>
 <li class="fragment" data-fragment-index="5">SDK (TypeScript)</li>
 </ul>
-
-notes:
-
-This section is an overview: we show that the Cursor ecosystem goes far beyond the editor. The deep dive (automations, orchestration) is levels 6–10 and the topics of later modules; here it's "what exists and why."
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### ☁️ Cloud Agents
 
-The same Agent, running in **Cursor-managed cloud VMs**.
+The same Agent — now with **its own machine**.
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Launch from: web (<code>cursor.com/agents</code>), IDE, iOS, Slack, Teams, GitHub, API</li>
-<li class="fragment" data-fragment-index="2">Full dev environment: clones repo, installs deps, runs tests</li>
-<li class="fragment" data-fragment-index="3">Delivers <strong>merge-ready PRs</strong> with artifacts</li>
-<li class="fragment" data-fragment-index="4">Runs in parallel — doesn't depend on your machine</li>
+<li class="fragment" data-fragment-index="2"><strong>Launch</strong> — web, IDE, iOS, Slack, Teams, GitHub, API</li>
+<li class="fragment" data-fragment-index="3"><strong>Environment</strong> — clones the repo, installs dependencies, loads secrets</li>
+<li class="fragment" data-fragment-index="4"><strong>Execution</strong> — edits code, runs the app and tests</li>
+<li class="fragment" data-fragment-index="5"><strong>Delivery</strong> — opens a draft PR with logs and artifacts</li>
+<li class="fragment" data-fragment-index="6"><strong>Parallel</strong> — multiple agents run without using your laptop</li>
 </ul>
 
-> _Example: a ticket from Slack / `@cursor` on GitHub → agent implements, tests, opens a PR._
+> 💡 Tip: _Think of it as: delegate a task → come back to a tested PR._
 
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="7" -->
 
 notes:
 
-The key difference from a local agent: its own isolated environment with network, secrets, and startup commands — it can build and test on its own. Typical scenario: you delegated a task from your phone or Slack → you got a ready PR. Previously called Background Agents.
+The PR opens as a draft; a person marks it ready. Screenshots and logs are on the run;
+embedding them in the GitHub description is opt-in. Previously called Background Agents.
+Cloud Sessions in Claude. Billing: model usage.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -849,7 +854,9 @@ Cloud agents that run **without you** — on a schedule or on events.
 
 notes:
 
-Created at cursor.com/automations or with the /automate command. Billing is cloud-agent usage. Examples: review recent commits for bugs, weekly codebase-change summary, triage bugs from Slack.
+Created at cursor.com/automations or with the /automate command. Billing is model usage,
+the same meter as a Cloud Agent you start yourself. Examples: review recent commits for
+bugs, weekly codebase-change summary, triage bugs from Slack. "Routines" in Claude
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -869,7 +876,10 @@ Two Cursor-managed agents on Cloud Agents infra:
 
 notes:
 
-Zero extra setup — they run on top of Cloud Agents. There is analytics: vulnerabilities found, time to fix, resolution rate. Manual counterparts are /review-security and /review right in the agent.
+Zero extra setup — they run on top of Cloud Agents. There is analytics: vulnerabilities
+found, time to fix, resolution rate. Billing: the team usage pool, under a shared service
+account, so it does not spend one person's allowance. `/review-security` in the IDE is
+ordinary agent usage on your own account, not this managed bill.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -890,30 +900,35 @@ Automated **code review** on every pull request.
 
 notes:
 
-Triggers automatically on every PR update, manually via a `cursor review` / `bugbot run` comment, or incrementally (new changes only). Two thoroughness levels: Default and High. It reads existing PR comments so it doesn't duplicate them.
+Triggers automatically on every PR update, manually via a `cursor review` / `bugbot run`
+comment, or incrementally (new changes only). Billing: its own review charge, separate
+from model usage. `/review` in the IDE is ordinary agent usage on your own account, not
+the managed Bugbot bill. Autofix is extra: it starts a Cloud Agent.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🔗 Integrations: GitHub & Teams
+### 🔗 Integrations
 
-_One example_ — also Slack, Jira, Linear, GitLab, Bitbucket, etc.
+Mention `@cursor` in a connected tool and hand the agent the task from there.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2"><strong>GitHub</strong> — the hub: Cloud Agents, Bugbot, PR create &amp; review</li>
-<li class="fragment" data-fragment-index="3">Comment <code>@cursor</code> on a PR or issue → agent picks it up</li>
-<li class="fragment" data-fragment-index="4"><strong>Microsoft Teams</strong> — <code>@Cursor</code> in chats &amp; channels</li>
-<li class="fragment" data-fragment-index="5">Launch agents, pick repo/model, get PR links; thread-aware follow-ups</li>
+<li class="fragment" data-fragment-index="2"><strong>Mention</strong> <code>@cursor</code> — GitHub, Slack, Jira, Linear, GitLab, Bitbucket, Teams</li>
+<li class="fragment" data-fragment-index="3"><strong>Example</strong> — <code>@cursor</code> on a GitHub issue; the agent picks it up and opens a PR</li>
+<li class="fragment" data-fragment-index="4"><strong>Launch</strong> — a Cloud Agent; you choose the repo and the model</li>
+<li class="fragment" data-fragment-index="5"><strong>Continue</strong> — reply in that same chat; the agent keeps the thread</li>
 </ul>
 
-> 💡 Tip: Start with **GitHub** — it unlocks Cloud Agents, Bugbot, and PRs.
+> 💡 Tip: Connect **GitHub** first — the agent uses that connection to open the PR, run
+> Cloud Agents, and use Bugbot.
 
 <!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="6" -->
 
 notes:
 
-The GitHub integration uses least-privilege permissions and supports GitHub Enterprise Server. Teams: install via the dashboard or Microsoft Marketplace; you can pick the repo (`repo=`), env, and Privacy Mode. The same kind of integration exists for Slack, Jira, Linear, GitLab, and Bitbucket.
+Least-privilege permissions, including GitHub Enterprise Server. Teams: install via the
+dashboard or Microsoft Marketplace; you can set the repo (`repo=`), env, and Privacy Mode.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -934,7 +949,10 @@ An approval agent that **routes and gates** pull requests.
 
 notes:
 
-A Cursor-managed agent on Automations (like Bugbot and Security), not an integration. Signals: it waits for Bugbot/Security if they are enabled; their findings block auto-approve. Policy files in the repo take priority over a custom prompt. At least one primary action is required: Request Reviewers or Approve PR.
+A Cursor-managed agent on Automations (like Bugbot and Security), not an integration.
+Signals: it waits for Bugbot/Security if they are enabled; their findings block
+auto-approve. Policy files in the repo take priority over a custom prompt. At least one
+primary action is required: Request Reviewers or Approve PR.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -961,7 +979,10 @@ for await (const event of run.stream()) { ... }
 
 notes:
 
-Use cases from the docs: auto-fix bots in CI/CD, automatic review passes, bug triage, agents embedded in your own product, orchestration. Resume: `Agent.resume(agentId)` — locally a store (SQLite / JSONL / your own Redis·Postgres), in the cloud on Cursor's server. Requires Node.js 22.13+, auth via CURSOR_API_KEY. There is also a Python SDK.
+Use cases from the docs: auto-fix bots in CI/CD, automatic review passes, bug triage,
+agents embedded in your own product, orchestration. Resume: `Agent.resume(agentId)` —
+locally a store (SQLite / JSONL / your own Redis·Postgres), in the cloud on Cursor's
+server. Requires Node.js 22.13+, auth via CURSOR_API_KEY. There is also a Python SDK.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
