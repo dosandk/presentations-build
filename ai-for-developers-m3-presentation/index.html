@@ -95,19 +95,30 @@
 
 ## Module #3: Teach Your Agent
 
-**Agenda:**
+<div class="block">
 
-- Rules
-- Skills
-- MCP-servers
-- Hooks
-- Slash commands
-- Q&A session
-- Useful Links
+- **Agenda: Part #1:**
+	- Rules
+	- Working environment
+	- Demo project "SkillStack"
+	- Q&A session
+- **Agenda: Part #2**
+	- Skills
+	- MCP-servers
+	- Slash commands
+	- Hooks
+	- Q&A session
+	- Useful Links
+</div>
+
+
+<!-- .element: style="font-size: 1.9rem" -->
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Agent Rules
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/rules-bg.png" alt="" style="object-fit: scale-down">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -126,12 +137,12 @@ established best practices.</p>
 <div class="block">
 
 <!-- prettier-ignore -->
-- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->You are an expert developer. Write clean, efficient, production-ready code without bugs
-- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Act as a 10x senior engineer. Solve this task in the best possible way and follow all
+- You are an expert developer. Write clean, efficient, production-ready code without bugs
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Act as a 10x senior engineer. Solve this task in the best possible way and follow all
   best practices
-- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->You are a world-class frontend developer. Make sure the implementation is perfect,
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->You are a world-class frontend developer. Make sure the implementation is perfect,
   scalable, maintainable, and bug-free
-- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Think like a senior developer and carefully consider all edge cases before writing the
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Think like a senior developer and carefully consider all edge cases before writing the
   code
 
 </div>
@@ -139,6 +150,15 @@ established best practices.</p>
 
 
 <!-- .element: style="font-size: 2rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### AI Agent Harness
+
+> An **AI agent harness** is the software infrastructure that wraps around a large language model (LLM) to turn its raw reasoning into reliable, multi-step action
+<!-- .element: style="font-size: 2rem" class="fragment" data-fragment-index="1" -->
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/harness-preview.png" alt="" style="width: 800px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -171,7 +191,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -180,7 +199,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -189,7 +207,7 @@ padding: 0 10px;
 <div class="container-header">
 <div class="block">
 
-### Why rules?
+### Why do we need rules?
 
 </div>
 
@@ -211,7 +229,7 @@ padding: 0 10px;
 <div class="container-body-right">
 <div class="block">
 
-LLMs keep **no memory** between completions — every chat starts blank.
+LLMs keep **no memory** between completions — every "chat" starts blank.
 
 </div>
 
@@ -237,18 +255,10 @@ notes:
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Rules
-
-> Rules = persistent, reusable context injected at the **start** of the model context
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
 ### How context works
 
-- **Context** = all the information the model sees to answer a prompt.
-- Rules are placed **first**, so they shape everything that follows.
+- **Context** = all the information the model sees to answer a prompt
+- Rules are placed **first**, so they shape everything that follows
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -260,6 +270,14 @@ System prompts are the foundational instructions that dictate an AI's behavior.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### Rules
+
+> Rules = persistent, reusable context injected at the **start** of the model context
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### Rules as system prompts
 
 Key elements a rule can define:
@@ -268,19 +286,10 @@ Key elements a rule can define:
 - **Constraint setting** — limitations and hard rules for responses
 - **Context provision** — background and situational information
 - **Ethical guidance** — guidelines and value alignment
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 1.8rem" class="drop" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### What are rules?
 
-
-
-> Rules are project-specific instructions that define how AI should behave in your
-> workspace.
-
-- Provide **system-level** instructions to the Agent
-- Bundle prompts, conventions, and workflows in one place
-- Included in **every** AI conversation within the project
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -313,7 +322,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -322,7 +330,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -342,7 +349,7 @@ padding: 0 10px;
 
 
 
-### From prompt to rule
+### From Prompt To Rule
 
 **🔴 prompt** <!-- .element: style="font-size: 1.8rem" -->
 
@@ -351,7 +358,7 @@ You are a senior frontend developer. Implement this task
 without bugs, follow best practices, write clean, scalable, and maintainable code.
 ```
 
-<!-- .element: style="font-size: 1.5rem" -->
+<!-- .element: style="font-size: 1.5rem" class="fragment" data-fragment-index="1" -->
 
 **✅ rule** <!-- .element: style="font-size: 1.8rem" -->
 
@@ -372,7 +379,7 @@ alwaysApply: true
 - Remove unused code, imports, and debug statements before completing the task.
 ```
 
-<!-- .element: style="font-size: 1rem" -->
+<!-- .element: style="font-size: 1rem" class="fragment" data-fragment-index="2" -->
 
 </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -380,7 +387,7 @@ alwaysApply: true
 
 ## Time to practice
 
-<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.jpg" alt="" style="width: 800px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -391,15 +398,15 @@ alwaysApply: true
 ## Rule A
 
 <!-- prettier-ignore -->
-```md
+```md[1-4| 1-8]
 ---  
 description: React component guidelines
 globs: ["src/**/*.tsx"]
 ---  
 
-- Prefer existing shared components before creating new ones.
-- Keep components focused on presentation and user interaction.
-- Move reusable business logic into custom hooks or services.
+- Prefer existing shared components before creating new ones
+- Keep components focused on presentation and user interaction
+- Move reusable business logic into custom hooks or services
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -407,16 +414,16 @@ globs: ["src/**/*.tsx"]
 ## Rule B
 
 <!-- prettier-ignore -->
-```md
+```md[1-4| 1-9]
 ---  
 description: Code quality guidelines
 alwaysApply: true
 ---  
 
-- Write clean, readable, and maintainable code.
-- Follow software engineering best practices.
-- Make sure the implementation is scalable and production-ready.
-- Always write high-quality code with no bugs.
+- Write clean, readable, and maintainable code
+- Follow software engineering best practices
+- Make sure the implementation is scalable and production-ready
+- Always write high-quality code with no bugs
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -424,15 +431,15 @@ alwaysApply: true
 ## Rule C
 
 <!-- prettier-ignore -->
-```md
+```md[1-4| 1-8]
 ---  
 description: API integration guidelines
 globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
 ---  
 
-- Reuse the existing API client for HTTP requests.
-- Keep API response types explicitly defined.
-- Handle loading and error states consistently with existing project patterns.
+- Reuse the existing API client for HTTP requests
+- Keep API response types explicitly defined
+- Handle loading and error states consistently with existing project patterns
 ```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -473,6 +480,23 @@ globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
 - Keep API response types explicitly defined.
 - Handle loading and error states consistently with existing project patterns.
 ```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### How rules activate
+
+<div class="block">
+
+| Rule Type               | Applied when...                                  |
+| :---------------------- | ------------------------------------------------ |
+| Always Apply            | Every chat session                               |
+| Apply Intelligently     | Agent decides it's relevant based on description |
+| Apply to Specific Files | A file matches a specified glob pattern          |
+| Apply Manually          | You `@-mention` it in chat (e.g., `@my-rule`)    |
+
+</div>
+
+<!-- .element: style="font-size: 1.8rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -492,23 +516,6 @@ globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
 notes:
 
 User Rules do not affect Tab or Inline Edit (Cmd/Ctrl+K) — only Agent/Chat.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### How rules activate
-
-<div class="block">
-
-| Rule Type               | Applied when...                                  |
-| :---------------------- | ------------------------------------------------ |
-| Always Apply            | Every chat session                               |
-| Apply Intelligently     | Agent decides it's relevant based on description |
-| Apply to Specific Files | A file matches a specified glob pattern          |
-| Apply Manually          | You `@-mention` it in chat (e.g., `@my-rule`)    |
-
-</div>
-
-<!-- .element: style="font-size: 1.8rem" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -621,12 +628,21 @@ alwaysApply: false
 - Add a `@service-template.ts` reference file when creating a new
   service for the standard boilerplate
 ```
+
+notes:
+
+- Architecture Decision Guidelines
+- Error Handling Guidelines
+- Performance Optimization
+- Backward Compatibility
+- Module Coupling Guidelines
+- Reuse Before Abstraction
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Manual - only via @-mention
 
-`@migration-template.sql`
+`@migration-template`
 
 <!-- prettier-ignore -->
 ```mdc
@@ -675,14 +691,24 @@ Generate `CLAUDE.md` and create a soft link to `AGENTS.md`
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Precedence & Nested Rules
+### Rule Precedence Order & Nested Rules
 
 When several rules apply, they are all **merged** - earlier sources win on conflict:
 
 `Team Rules` --> `Project Rules` --> `User Rules`
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-- Nested `AGENTS.md` combine with parent directories
-- More specific (deeper) instructions take precedence
+### Rule Precedence Order & Nested Rules
+
+
+When rules conflict or overlap, Cursor evaluates them in this strict priority order:
+
+1. **Team Rules** (Highest priority — managed centrally via the team/enterprise dashboard)
+2. **Project Rules** (`.cursor/rules/*.mdc` stored in version control)
+3. **User Rules** (Global preferences configured in Cursor Settings)
+4. **Legacy Rules** (`.cursorrules` in the root directory — supported for backwards compatibility)
+5. **AGENTS.md / CLAUDE.md** (Nested `AGENTS.md` combines with parent directories; more specific (deeper) instructions take precedence)
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -715,29 +741,32 @@ Principles reference: https://github.com/webpro/programming-principles
 
 Good rules are focused, actionable, and scoped.
 
-- Keep rules under **500 lines**
-- Split large rules into multiple, composable rules
-- Provide concrete examples or referenced files
-- Avoid vague guidance — write rules like clear internal docs
-- Reuse rules when you catch yourself repeating prompts in chat
-- **Reference** files instead of copying them — keeps rules short and fresh
+- ✅ Keep rules under **500 lines**
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->✅  Avoid vague wording; 150–300 lines of specific, actionable rules are more effective than 1500- &shy;<!-- .element: class="fragment" -->lines of ambiguous text.
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->✅ Split large rules into multiple, composable rules
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->✅ Provide concrete examples or referenced files
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->✅ Avoid vague guidance — write rules like clear internal docs
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->✅ Reuse rules when you catch yourself repeating prompts in chat
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->✅ **Reference** files instead of copying them — keeps rules short and fresh
+- &shy;<!-- .element: class="fragment" data-fragment-index="7" -->✅ Highlight critical requirements. Use markers such as `IMPORTANT` or `YOU MUST` to make key instructions explicit.
+- &shy;<!-- .element: class="fragment" data-fragment-index="8" -->✅ Commit your rules. If the rules are not part of the repository, AI may behave differently for different members of the team.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Time to Practice
 
-<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="object-fit: scale-down">
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.jpg" alt="" style="width: 800px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### What to avoid in rule: select rule
+### What is best to avoid in a rule? Select rule
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Rule A
 
 <!-- prettier-ignore -->
-```mdc
+```mdc[1-4| 5-8]
 ---  
 description: API client patterns for this project
 globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
@@ -753,7 +782,7 @@ globs: ["src/api/**/*.ts", "src/services/**/*.ts"]
 ### Rule B
 
 <!-- prettier-ignore -->
-```mdc
+```mdc[1-4| 5-23]
 ---  
 description: Complete ESLint and Prettier style guide
 alwaysApply: true
@@ -784,7 +813,7 @@ alwaysApply: true
 ### Rule C
 
 <!-- prettier-ignore -->
-```mdc
+```mdc[1-4, 6-11]
 ---  
 description: Common development commands
 alwaysApply: true
@@ -809,10 +838,10 @@ notes:
 ### What to avoid
 
 <!-- prettier-ignore -->
-+ 🔴 Copying entire style guides - use a **linter** instead
-+ 🔴 Documenting every command — the Agent already knows common tools
-+ 🔴 Writing rules for rare edge cases
-+ 🔴 Duplicating code that already lives in your codebase
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->🔴 Copying entire style guides - use a **linter** instead
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->🔴 Documenting every command — the Agent already knows common tools
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->🔴 Writing rules for rare edge cases
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->🔴 Duplicating code that already lives in your codebase
 
 <div class="block">
 
@@ -821,11 +850,250 @@ notes:
 
 </div>
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" data-fragment-index="5" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Useful links
+
+- https://cursor.directory/
+- https://cursor.com/docs/rules
+- https://cursor.com/help/customization/rules
+- https://github.com/sanjeed5/awesome-cursor-rules-mdc/blob/main/cursor-rules-reference.md
+- https://github.com/PatrickJS/awesome-cursorrules
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Summary
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/summary-bg.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Working environment
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/working-environment-bg.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## IDEs, tools and agents
+
+- Cursor/Cursor CLI
+- Claude/Claude-code
+- Visual Studio Code + Copilot
+- Vim + Tmux + custom scripts and configurations
+- Other IDEs...
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cursor. One more time
+
+- Classical view (Development)
+- CLI mode
+- Agents Mode
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cursor Classical View
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/cursor-classical-view.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cursor CLI mode
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/cursor-cli-mode.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+https://cursor.com/cli
+
+notes:
+
+Command `agent` in the terminal
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cursor Agent Mode
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/cursor-agents-mode.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Visual Studio Code + Copilot
+
+"Development mode"
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/visual-studio-code-dev-mode.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Visual Studio Code Agent Mode
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/vscode-agents-mode.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Copilot CLI
+
+https://github.com/features/copilot/cli
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/copilot-cli.png" alt="" style="width: 1000px; object-fit: fill">
+
+
+notes:
+
+command `copilot` in the terminal
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Visual Studio Code + Copilot configs
+
+```bash
+.github/
+├── copilot-instructions.md       # global rules
+│
+├── instructions/
+│   ├── frontend.instructions.md  # React/TS rules
+│   ├── backend.instructions.md   # backend rules
+│   └── tests.instructions.md     # testing rules
+│
+├── skills/
+│   ├── code-review/
+│   │   └── SKILL.md
+│   ├── debugging/
+│   │   └── SKILL.md
+│   ├── refactoring/
+│   │   └── SKILL.md
+│   └── documentation/
+│       └── SKILL.md
+│
+├── prompts/
+│   └── create-component.prompt.md
+│
+└── agents/
+    ├── reviewer.agent.md
+    └── architect.agent.md
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Claude-code
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/claude-code-preview.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Claude desktop
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/claude-desktop-skills-preview-1.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Claude desktop
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/claude-desktop-devs-setup.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Claude desktop
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/claud-desktop-skills-setup.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## GPT configuration
+
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/gpt-settings.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## NVIM + TMUX + AGENT CLI
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/nvim-and-tmux.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Demo Project
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/demo-bg.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Skill.sh
+
+https://www.skills.sh/
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/skillsh-preview.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Skill.sh Clone. Architecture
+
+SkillStack
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/skillstack-architecture.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## SkillStack CLI
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/skillstack-cli-preview.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## SkillStack Web SPA 
+
+SkillStack Single Page Application
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/skillstack-web.png" alt="" style="width: 1000px; object-fit: fill">
+</div>
+
+<aside class="notes"><p><a href="http://localhost:5173/">http://localhost:5173/</a></p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## SkillStack GitHub Project
+
+https://github.com/users/dosandk/projects/10
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/skillstack-github-project.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Homework
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/homework-bg-2.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Homework. Part #1
+
+Create 1 task for the SkillStack project
+https://github.com/users/dosandk/projects/10/views/1
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Homework. Part #2
+
+
+| Quality attribute   | Engineering practices that improve it                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Readability**     | Code Consistency, Code Complexity Control, Keep Solutions Simple (YAGNI), Separation of Responsibilities, Eliminate Unnecessary Duplication (DRY) |
+| **Maintainability** | Code Review, Living Documentation, Version Control (Git), Focused Pull Requests, Continuous Refactoring, Technical Debt Management                |
+<!-- .element: style="font-size: 1.8rem; margin: 20px auto" -->
+
+Add 2 rules to the SkillStack project
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Agent Skills
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/agent-skills-bg.png" alt="" style="width: 1000px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -907,7 +1175,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -916,7 +1183,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -985,7 +1251,7 @@ padding: 0 10px;
 
 ## Time to practice
 
-<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.jpg" alt="" style="width: 800px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1054,8 +1320,8 @@ When implementing a new feature:
 
 notes:
 
-There is a clear multi-step workflow: analyze -> explore -> plan -> implement -> test -> review ->
-summarize.
+There is a clear multi-step workflow: analyze -> explore -> plan -> implement -> test ->
+review -> summarize.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1092,7 +1358,64 @@ https://github.com/slowmist/MCP-Security-Checklist
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### MCP market-places
+### MCP approvals
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/claude-mcp-approvals.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### MCP allowed list
+
+- [Internal Jira DC (jdc.eleks.com) via official MCP Connector](https://github.com/atlassian/atlassian-mcp-server)
+- [Confluence via official MCP](https://github.com/atlassian/atlassian-mcp-server)
+- [Internal GitLab via official MCP](https://docs.gitlab.com/user/gitlab_duo/model_context_protocol/mcp_server/)
+- [Figma via official MCP](https://github.com/figma/mcp-server-guide)
+- [Winsdor AI MCP Connector](https://windsor.ai/introducing-windsor-mcp/)
+- [Datadog](https://docs.datadoghq.com/bits_ai/mcp_server/)
+- [Microsoft Learn MCP Connector](https://learn.microsoft.com/en-us/connectors/microsoftlearndocsmcpserver/)
+- [Slack](https://slack.com/intl/en-gb/help/articles/48855576908307-Guide-to-Model-Context-Protocol-in-Slack)
+- [Lucid](https://lucid.co/mcp-server)
+
+https://elekscloud.sharepoint.com/sites/GenAI/SitePages/Security-Baselines-for-MCP.aspx
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Your own MCPs
+
+**ELEKS UI MCP Server**
+
+
+```typescript
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+
+const server = new McpServer(
+ {
+	name: 'eleks-ui',
+	version: process.env.NPM_PACKAGE_VERSION ?? 'unknown'
+ },
+ {
+	instructions: mcpInstructions,
+ }
+);
+
+server.tool(
+  getFigmaScreenshotTool.name,
+  getFigmaScreenshotTool.description,
+  getFigmaScreenshotTool.parameters,
+  getFigmaScreenshotTool.handler,
+);
+ 
+const transport = new StdioServerTransport();
+
+await server.connect(transport);
+```
+
+Link to GitLab: https://gitlab2.eleks.com/eleks-ui
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### MCP marketplaces
 
 - https://smithery.ai/
 - https://glama.ai/mcp
@@ -1148,16 +1471,34 @@ https://platform.openai.com/playground/prompts?models=gpt-4o-mini
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Time To Practice
+### Claude MCP
 
-<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+<img src="master-classes/ai-dev-setup/03-module/imgs/claude-mcp.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Claude MCP
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/claude-mcp-settings.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Homework
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/homework-bg-2.png" alt="" style="object-fit: scale-down">
 
 
-Check how to get information about a task in your task-tracking system
+Add an MCP for the GitHub task-tracking dashboard
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## 🪝 Agent Hooks
+## Agent Hooks
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/hooks-bg.png" alt="" style="width: 400px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1281,7 +1622,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -1290,7 +1630,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -1607,7 +1946,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -1616,7 +1954,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -1726,7 +2063,7 @@ Hooks complement rules — rules shape behavior; hooks enforce it at execution t
 
 ## Time to practice
 
-<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.jpg" alt="" style="width: 800px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1765,6 +2102,8 @@ Hooks complement rules — rules shape behavior; hooks enforce it at execution t
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Slash Commands
+
+<img src="master-classes/ai-dev-setup/03-module/imgs/slash-commands-bg.png" alt="" style="width: 1000px; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1805,7 +2144,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -1814,7 +2152,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -1918,7 +2255,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -1927,7 +2263,6 @@ padding: 0 10px;
   height: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 </style>
@@ -2002,8 +2337,8 @@ large </div>
 
 notes:
 
-Skills with `disable-model-invocation: true` behave like a slash command — the agent does not
-pull them in on its own. `/migrate-to-skills` converts old commands into such skills.
+Skills with `disable-model-invocation: true` behave like a slash command — the agent does
+not pull them in on its own. `/migrate-to-skills` converts old commands into such skills.
 
 </div>
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -2056,11 +2391,31 @@ pull them in on its own. `/migrate-to-skills` converts old commands into such sk
 
 ### Time to practice
 
-<img src="master-classes/ai-dev-setup/imgs/time-to-practice.png" alt="" style="width: 500px; object-fit: fill">
+<img src="master-classes/ai-dev-setup/imgs/time-to-practice.jpg" alt="" style="width: 800px; object-fit: fill">
 
 
 Create slash commands for `code-review`
-</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Congratulations
+
+Developer Level 6-10
+
+<div class="block">
+
+| Score | What it looks like                                                                                                                                                    |
+| :---: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|   6   | Repeatable workflows: refactoring, test generation, PR descriptions, commit messages; personal prompt templates                                                       |
+|   7   | Project rules (code style, architecture patterns, error handling); skills for common tasks; documented and reproducible practices                                     |
+|   8   | Subagents for complex flows (feature scaffolding, migration scripts, multi-service changes); MCP integrations (Git, CI/CD, DB); plugins                               |
+|   9   | Full workspace: all routine dev tasks AI-assisted; curated skill library; quality gates (AI code must pass same review as human code); traceability                   |
+|  10   | AI workspace is the primary development interface; pair-programs with AI on complex tasks; continuously refines skills and workflows; measurable velocity improvement |
+
+</div>
+
+ <!-- .element: style="font-size: 1.6rem" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Q&A session
