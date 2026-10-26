@@ -86,195 +86,299 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+      <div class="slides"><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#e5f3e0" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 <style>
-body .reveal table  {
-  margin-top: 10px;
-  margin-bottom: 10px
+/* Inline `code` — color without touching fenced <pre><code> (monokai) */
+.reveal :not(pre) > code {
+  color: #c7254e;
+  background-color: rgba(199, 37, 78, 0.1);
+  padding: 0.05em 0.35em;
+  border-radius: 0.25em;
 }
-/* <aside class="notes"><p>keep fragment layout (no title jump); strip chrome while hidden */
-.reveal .slides section .fragment:not(.visible) {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-</style></p>
-<h2 id="module-4-orchestrated-automation">Module #4: Orchestrated Automation</h2>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+</style>
+
+
+
+## AI for Developers: Adoption via Engineering Practices
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Module #4: Orchestrated Automation
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Table of Contents
 
-- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Orchestrated Automation — _checkpoints, not one-shot auto_
-- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Feature Implementation — _route, then code_
-- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Test Automation — _two specialists, one call_
-- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Code Review — _many ears, one report_
+- **Decision-making process** - how we came up with this solution?
+- **Rules, Skills, Subagents** - connection to Engineering Practices
+- **Orchestrated Automation** - our workflows to become semi-AI-native
+- **Full AI-native** - what is left out of scope?
 
 <!-- .element: style="font-size: 2.0rem" -->
-</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Orchestrated Automation
+## Skill.sh Clone. Architecture
 
-> Rules and skills were the score. Now you need a **conductor**.
+[SkillStack](https://github.com/dosandk/SkillStack)
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="master-classes/ai-dev-setup/03-module/imgs/skillstack-architecture.png" alt="" style="width: 1000px; object-fit: fill">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2">Delegate focused work to specialists</li>
-<li class="fragment" data-fragment-index="3">Route decisions through an orchestrator</li>
-<li class="fragment" data-fragment-index="4">Keep quality gates and human control</li>
-</ul>
+
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 📶 A bigger prompt won't get you here
+## Our Principles for AI Interaction
 
-<img src="master-classes/ai-dev-setup/04-module/drawings/level-6-to-9.excalidraw.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
-
-
-notes:
-
-Transition to Level 6: Repeatable Workflows
-
-- ✅ You rely on a personal set of prompt templates for common tasks.
-- ✅ You routinely use AI to generate tests, write PR descriptions, and draft commit
-  messages.
-- ✅ You handle non-trivial refactoring tasks using AI assistance.
-
-Transition to Level 7: Codified Workflows (Rules & Skills)
-
-- ✅ Project rules are committed to the repository and govern AI output.
-- ✅ You have 2-3 codified skills/templates shared with the team.
-- ✅ Your AI practices are fully documented and reproducible.
-
-Transition to Level 8: Orchestrated Automation (Integrations)
-
-- ✅ You routinely pull context directly from Jira, Confluence, or Databases via MCP
-  integrations.
-- ✅ You use subagents to execute complex, multi-file feature scaffolding or migrations
-  end-to-end.
-- ✅ You spend less time gathering context and more time orchestrating AI actions.
-
-Transition to Level 9: Optimized Mastery (Quality & Curation)
-
-- ✅ Nearly all of your routine development tasks are fully AI-assisted.
-- ✅ You maintain a curated library of project-specific AI skills.
-- ✅ Strict quality gates prevent bad AI code from reaching production.
-- ✅ You can demonstrate measurable impact and traceability of your AI usage.
-
-Transition to Level 10: Mastery (The AI Workspace)
-
-- ✅ The AI workspace is your primary development interface.
-- ✅ You actively pair-program with AI on highly complex, non-trivial tasks.
-- ✅ You have a continuous improvement loop that instantly updates rules when AI fails.
-- ✅ You are driving measurable velocity improvements and lifting the maturity of your
-  peers.
+- AI does not replace the process - it removes routine work within it
+- The developer is always responsible for the final result.
+- <mark>AI-generated code must meet the same engineering standards as human-written code.</mark>
+- The goal of AI adoption is not to write more code, but to deliver better results in less
+  time
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🗺️ Our Worflows AI infrastructure
-
-<img src="master-classes/ai-dev-setup/04-module/drawings/skillstack-ai-infrastructure.excalidraw.svg" alt="" style="max-height: 75vh; width: auto; object-fit: fill">
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🛑 Whoa — not one giant symphony
+### Two quality attributes we optimize for
 
 <div class="block">
 
-Full auto on a product feature is **expensive**. You also lose the baton.
+| Quality attribute   | What it means                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| **Readability**     | The code should be easy to read, understand, and reason about without unnecessary mental effort. |
+| **Maintainability** | The code is easy to understand, modify, debug, and extend.                                       |
 
-We split the flow on purpose. </div>
+</div>
 
+ <!-- .element: style="font-size: 1.8rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Decision-making retrospective
+
+<div class="block">
+
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="fragment" data-fragment-index="1">Do we plan to develop the SkillStack project as a team?</td>
+<td class="fragment" data-fragment-index="1"><strong>Yes!</strong></td>
+</tr>
+<tr>
+<td class="fragment" data-fragment-index="2">Do we plan to keep developing the project after the course ends?</td>
+<td class="fragment" data-fragment-index="2"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td class="fragment" data-fragment-index="3">Do we plan to use a TDD approach?</td>
+<td class="fragment" data-fragment-index="3"><strong>No</strong></td>
+</tr>
+<tr>
+<td class="fragment" data-fragment-index="4">Do we plan to use tests?</td>
+<td class="fragment" data-fragment-index="4"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td class="fragment" data-fragment-index="5">Do we plan to use code review?</td>
+<td class="fragment" data-fragment-index="5"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td class="fragment" data-fragment-index="6">Do we need a CI/CD process at the start of the project?</td>
+<td class="fragment" data-fragment-index="6"><strong>No</strong></td>
+</tr>
+<tr>
+<td class="fragment" data-fragment-index="7">Do we need project versioning and release management?</td>
+<td class="fragment" data-fragment-index="7"><strong>No</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
 
 
 <!-- .element: style="font-size: 2.0rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-> 📌 **Rule:** orchestration with checkpoints — not a one-shot agent.
+## Problems we ran into
 
-<!-- .element: style="font-size: 2.0rem" -->
+- Agents may generate inconsistent code across different calls or tasks
+- The agent may leave many explanatory comments in the code
+- The agent may not take into account approaches already used for a similar task
+- The agent may over-engineer the task
+- The agent may pull extra context from neighboring git branches
+- The agent may not follow a single approach when organizing code
+- The agent may not understand the monorepo structure properly
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## EP we've chosen
+
+<div class="block">
+
+**Readability & Maintainability**
+
+- Code Consistency
+- Code Review
+- Unit Testing
+- Single Responsibility
+- Code Complexity Control
+- KISS
+- Version Control (Git)
+  - Trunk-Based Development
+  - Atomic Commits
+  - Small, Focused PRs
+- Duplication Elimination
+- Living Documentation
+- Security Auditing
+- End-to-End Testing
+- Error Handling
+
+</div>
+
+<!-- .element: style="font-size: 1.7rem" -->
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🧾 SkillStack Rules
+
+<div class="block">
+
+| Practice                    | Rule(s)                                                                                              |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Code Consistency            | `code-comments`, `naming-convention`, `js-import-order`, `typescript-best-practices`, `react-client` |
+| Single Responsibilities     | `single-responsibility`                                                                              |
+| Error Handling              | `error-handling`                                                                                     |
+| Unit Testing / Test Quality | `test-conventions`                                                                                   |
+| Version Control Usage       | `git-history-scope`                                                                                  |
+
+</div>
+
+<!-- .element: style="font-size: 1.6rem" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-auto-animate="true" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🔧 SkillStack Skills
+
+<div class="block">
+
+| Practice                | Skill / agent                   |
+| ----------------------- | ------------------------------- |
+| Code Review             | `review-flow`                   |
+| Unit Testing            | `create-unit-tests` → `unituna` |
+| End-to-End Testing      | `create-e2e-tests` → `e2eagle`  |
+| Test Quality Gates      | `check-coverage`                |
+| Code Complexity Control | `check-complexity`              |
+| Duplication Elimination | `check-duplicates`              |
+| Living Documentation    | `update-adr`                    |
+| Stack Specific Skills   | `firebase`, `use-eleks-ui`      |
+| Version Control Usage   | `git-commit`                    |
+
+</div>
+
+<!-- .element: style="font-size: 1.6rem" data-id="bar" -->
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🧑‍🔧 SkillStack Sub-Agents
+
+> Specialists beat one mega-agent that plans, codes, tests etc.
+
+<div class="block">
+
+| Agent                              | Job                                     |
+| ---------------------------------- | --------------------------------------- |
+| ⚖️ `requirements-complexity-agent` | Triage: simple vs complex (never codes) |
+| 💥 `spark`                         | Executor for simple changes             |
+| 🐙 `octopus`                       | Executor for complex changes            |
+| 🐟 `unituna`                       | Writes unit tests                       |
+| 🦅 `e2eagle`                       | Writes Playwright E2E tests             |
+
+</div>
+
+ <!-- .element: style="font-size: 1.65rem" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### General Agent structure
+
+<!-- prettier-ignore -->
+```md
+--- 
+name: <some name>
+description: <some description>
+model: <model name>
+--- 
+
+# Title
+
+short description...
+
+## Core responsibility
+
+...
+
+## Communication with user
+
+...
+
+## Escalation
+
+...
+
+## Git
+
+...
+
+## Bash
+
+...
+
+## Validation
+
+...
+
+## Output format
+
+...
+
+## Done criteria
+
+...
+
+## Examples
+
+...
+
+```
 
 notes:
 
-Stress this: we are not chasing full AI automation of implementation. Cost + control.
-Three large stages, with a human gate between them.
+1. Frontmatter with instructions
+2. Title and description
+3. Core responsibility
+4. Communication with user
+5. Escalation
+6. Git
+7. Bash
+8. Validation
+9. Output format
+10. Done criteria
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🎼 Three movements, one band
+### ⚖️ Triage (requirements-complexity-agent)
 
-<ol style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>Analysis + implementation</strong> — route, then ship the change</li>
-<li class="fragment" data-fragment-index="2"><strong>Tests</strong> — protect behavior and journeys</li>
-<li class="fragment" data-fragment-index="3"><strong>Code review</strong> — verify from multiple angles</li>
-</ol>
+<img src="master-classes/ai-dev-setup/03.5-module/drawings/implementation-complexity-triage.excalidraw.svg" alt="" style="width: implementation-complepx; height: ity-triage.pngpx; object-fit: fill">
 
-> 🎯 **Best for:** control at each movement — not one endless run.
 
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
-</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-## Feature Implementation
-
-> You don't just generate code. You **conduct** the change.
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🪜 From request to validated change
-
-Clarify → assess → plan → implement → test → validate
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2"><strong>Clarify</strong> — goal, constraints, acceptance criteria</li>
-<li class="fragment" data-fragment-index="3"><strong>Assess</strong> — scope, contracts, architecture risk</li>
-<li class="fragment" data-fragment-index="4"><strong>Implement</strong> — the plan and the diff</li>
-<li class="fragment" data-fragment-index="5"><strong>Validate</strong> — tests and evidence</li>
-</ul>
-
-notes:
-
-Ask the room to name these stages before the first line of code — clarification, risk
-assessment, a plan, checks.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🧍 Hard mode: you did all of this yourself
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Re-reading the ticket to guess the real acceptance criteria</li>
-<li class="fragment" data-fragment-index="2">Deciding "small fix" vs "this touches three packages"</li>
-<li class="fragment" data-fragment-index="3">Keeping scope from drifting mid-change</li>
-<li class="fragment" data-fragment-index="4">Remembering which tests this even needs</li>
-</ul>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🤖 Same stages — less carrying
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">AI scores complexity; you confirm</li>
-<li class="fragment" data-fragment-index="2">The executor holds plan, scope, and diff</li>
-<li class="fragment" data-fragment-index="3">Tests and ADRs are cued, not remembered</li>
-</ul>
-
-> 🎯 **Best for:** keeping every stage when the day gets busy.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🗺️ Routed implementation (Triage)
-
-<img src="master-classes/ai-dev-setup/04-module/drawings/implementation-complexity-triage.excalidraw.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
-
+<!-- .element: style="max-height: 70vh; width: auto" -->
 
 notes:
 
@@ -282,288 +386,684 @@ notes:
 - Any High dimension → Octopus; all Low → Spark
 - We know what to build, the risk is unclear → complex
 - No one-sentence Task → clarification
-- Up to 3 questions with options; the parent asks. At most 3 clarification rounds, then stop with no executor
+- Up to 3 questions with options; the parent asks. At most 3 clarification rounds, then
+  stop with no executor
+</div>
+
+<aside class="notes"><div class="mermaid">
+flowchart TD
+    A([Prompt received])-->B[Analysis phase]
+    B --> C{Clear enough to score?}
+    C -- Yes --> VVerdict: spark / octopus
+    C -- No --> Q[/NEEDS_CLARIFICATION · ≤3 questions/]
+    Q -.->|parent answers, re-invokes| A
+
+</div></aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ⚖️ Triage (requirements-complexity-agent)
+
+<!-- prettier-ignore -->
+```md[2| 3-8| 9| 10|]
+--- 
+name: requirements-complexity-agent
+description: >-
+  Implementation-complexity triage. Use FIRST for any new implementation task — before
+  writing code and before choosing spark (simple) or octopus (complex). Never skip for
+  seemingly trivial one-file or one-button changes. Analyzes scope, risk, and
+  cross-cutting impact; returns either a complexity verdict or a clarification request.
+  Never writes code, never edits files, never calls other agents
+readonly: true
+model: inherit
+--- 
+
+You are a **requirements complexity analyst**, not an implementer and not an orchestrator.
+
+...more
+```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🗺️ Routed implementation (Full Flow)
+### ⚖️ Triage (requirements-complexity-agent)
 
-<img src="master-classes/ai-dev-setup/04-module/drawings/feature-implementation-workflow.excalidraw.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
+<!-- prettier-ignore -->
+```md[2| 15-29|]
+--- 
+name: requirements-complexity-agent
+description: >-
+  Implementation-complexity triage. Use FIRST for any new implementation task — before
+  writing code and before choosing spark (simple) or octopus (complex). Never skip for
+  seemingly trivial one-file or one-button changes. Analyzes scope, risk, and
+  cross-cutting impact; returns either a complexity verdict or a clarification request.
+  Never writes code, never edits files, never calls other agents
+readonly: true
+model: inherit
+--- 
 
+You are a **requirements complexity analyst**, not an implementer and not an orchestrator.
 
-notes:
+Your job: decide whether an upcoming implementation task is **simple** or **complex**
+**before** anyone writes code, and return a structured verdict the parent
+uses to notify the user which executor will run:
 
-- Sequential: triage → one executor → tests → summary → ADR
-- While Spark or Octopus is working, the parent does not edit code itself
-- One executor, and only after triage
-- Tests: classify none / unit / e2e / both. Ask only if not none. Writers only on Yes. Both means Unituna, then E2eagle, and wait
-- Clarification re-runs triage (max 3). Escalation relaunches the executor — no new triage
-- ADR waits in the foreground after approval
-- Commit — only if the prompt says so explicitly
+| Verdict   | Executor    | Meaning                                     |
+| --------- | ----------- | ------------------------------------------- |
+| `simple`  | **spark**   | Narrow, local, low-risk change              |
+| `complex` | **octopus** | Broad, cross-cutting, high-uncertainty work |
+
+You analyze and return **exactly one of two outputs**: a `Verdict`, or a
+`NEEDS_CLARIFICATION` request. You **never** implement, refactor, delegate, or
+ask the user directly — you have no tool to do that. Escalation is delegated
+to the parent (see below). The parent caps how many times it re-invokes you.
+
+...more
+```
+
+<!-- .element: style="height: 80%" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" data-auto-animate="true" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 💥 Spark
+
+<!-- prettier-ignore -->
+```md[2| 3-5| 6| 9-13]
+--- 
+name: spark
+description: >-
+  Fast simple-task implementer. Implements quickly and directly, 
+  follows existing patterns.
+model: composer-2.5
+--- 
+
+# Spark agent
+
+You are `Spark` — a fast leaf implementation agent for pre-classified SIMPLE tasks.
+Your goal is: Make the smallest safe change that satisfies the requirement, validate it, and 
+stop. You are not an architect and not a multi-file refactorer.
+
+...more
+
+```
+
+<!-- .element: style="height: 50%" data-id="foo" -->
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🎬 Cue the orchestra
+### 💥 Spark. Core responsibility
 
-From a request to a validated change — one conducted workflow.
+🔴 For every case, you must do <...something>. However, if <...some condition> applies, do
+<...something>; otherwise, use <...some tool>.
 
-notes:
+✅ Do ...
 
-Switch to Cursor. Show launching the implement skill, the complexity verdict, the choice of Spark
-or Octopus, the run, and the final structured summary. Explain the code during the demo.
+- 1. <...something>
+- 2. <...something>
+- 3. <...something>
+
+✅ Do not ...
+
+- 1. <...something>
+- 2. <...something>
+- 3. <...something>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" data-auto-animate="true" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 💥 Spark
+
+<!-- prettier-ignore -->
+```md[2| 15-40]
+--- 
+name: spark
+description: >-
+  Fast simple-task implementer. Implements quickly and directly,
+  follows existing patterns.
+model: composer-2.5
+--- 
+
+# Spark agent
+
+You are `Spark` — a fast leaf implementation agent for pre-classified SIMPLE tasks. Your
+goal is: Make the smallest safe change that satisfies the requirement, validate it, and
+stop. You are not an architect and not a multi-file refactorer.
+
+## Core responsibility
+
+Implement the requested change with the smallest reasonable diff.
+
+Always:
+
+- Investigate only what is necessary to implement the requested change
+- Do not explore unrelated files, modules, packages, or architecture.
+- Stop searching once you have enough context to implement safely.
+- Follow the requirement provided by the parent.
+- Preserve existing behavior outside the requested change.
+- Keep the implementation local and focused.
+
+Do not:
+
+- redesign the solution;
+- introduce new architecture;
+- create abstractions without a concrete need;
+- refactor unrelated code;
+- fix unrelated bugs;
+- add unrequested features;
+- if you touch code that looks imperfect, do not improve it unless the
+  requested change requires it;
+- optimize code without a demonstrated need;
+
+If you notice an unrelated improvement: leave it untouched.
+
+```
+
+<!-- .element: style="height: 80%" data-id="foo" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐙 Octopus
+
+<!-- prettier-ignore -->
+```md[2| 3-5| 6| 9-13]
+--- 
+name: octopus
+description: >-
+  Complex multi-module implementer. Architectural decisions, multi-file/layer
+  work, or cross-cutting changes.
+model: claude-sonnet-5
+--- 
+
+# Octopus agent
+
+You are `Octopus` — a planning-first implementation agent for pre-classified COMPLEX tasks.
+Your goal is: Decompose the work, verify patterns and contracts, implement in deliberate
+vertical slices, surface architectural decisions, and stop.
+
+...more
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐙 Octopus. Output format
+
+<!-- prettier-ignore -->
+```md[2| 17-43]
+--- 
+name: octopus
+description: >-
+  Complex multi-module implementer. Architectural decisions, multi-file/layer
+  work, or cross-cutting changes.
+model: claude-sonnet-5
+--- 
+
+# Octopus agent
+
+You are `Octopus` — a planning-first implementation agent for pre-classified COMPLEX tasks.
+Your goal is: Decompose the work, verify patterns and contracts, implement in deliberate
+vertical slices, surface architectural decisions, and stop.
+
+...more
+
+## Output format
+
+End the final response with only this JSON object.
+
+
+{
+  "task": "{{task}}",
+  "status": "done | escalated",
+  "packagesTouched": ["{{package}}"],
+  "filesTouched": ["{{path}}"],
+  "plan": ["{{step}}"],
+  "changes": ["{{change}}"],
+  "checks": [
+    {
+      "command": "{{command}}",
+      "result": "pass | fail | not_run",
+      "reason": "{{only when not_run}}"
+    }
+  ],
+  "adrCandidates": [{ "title": "{{title}}", "why": "{{why}}" }],
+  "blockers": []
+}
+
+
+`done` keeps `"blockers": []`. `escalated` sets `blockers` to one or more
+`{ "blocker", "neededFromParent" }`. `adrCandidates` is `[]` when there is nothing to
+record.
+
+```
+
+<!-- .element: style="height: 80%" -->
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🪝 SkillStack Hooks
+
+When `spark` or `octopus` finishes, a hook validates the handoff against a schema before
+the parent trusts the result.
+
+```json
+{
+  "hooks": {
+    "subagentStop": [
+      {
+        "command": "node .cursor/hooks/validate-agent-handoff.mjs",
+        "matcher": "^(spark|octopus)$"
+      }
+    ]
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🪝 SkillStack Hooks. Run
+
+```js[|6| 9| 27| |]
+function run() {
+  let payload = {};
+  let event;
+
+  try {
+    event = JSON.parse(readFileSync(0, 'utf8'));
+  } catch (error) {
+    console.error('Failed to parse the subagentStop hook input:', error);
+    process.stdout.write(`${JSON.stringify(payload)}\n`);
+    return;
+  }
+
+  const isEvent =
+    event !== null && typeof event === 'object' && !Array.isArray(event);
+  const shouldValidate =
+    isEvent &&
+    event.status === 'completed' &&
+    Object.hasOwn(HANDOFF_FIELDS, event.subagent_type);
+
+  if (shouldValidate) {
+    const loaded = loadHandoff(event);
+    const problems =
+      loaded.problems ?? validate(event.subagent_type, loaded.handoff);
+    if (problems.length > 0) payload = followupPayload(problems);
+  }
+
+  process.stdout.write(`${JSON.stringify(payload)}\n`);
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐟 Unituna
+
+<!-- prettier-ignore -->
+```md[2| 3-5| 6| 9-13]
+--- 
+name: unituna
+description: >-
+  Responsible agent for adding or updating unit tests for behavior affected
+  by the current changes
+model: composer-2.5
+--- 
+
+# Unituna
+
+You are `unituna`. You are responsible for analyzing changed code,
+identifying meaningful behavior that requires unit-test coverage, and implementing only the tests
+necessary to protect that behavior.
+
+...more
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🐟 Unituna. Validation
+
+<!-- prettier-ignore -->
+```md[2| 17-28]
+--- 
+name: unituna
+description: >-
+  Responsible agent for adding or updating unit tests for behavior affected
+  by the current changes
+model: composer-2.5
+--- 
+
+# Unituna
+
+You are `unituna`. You are responsible for analyzing changed code,
+identifying meaningful behavior that requires unit-test coverage, and implementing only the tests
+necessary to protect that behavior.
+
+...more
+
+## Validation
+
+Validation must be evidence-based.
+
+At minimum:
+
+1. Run the tests directly related to the changed code.
+2. Confirm that newly added tests pass.
+3. Confirm that existing tests have not regressed.
+4. Run coverage for the affected code when available.
+
+...more
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🦅 E2Eagle
+
+<!-- prettier-ignore -->
+```md[|2| 3-5| 6 |]
+--- 
+name: e2eagle
+description: >-
+  Responsible agent for adding or updating Playwright E2E tests for
+  user-visible flows affected by the current changes
+model: inherit
+--- 
+
+# E2eagle
+
+You are `e2eagle`. You are responsible for analyzing changed code,
+identifying meaningful user-visible journeys that require E2E coverage, and
+implementing only the Playwright tests necessary to protect those journeys.
+
+...more
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🦅 E2Eagle. Done criteria
+
+<!-- prettier-ignore -->
+```md[2| 17-38]
+--- 
+name: e2eagle
+description: >-
+  Responsible agent for adding or updating Playwright E2E tests for
+  user-visible flows affected by the current changes
+model: inherit
+--- 
+
+# E2eagle
+
+You are `e2eagle`. You are responsible for analyzing changed code,
+identifying meaningful user-visible journeys that require E2E coverage, and
+implementing only the Playwright tests necessary to protect those journeys.
+
+...more
+
+## Done criteria
+
+The task is DONE only when all of the following are true:
+
+- Changed files have been analyzed for user-visible journeys.
+- Existing E2E tests covering those journeys have been identified.
+- Meaningful uncovered journeys have been identified.
+- Required E2E tests have been implemented or existing tests have been
+  appropriately updated.
+- Tests validate user-visible behavior rather than implementation details.
+- Relevant E2E tests pass.
+- No unrelated production behavior has been changed (except minimal
+  testability hooks such as `data-testid` when required).
+- Important changed journeys are covered by tests.
+- No unresolved test failure caused by the agent remains.
+- The final output follows the required output format.
+
+The task is ESCALATED when the agent cannot determine the correct expected
+journey or test boundary without a decision from the user.
+
+The task is BLOCKED when the required implementation or validation cannot be
+completed because of an environmental or tooling problem.
+```
+
+<!-- .element: style="height: 80%" -->
 </div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Test Automation
+## 🧰 SkillStack Flows
 
-> Tests protect behavior and journeys — not a line count.
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
+- `implement-flow` — write safely: gate before every product change; triage, execute,
+  optional tests and ADRs
+- `review-flow` — read-only QA: coverage, security, defects, acceptance, scope
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🪜 Stages before the first spec
+### Implement Flow
 
-Inspect → map risk → choose level → write → run → review
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2"><strong>Inspect</strong> — what actually changed</li>
-<li class="fragment" data-fragment-index="3"><strong>Map risk</strong> — behavior or user journey</li>
-<li class="fragment" data-fragment-index="4"><strong>Write</strong> — focused specs, stable fixtures</li>
-<li class="fragment" data-fragment-index="5"><strong>Run</strong> — reproducible output, real gaps</li>
-</ul>
-
-notes:
-
-Ask the room to name these stages: where a unit test is needed, where E2E is, and where a new
-test adds no value. Generation is not the first step.
+- ✅ Step 1: Capture task brief
+- ✅ Step 2: Triage (subagent, or inline fast path)
+- ✅ Step 3: Launch executor and handle outcome
+- ✅ Step 4: Confirm tests + ADRs (one ask-user, or none)
+- ✅ Step 5: Test writers (on Yes)
+- ✅ Step 6: ADR task (on Yes)
+- ✅ Step 7: Summary
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🧍 Hard mode: you did all of this yourself
+### Implement-Flow. SKILL.md
 
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Scrolling the diff to find what deserves a test</li>
-<li class="fragment" data-fragment-index="2">Arguing unit vs E2E with yourself</li>
-<li class="fragment" data-fragment-index="3">Copy-pasting an old spec as a template</li>
-<li class="fragment" data-fragment-index="4">Re-running the suite to see whether it was you</li>
-</ul>
+`SKILL.md` describes the algorithm and constraints.
+
+<!-- prettier-ignore -->
+```md[|2| 3-12| 15-19| 21-30]
+--- 
+name: implement-flow
+description: >-
+  Mandatory gate for product and feature implementation. Read and follow this
+  skill before Write/Edit/Delete on product source whenever the user wants to
+  develop, change, add, fix, update, remove, refactor, configure, style, wire,
+  or improve project behavior or a feature — including trivial one-line,
+  one-file, UI-only, config, CLI, functions, or product/architecture
+  docs-in-repo edits. Orchestrates requirements-complexity-agent triage, then
+  spark (simple) or octopus (complex). Never implement product code in the
+  parent without this workflow. Skip for pure Q&A, read-only review,
+  commit-only, or explicit "do not change code" requests.
+--- 
+
+# Implement flow
+
+Gate for every change to product source. Read this file on each request that
+develops or changes project behaviour. Read [reference.md](reference.md) when you
+actually run the steps — it holds the step bodies, prompt templates, and examples.
+
+## Tool map
+
+The text below uses host-neutral names. Replace them with the host's tools:
+
+| Name in this skill | Cursor           | Notes                                     |
+| ------------------ | ---------------- | ----------------------------------------- |
+| `ask-user`         | `AskQuestion`    | 2–4 options per question, max 3 questions |
+| `general subagent` | `generalPurpose` |                                           |
+| `todo list`        | `TodoWrite`      | tracks the progress checklist             |
+| `config root`      | `.cursor/`       |                                           |
+```
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🤖 Same stages — less scrolling
+## Implement-Flow. Reference.md
 
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">The diff is read for you</li>
-<li class="fragment" data-fragment-index="2">The specialist matches the risk</li>
-<li class="fragment" data-fragment-index="3">The suite runs and reports back</li>
-<li class="fragment" data-fragment-index="4">Ambiguity returns as a question, not a guess</li>
-</ul>
+`reference.md` describes the mechanics.
+
+<img src="master-classes/ai-dev-setup/03.5-module/drawings/feature-implementation-workflow.excalidraw.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🧭 Two specialists
+### Review Flow
 
-| Signal                               | Route          |
-| ------------------------------------ | -------------- |
-| Logic, branches, validation, errors  | **🍣 Unituna** |
-| User-visible flows across boundaries | **🦅 E2eagle** |
-| Both risks in the same change        | **both**       |
-| No testable contract                 | **none**       |
-
-<!-- .element: style="font-size: 2.0rem" -->
-
-> 📌 **Rule:** pick the specialist for the risk — not a test for every file.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
+- ✅ Step 1: Resolve scope and context
+- ✅ Step 2: Classify dimensions to run
+- ✅ Step 3: Coverage review (run in parallel)
+- ✅ Step 4: Security review (run in parallel)
+- ✅ Step 5: Defect review (Bugbot) (run in parallel)
+- ✅ Step 6: Acceptance criteria & scope check (run in parallel)
+- ✅ Step 7: Optional quality gates (as classified) (run in parallel)
+- ✅ Step 8: Unified report
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 📌 Proof, not more files
+### Review Flow Diagram
 
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Analyze the current change before adding tests</li>
-<li class="fragment" data-fragment-index="2">Protect behavior — not implementation details</li>
-<li class="fragment" data-fragment-index="3">Run the relevant suite and report the result</li>
-<li class="fragment" data-fragment-index="4">Escalate ambiguity instead of writing speculative tests</li>
-</ul>
-
-> 📌 **Rule:** a generated test matters only when it proves something.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🗺️ Test routing
-
-<img src="master-classes/ai-dev-setup/04-module/drawings/test-agents.excalidraw.svg" alt="" style="max-height: 70vh; width: auto; object-fit: fill">
-
-
-notes:
-
-- **Gather** - Request + workspace. Parent never writes tests.
-- **Launch** - One Task: Unituna or E2eagle. Foreground — wait.
-- **Cover** - Git diff only. Gaps: behavior (unit) or journey (e2e).
-- **Prove** - Run the suite. New tests pass; no speculative coverage.
-- **Return** - DONE / ESCALATED / BLOCKED + files. Parent summarizes. No commit.
-- ESCALATED — a human decision is needed: unclear behavior, the wrong test level (unit vs e2e vs
-  integration), production code has to change, existing tests contradict the expectation. Do not
-  write speculative tests.
-- BLOCKED — the environment: the suite won't start, infra is broken, there is no way to run the
-  tests. The reply names the command that failed.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🎬 Let’s protect the change
-
-Route the risk, cue the specialist, inspect the evidence.
-
-notes:
-
-In the live demo, first show Unituna on changed behavior. Then E2eagle for a
-user-visible journey, if the change touches one. Draw attention to structured output and
-validation, not to how many tests were created.
-</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-## Code Review
-
-> A quality gate before human approval — not a final glance at the diff.
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🪜 Stages of one review
-
-Scope → coverage → security → defects → intent → gates → report
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2"><strong>Scope</strong> — what changed, which packages</li>
-<li class="fragment" data-fragment-index="3"><strong>Findings</strong> — severity, location, evidence</li>
-<li class="fragment" data-fragment-index="4"><strong>Gates</strong> — tests, coverage, static checks</li>
-<li class="fragment" data-fragment-index="5"><strong>Decision</strong> — ready, needs work, blocked</li>
-</ul>
-
-notes:
-
-Ask them to name stages besides correctness: security, tests, acceptance criteria, scope,
-complexity, duplication, and project-specific conventions.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🧍 Hard mode: you did all of this yourself
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Reading the same diff four times for four concerns</li>
-<li class="fragment" data-fragment-index="2">Checking the ticket for what was actually promised</li>
-<li class="fragment" data-fragment-index="3">Spotting the drive-by refactor that rode along</li>
-<li class="fragment" data-fragment-index="4">Writing the summary nobody has time to write</li>
-</ul>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🤖 Same passes — in parallel
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1">Every concern gets its own pass</li>
-<li class="fragment" data-fragment-index="2">Irrelevant checks are skipped, not faked</li>
-<li class="fragment" data-fragment-index="3">Findings arrive as one report with severity</li>
-</ul>
-
-> 📌 **Rule:** AI gives the first systematic pass; you still approve.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="4" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 👂 Always-on chairs
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>Coverage</strong> — does each changed behavior have protection?</li>
-<li class="fragment" data-fragment-index="2"><strong>Security and defects</strong> — what could fail or be exploited?</li>
-<li class="fragment" data-fragment-index="3"><strong>Acceptance criteria</strong> — did we build the intended outcome?</li>
-<li class="fragment" data-fragment-index="4"><strong>Scope alignment</strong> — did unrelated changes ride along?</li>
-</ul>
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🎛️ Extra chairs — only if the diff needs them
-
-<ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="1"><strong>Complexity</strong> — scan changed executable code</li>
-<li class="fragment" data-fragment-index="2"><strong>Duplication</strong> — inspect broad or shared changes</li>
-<li class="fragment" data-fragment-index="3"><strong>Dependencies</strong> — audit changed manifests and lockfiles</li>
-<li class="fragment" data-fragment-index="4"><strong>Domain checks</strong> — UI kit, security rules, schemas — only if the diff touched them</li>
-</ul>
-
-> 📌 **Rule:** run the checks the diff asks for — not every check every time.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
-
-notes:
-
-- Domain checks — not always. Only if the diff has the relevant files.
-- Examples: a UI kit (in SkillStack — ELEKS UI), security rules (Firestore), Zod/API schemas.
-- A button change ≠ a rules audit. A Cloud Function change ≠ a design-system review.
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🗺️ Code Review Workflow
-
-<img src="master-classes/ai-dev-setup/04-module/drawings/code-review-workflow.excalidraw.svg" alt="" style="max-height: 75vh; width: auto; object-fit: fill">
-
-
-notes:
-
-- Read-only
-- Analyze `uncommitted changes` by default,
-- Analyze `branch changes` only when the user asks to review the whole branch or a PR
-- Reuse task context (summary of implement skill) - if applicable
-- Run in parallel
-- Skip irrelevant checks
-- Do not fix
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 🎬 Let’s review the change
-
-One diff. Many specialists. One actionable report.
-
-notes:
-
-Launch the review skill on the changes from the previous demos. Show classification, the parallel
-review dimensions, and the unified report. Stress: AI gives the first systematic pass, but
-the final approve stays with a human.
+<img src="master-classes/ai-dev-setup/03.5-module/drawings/code-review-workflow.excalidraw.svg" alt="" style="max-height: 75vh; width: auto; object-fit: fill">
 </div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Connection between EP and SDLC
+
+<div class="block">
+
+| Planning | Analysis | Design | Implementation                 | Testing & Integration | Maintenance             |
+| -------- | -------- | ------ | ------------------------------ | --------------------- | ----------------------- |
+| \-\-\-   | \-\-\-   | \-\-\- | Code Consistency               | Unit Testing          | Duplication Elimination |
+|          |          |        | Duplication Elimination        | End-to-End Testing    | Code Consistency        |
+|          |          |        | Trunk-Based Development        | Code Review           |                         |
+|          |          |        | Separation of Responsibilities | Version Control       |                         |
+|          |          |        |                                | Security Auditing     |                         |
+
+</div>
+
+ <!-- .element: style="font-size: 1.6rem" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+.container {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+padding: 0 10px;
+}
+
+.container-header {
+ display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
+	padding: 0 20px;
+}
+
+.container-body-left {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.container-body-right {
+  width: 50%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+</style>
+
+<div class="container">
+<div class="container-header">
+<div class="block">
+
+### What stays human
+
+</div>
+
+
+
+</div>
+<div class="container-body">
+<div class="container-body-left">
+<div class="block">
+
+**Humans decide**
+
+- Product intent and acceptance criteria
+- Clarifications when triage is stuck
+- Whether to write tests or ADRs
+- Escalation after a failed executor
+- Commits, pushes, merges
+
+</div>
+
+<!-- .element: style="font-size: 1.7rem" -->
+
+</div>
+<div class="container-body-right">
+<div class="block">
+
+**Agents execute**
+
+- Complexity classification
+- Implementation within rules
+- Test authoring (when allowed)
+- Multi-dimensional review reports
+
+</div>
+
+<!-- .element: style="font-size: 1.7rem" -->
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## ✨⚔️✨ AI Jedi unlocked!!!
 
-You now: <!-- .element: class="fragment" data-fragment-index="1" -->
+<div class="fragment" data-fragment-index="1">
+
+You now:
 
 <ul style="font-size: 2.0rem">
-<li class="fragment" data-fragment-index="2">Write the laws of your world</li>
-<li class="fragment" data-fragment-index="3">Command agents like a general</li>
-<li class="fragment" data-fragment-index="4">Hands off the shovel — you still read the map</li>
+<li>Write the laws of your world</li>
+<li>Command agents like a general</li>
+<li>Hands off the shovel — you still read the map</li>
 </ul>
+
+</div>
 
 > 🎉🌟 You're a Jedi — _almost_ 🤭 </br> ⚠️🛤️ The path doesn't end here. 🚀
 
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="5" -->
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="2" -->
 
 notes:
 
 Encourage them: they already know how to orchestrate. The "but" is not the end of the path
 (Level 9–10), not a lecture, and not "you failed the module."
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## 🤨 Q&A session
+### 📝 Homework — pick one, or both
+
+<img src="master-classes/ai-dev-setup/04-module/imgs/homework-bg-2.png" alt="" style="max-height: 36vh; width: auto; object-fit: fill">
+
+
+<ul style="font-size: 2.0rem">
+<li><strong>TDD workflow</strong> — your own feature implementation, tests first</li>
+<li><strong>GitHub tasks</strong> — the “add a task” skill, as a multi-stage workflow</li>
+</ul>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1440px; min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Q&A
+
+<img src="presentations-build/ai-for-developers-m3-presentation/master-classes/ai-dev-setup/imgs/questions.png" alt="" style="width: 1000px; object-fit: fill">
 </div></script></section></div>
     </div>
 
@@ -681,7 +1181,7 @@ Encourage them: they already know how to orchestrate. The "but" is not the end o
       // options from URL query string
       var queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {"width":1600,"height":800,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+      var options = extend(defaultOptions, {"width":1440,"height":900,"margin":0,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
     </script>
 
     <script>
