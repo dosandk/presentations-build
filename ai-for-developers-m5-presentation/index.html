@@ -144,10 +144,9 @@ Before the model opens a single project file, this repo has loaded:
 
 - `AGENTS.md` — the package map
 - 2 rules with `alwaysApply: true`: `code-comments.mdc`, `git-history-scope.mdc`
-- descriptions of **21 skills**
+- descriptions of **21 skills** (The bodies of those skills are still on disk)
 - the agent catalog (`spark`, `octopus`, `e2eagle`, `unituna`, `triage`)
-
-The bodies of those skills are still on disk.
+- MCP servers: `github`, `eleks-ui`, `playwright`
 
 </div>
 
@@ -243,6 +242,36 @@ change buys a failed attempt and an escalation.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### 💥 Spark and 🐙 Octopus
+
+<div class="block">
+
+|         | **Spark**                           | **Octopus**                                 |
+| ------- | ----------------------------------- | ------------------------------------------- |
+| Job     | Fast leaf for a **simple** task     | Planning-first for a **complex** task       |
+| Model   | `composer-2.5`                      | `claude-sonnet-5`                           |
+| Does    | Smallest safe change, then stop     | Decompose, check contracts, vertical slices |
+| Doesn't | Architect, or refactor across files | Skip the plan and dive in                   |
+
+</div>
+
+ <!-- .element: style="font-size: 1.7rem" -->
+
+> 📌 **Rule:** classify the task first. Then pick the specialist.
+
+<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
+
+notes:
+
+Spark — fast simple-task implementer. Goal: the smallest safe change that meets the
+requirement, validate it, and stop. Not an architect. Not a multi-file refactorer.
+
+Octopus — complex multi-module implementer. Architectural decisions, multi-file or
+cross-cutting work. Goal: decompose, verify patterns and contracts, implement in
+deliberate vertical slices, surface architectural decisions, and stop.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### Skip triage when the task is already scoped
 
 `implement-flow`
@@ -272,36 +301,6 @@ If any line is uncertain, run triage.
 </div>
 
 <!-- .element: style="font-size: 1.7rem" -->
-</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### 💥 Spark and 🐙 Octopus
-
-<div class="block">
-
-|         | **Spark**                           | **Octopus**                                 |
-| ------- | ----------------------------------- | ------------------------------------------- |
-| Job     | Fast leaf for a **simple** task     | Planning-first for a **complex** task       |
-| Model   | `composer-2.5`                      | `claude-sonnet-5`                           |
-| Does    | Smallest safe change, then stop     | Decompose, check contracts, vertical slices |
-| Doesn't | Architect, or refactor across files | Skip the plan and dive in                   |
-
-</div>
-
- <!-- .element: style="font-size: 1.7rem" -->
-
-> 📌 **Rule:** classify the task first. Then pick the specialist.
-
-<!-- .element: style="font-size: 2.0rem" class="fragment" data-fragment-index="1" -->
-
-notes:
-
-Spark — fast simple-task implementer. Goal: the smallest safe change that meets the
-requirement, validate it, and stop. Not an architect. Not a multi-file refactorer.
-
-Octopus — complex multi-module implementer. Architectural decisions, multi-file or
-cross-cutting work. Goal: decompose, verify patterns and contracts, implement in
-deliberate vertical slices, surface architectural decisions, and stop.
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -490,7 +489,7 @@ Force-include an exception with a `!` prefix
 </div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 800px; width: 1600px; min-height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### 🔌 Who else is in the tank?
+### 🔌 Who else is in the context?
 
 Check MCPs, Rules, and Skills. Filter **User**, **Team**, **Workspace**, **SkillStack**.
 
@@ -602,8 +601,6 @@ tool-call count, not only in the slide text.
 ### 📎 Point at the file, not the repo
 
 Use `@file` or `@function`. Leave `@codebase` and whole folders for later.
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 - @filename or one function — cheap and precise
 - @folder or @codebase — hauls in weight you didn't ask for
